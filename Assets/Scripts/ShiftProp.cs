@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ShiftObject : MonoBehaviour
+public class ShiftProp : MonoBehaviour
 {
 	[SerializeField] Mesh mesh;
 	public Mesh Mesh { get => mesh; }

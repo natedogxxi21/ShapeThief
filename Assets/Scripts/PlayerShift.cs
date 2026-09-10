@@ -7,8 +7,8 @@ using UnityEngine.Events;
 public class PlayerShift : MonoBehaviour
 {
 	[SerializeField] Rigidbody rb;
-	ShiftObject possibleShiftTarget;
-	ShiftObject shiftTarget;
+	ShiftProp possibleShiftTarget;
+	ShiftProp shiftTarget;
 	[SerializeField] Transform baseModel;
 	[SerializeField] Transform shiftModelTransform;
 	[SerializeField] MeshFilter shiftMeshFilter;
@@ -80,8 +80,8 @@ public class PlayerShift : MonoBehaviour
 		{
 			p += Time.deltaTime / shiftTransitionLength;
 			float pc = Mathf.Clamp01(p);
-			float shiftProgress = toObject ? pc : 1 - pc;
-			float baseProgress = 1 - shiftProgress;
+			float shiftProgress = Mathf.Clamp(toObject ? pc : 1 - pc, 0.05f, 1);
+			float baseProgress = Mathf.Clamp(1 - shiftProgress, 0.05f, 1);
 			shiftModelTransform.localScale = new(shiftProgress, shiftProgress, shiftProgress);
 			baseModel.localScale = new(baseProgress, baseProgress, baseProgress);
 			transform.position = new(transform.position.x, 0, transform.position.z);
@@ -115,7 +115,7 @@ public class PlayerShift : MonoBehaviour
 			Debug.DrawLine(ray.origin, ray.origin + (ray.direction * 100), Color.red, 4);
 			if (Physics.Raycast(ray, out RaycastHit hit, 100, shiftObjMask))
 			{
-				if (hit.transform.TryGetComponent(out ShiftObject shiftObject))
+				if (hit.transform.TryGetComponent(out ShiftProp shiftObject))
 				{
 					// Will become actual shift target if the same object is
 					// found where the player lifts their finger off the screen
@@ -139,7 +139,7 @@ public class PlayerShift : MonoBehaviour
 			Ray ray = Camera.main.ScreenPointToRay(finger.currentTouch.screenPosition);
 			if (Physics.Raycast(ray, out RaycastHit hit, 100, shiftObjMask))
 			{
-				if (hit.transform.TryGetComponent(out ShiftObject shiftObject))
+				if (hit.transform.TryGetComponent(out ShiftProp shiftObject))
 				{
 					if (shiftObject == possibleShiftTarget)
 					{
