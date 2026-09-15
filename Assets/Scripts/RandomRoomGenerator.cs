@@ -63,9 +63,19 @@ private bool spawned = false;
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("SpawnPoint") && other.GetComponent<RandomRoomGenerator>().spawned == true) 
+        if(other.CompareTag("SpawnPoint"))   
         {
-            Destroy(gameObject);
-        }
+            if(other.CompareTag("SpawnPoint") && other.GetComponent<RandomRoomGenerator>().spawned == true)
+          // if(other.GetComponent<RandomRoomGenerator>().spawned == false && spawned == false)
+            {
+                // Instantiate(templates.closedRoom[rand], transform.position, Quaternion.identity);
+
+                // spawn walls blocking off any openings
+               
+                Destroy(gameObject);
+            }
+            }
+           
+            //spawned = true;
     }
 }
