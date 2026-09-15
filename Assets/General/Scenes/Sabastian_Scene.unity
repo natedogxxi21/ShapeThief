@@ -426,15 +426,86 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2045040925586106127, guid: c09cf248bdebdc041b098eacc349460e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2455525309149631987, guid: c09cf248bdebdc041b098eacc349460e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711459819752207237, guid: c09cf248bdebdc041b098eacc349460e, type: 3}
+      propertyPath: m_Colors.m_NormalColor.b
+      value: 0.45056072
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711459819752207237, guid: c09cf248bdebdc041b098eacc349460e, type: 3}
+      propertyPath: m_Colors.m_NormalColor.g
+      value: 0.45056072
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711459819752207237, guid: c09cf248bdebdc041b098eacc349460e, type: 3}
+      propertyPath: m_Colors.m_NormalColor.r
+      value: 0.764151
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711459819752207237, guid: c09cf248bdebdc041b098eacc349460e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711459819752207237, guid: c09cf248bdebdc041b098eacc349460e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711459819752207237, guid: c09cf248bdebdc041b098eacc349460e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 899174605}
+    - target: {fileID: 2711459819752207237, guid: c09cf248bdebdc041b098eacc349460e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711459819752207237, guid: c09cf248bdebdc041b098eacc349460e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Upgrade1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711459819752207237, guid: c09cf248bdebdc041b098eacc349460e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Pause_Ui, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711459819752207237, guid: c09cf248bdebdc041b098eacc349460e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2711459819752207237, guid: c09cf248bdebdc041b098eacc349460e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487244144811924065, guid: c09cf248bdebdc041b098eacc349460e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8939822902661460195, guid: c09cf248bdebdc041b098eacc349460e, type: 3}
       propertyPath: m_Name
       value: Upgrade_Panel
+      objectReference: {fileID: 0}
+    - target: {fileID: 8939822902661460195, guid: c09cf248bdebdc041b098eacc349460e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c09cf248bdebdc041b098eacc349460e, type: 3}
+--- !u!114 &899174605 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4873763244428825684, guid: c09cf248bdebdc041b098eacc349460e, type: 3}
+  m_PrefabInstance: {fileID: 818865212}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 876225e6cb3cf7f4f8760807407b0ae0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pause_Ui
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
