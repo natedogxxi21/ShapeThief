@@ -10,14 +10,15 @@ public partial class HUD : MonoBehaviour
 	[SerializeField] Button shiftButton;
 	[SerializeField] TMP_Text shiftButtonLabel;
 	[SerializeField] Image shiftButtonBackground;
+	[SerializeField] TMP_Text moneyCounterText;
 
 	[SerializeField] RectTransform[] reservedRects;
-
 
 	void Start()
 	{
 		Instance = this;
 		player.ShiftEvent.AddListener(OnShiftEvent);
+		PlayerStats.OnMoneyChanged.AddListener(OnMoneyChanged);
 	}
 
 	void Update()
@@ -39,7 +40,7 @@ public partial class HUD : MonoBehaviour
 		}
 	}
 
-	public bool IsPosReserved(Vector2 screenPos)
+	public bool IsScreenPosReserved(Vector2 screenPos)
 	{
 		Vector2 anchorPos = new(screenPos.x / Screen.width, screenPos.y / Screen.height);
 
@@ -52,6 +53,11 @@ public partial class HUD : MonoBehaviour
 			{ return true; }
 		}
 		return false;
+	}
+
+	void OnMoneyChanged(int prev, int money)
+	{
+		moneyCounterText.text = $"${money}";
 	}
 
 	void OnShiftEvent() => SetShiftAvailable(player.ShiftAvailable);

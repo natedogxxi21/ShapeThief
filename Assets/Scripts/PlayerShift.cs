@@ -105,7 +105,7 @@ public class PlayerShift : MonoBehaviour
 
 	void HandleFingerDown(Finger finger)
 	{
-		if (HUD.Instance.IsPosReserved(finger.currentTouch.screenPosition))
+		if (HUD.Instance.IsScreenPosReserved(finger.currentTouch.screenPosition))
 		{ return; }
 
 		if (castingFinger == null)

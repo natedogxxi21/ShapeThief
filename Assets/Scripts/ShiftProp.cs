@@ -1,4 +1,5 @@
 using UnityEngine;
+using ITISKIRUHERE;
 
 public class ShiftProp : MonoBehaviour
 {
@@ -10,5 +11,7 @@ public class ShiftProp : MonoBehaviour
 	[SerializeField] GameObject highlight;
 
 	public void Highlight(bool on)
-	{ if (highlight != null) { highlight.SetActive(on); } }
+	{
+		if (highlight != null) { highlight.SetActive(on); }
+	}
 }

@@ -16,10 +16,12 @@ public partial class PlayerTouchMovement : MonoBehaviour
 	[SerializeField] float speed;
 	[SerializeField] float lookSensitivity = 1;
 
+	[Header("Debug Keyboard & Mouse Controls")]
 	[SerializeField] InputAction kbmMove;
 	[SerializeField] InputAction kbmTurn;
 	bool kbmTurning = false;
 	[SerializeField] InputAction kbmLook;
+	[SerializeField] InputAction kbmTest;
 
 	Finger movementFinger;
 	Vector2 moveInput;
@@ -147,7 +149,6 @@ public partial class PlayerTouchMovement : MonoBehaviour
 		if (moveInput.sqrMagnitude > 0.05f)
 		{ targetAngle = (Mathf.Atan2(moveInput.x, moveInput.y) * Mathf.Rad2Deg) + yaw; }
 	}
-
 	void OnKBMTurn(InputAction.CallbackContext ctx) => kbmTurning = ctx.ReadValue<float>() > 0.5f;
 	void OnKBMLook(InputAction.CallbackContext ctx)
 	{
@@ -165,6 +166,7 @@ public partial class PlayerTouchMovement : MonoBehaviour
 			{ targetAngle = (Mathf.Atan2(moveInput.x, moveInput.y) * Mathf.Rad2Deg) + yaw; }
 		}
 	}
+	void OnKBMTest(InputAction.CallbackContext ctx) => PlayerStats.ChangeMoney(100);
 
 	void OnEnable()
 	{
@@ -176,10 +178,12 @@ public partial class PlayerTouchMovement : MonoBehaviour
 		kbmMove.performed += OnKBMMove;
 		kbmTurn.performed += OnKBMTurn;
 		kbmLook.performed += OnKBMLook;
+		kbmTest.performed += OnKBMTest;
 		kbmMove.Enable();
 		kbmTurn.Enable();
 		kbmLook.Enable();
-		#endif
+		kbmTest.Enable();
+#endif
 	}
 
 	void OnDisable()
@@ -191,10 +195,12 @@ public partial class PlayerTouchMovement : MonoBehaviour
 		kbmMove.performed -= OnKBMMove;
 		kbmTurn.performed -= OnKBMTurn;
 		kbmLook.performed -= OnKBMLook;
+		kbmTest.performed -= OnKBMTest;
 		kbmMove.Disable();
 		kbmTurn.Disable();
 		kbmLook.Disable();
-		#endif
+		kbmTest.Disable();
+#endif
 		EnhancedTouchSupport.Disable();
 	}
 }

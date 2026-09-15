@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: cb327631b27f54a239e0969382f232c3
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 384346
+  packageName: Advanced Outline Shader
+  packageVersion: 1.0
+  assetPath: Assets/AdvancedOutline/AdvancedOutlineSample.unity
+  uploadId: 926934
