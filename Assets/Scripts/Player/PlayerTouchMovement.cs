@@ -14,7 +14,9 @@ public partial class PlayerTouchMovement : MonoBehaviour
 	[SerializeField] Transform camYaw;
 	[SerializeField] Transform camPitch;
 	[SerializeField] float speed;
+	[SerializeField] float runSpeed;
 	[SerializeField] float lookSensitivity = 1;
+	bool running = false;
 
 	[Header("Debug Keyboard & Mouse Controls")]
 	[SerializeField] InputAction kbmMove;
@@ -46,7 +48,7 @@ public partial class PlayerTouchMovement : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		rb.linearVelocity = speed * ((moveInput.x * camYaw.right) + (moveInput.y * camYaw.forward));
+		rb.linearVelocity = (running ? runSpeed : speed) * ((moveInput.x * camYaw.right) + (moveInput.y * camYaw.forward));
 	}
 
 	private void HandleFingerDown(Finger touchedFinger)
@@ -141,6 +143,12 @@ public partial class PlayerTouchMovement : MonoBehaviour
 		}
 
 		return startPosition;
+	}
+
+	public bool ToggleRun()
+	{
+		running = !running;
+		return running;
 	}
 
 	void OnKBMMove(InputAction.CallbackContext ctx)
