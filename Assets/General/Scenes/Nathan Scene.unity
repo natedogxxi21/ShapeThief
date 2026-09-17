@@ -469,7 +469,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4713290183012130295, guid: f834b50eb027a1941ba4403e67816d89, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.18
       objectReference: {fileID: 0}
     - target: {fileID: 4713290183012130295, guid: f834b50eb027a1941ba4403e67816d89, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1776,7 +1776,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670829068}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f88271944324a2b4eb4bf6860e1d9855, type: 3}
   m_Name: 
@@ -1811,6 +1811,10 @@ MonoBehaviour:
   - {fileID: 1590115920441168491, guid: 43a1f3e21c53e794bbf015e0267b731b, type: 3}
   - {fileID: 8851783721970516961, guid: f2189b3aa6d8c8d49b313ca1add18fed, type: 3}
   - {fileID: 3388594364545142373, guid: d911141c318a54f48a74b78a82ea90a0, type: 3}
+  bottomhallways: []
+  tophallways: []
+  lefthallways: []
+  righthallways: []
   closedRoom: []
   rooms: []
 --- !u!4 &670829070
@@ -5710,6 +5714,15 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Kbm Look
       m_Flags: 0
+    m_Flags: 0
+  kbmTest:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: db6859b7-0c3c-4841-913d-d38f1f887ff4
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
     m_Flags: 0
 --- !u!4 &1980144976
 Transform:

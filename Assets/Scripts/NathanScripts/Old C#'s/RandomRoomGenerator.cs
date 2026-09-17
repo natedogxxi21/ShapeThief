@@ -25,6 +25,10 @@ private bool spawned = false;
     // Update is called once per frame
     void Spawn()
     {
+        //we need to create a seperate "void Spawn()" for rooms to spawn hallways instead, and then call void Spawn() for the spawnpoints of those hallways
+        //In order to get more advanced room generation, I am going to need to create a lot of empty game objects within my room prefabs.
+        //I could go more advanced with the tutorial that allows you to change the x and z values of individual rooms but I believe having rooms premade will alieve me of all that stress.
+        
         if(spawned == false)
         {
             if(openingDirection == 1){
