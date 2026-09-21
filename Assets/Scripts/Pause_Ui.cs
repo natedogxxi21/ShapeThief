@@ -34,4 +34,12 @@ public class Pause_Ui : MonoBehaviour
     {
         CloseUpgradeScreen();
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+    }
 }
