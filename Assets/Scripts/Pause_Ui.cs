@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Pause_Ui : MonoBehaviour
 {
@@ -42,4 +43,9 @@ public class Pause_Ui : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
     }
+    public void StartGame()
+    {
+        SceneManager.LoadScene("Main");
+    }
+   
 }
