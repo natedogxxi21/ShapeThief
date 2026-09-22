@@ -3,6 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class Pause_Ui : MonoBehaviour
 {
+
+    private void Start()
+    {
+        InstructionPanel.SetActive(false);
+        MainMenuPanel.SetActive(true);
+    }
     public void OnEnable()
     {
         Time.timeScale = 0f;
@@ -45,7 +51,19 @@ public class Pause_Ui : MonoBehaviour
     }
     public void StartGame()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("Main");
     }
-   
+    public GameObject InstructionPanel;
+    public GameObject MainMenuPanel;
+    public void OpenInstructions()
+    {
+        InstructionPanel.SetActive(true);
+        MainMenuPanel.SetActive(false);
+    }
+    public void CloseInstructions()
+    {
+        InstructionPanel.SetActive(false);
+        MainMenuPanel.SetActive(true);
+    }
 }
