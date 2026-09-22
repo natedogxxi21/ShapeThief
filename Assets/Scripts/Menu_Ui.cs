@@ -8,6 +8,7 @@ public class Pause_Ui : MonoBehaviour
     {
         InstructionPanel.SetActive(false);
         MainMenuPanel.SetActive(true);
+        GameOverPanel.SetActive(false);
     }
     public void OnEnable()
     {
@@ -56,14 +57,19 @@ public class Pause_Ui : MonoBehaviour
     }
     public GameObject InstructionPanel;
     public GameObject MainMenuPanel;
+    public GameObject GameOverPanel;
     public void OpenInstructions()
     {
         InstructionPanel.SetActive(true);
         MainMenuPanel.SetActive(false);
+        GameOverPanel.SetActive(false);
     }
     public void CloseInstructions()
     {
         InstructionPanel.SetActive(false);
         MainMenuPanel.SetActive(true);
+        GameOverPanel.SetActive(false);
     }
+
+    //When timer runs out it opens game over panel 
 }
