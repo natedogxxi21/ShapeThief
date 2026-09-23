@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a9a9d5df9fda4ff38088fd5daccf1d7, type: 3}
+  m_Name: Cup
+  m_EditorClassIdentifier: Assembly-CSharp::Prop
+  propName: Coffee Cup
+  mesh: {fileID: 4176335007228740364, guid: 818df777a71cdbb4cb911e8f253fda84, type: 3}
+  material: {fileID: 2100000, guid: dfc08c90188302847afb04f628582097, type: 2}
+  scale: {x: 90, y: 90, z: 90}

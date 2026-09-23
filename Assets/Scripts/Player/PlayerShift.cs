@@ -27,6 +27,7 @@ public class PlayerShift : MonoBehaviour
 
 	bool shifted;
 	bool shiftTransitioning;
+	Vector3 targetShiftObjectScale;
 	public float ShiftTimer { get; private set; }
 	public float ShiftCooldown { get; private set; }
 	public float ShiftCooldownPercent => ShiftCooldown / shiftCooldownDuration;
@@ -58,12 +59,31 @@ public class PlayerShift : MonoBehaviour
 			ShiftEvent.Invoke();
 			if (!shifted)
 			{
-				shiftMeshCollider.sharedMesh = shiftTarget.Mesh;
-				shiftMeshFilter.mesh = shiftTarget.Mesh;
-				shiftMeshRenderer.material = shiftTarget.Material;
+				shiftMeshCollider.sharedMesh = shiftTarget.prop.mesh;
+				shiftMeshFilter.mesh = shiftTarget.prop.mesh;
+				shiftMeshRenderer.material = shiftTarget.prop.material;
+				targetShiftObjectScale = shiftTarget.prop.scale;
+				HUD.Instance.AddToInventory(shiftTarget.prop);
 			}
 			StartCoroutine(ShiftCoroutine(!shifted));
 		}
+	}
+
+	public bool ShiftInventory(Prop prop)
+	{
+		if (shiftTransitioning || shifted || ShiftCooldown > 0)
+		{ return false; }
+
+		shiftTransitioning = true;
+		ShiftEvent.Invoke();
+		shiftMeshCollider.sharedMesh = prop.mesh;
+		shiftMeshFilter.mesh = prop.mesh;
+		shiftMeshRenderer.material = prop.material;
+		targetShiftObjectScale = prop.scale;
+		HUD.Instance.AddToInventory(prop);
+		StartCoroutine(ShiftCoroutine(!shifted));
+
+		return true;
 	}
 
 	IEnumerator ShiftCoroutine(bool toObject)
@@ -82,7 +102,7 @@ public class PlayerShift : MonoBehaviour
 			float pc = Mathf.Clamp01(p);
 			float shiftProgress = Mathf.Clamp(toObject ? pc : 1 - pc, 0.05f, 1);
 			float baseProgress = Mathf.Clamp(1 - shiftProgress, 0.05f, 1);
-			shiftModelTransform.localScale = new(shiftProgress, shiftProgress, shiftProgress);
+			shiftModelTransform.localScale = targetShiftObjectScale * shiftProgress;
 			baseModel.localScale = new(baseProgress, baseProgress, baseProgress);
 			transform.position = new(transform.position.x, 0, transform.position.z);
 			rb.position = transform.position;

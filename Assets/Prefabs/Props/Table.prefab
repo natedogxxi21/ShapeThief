@@ -47,9 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c58e6df9a2e1423699963c59356acac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShiftObject
-  mesh: {fileID: 3914326965255041974, guid: 4b619285b1ef6479684eec0567350bf5, type: 3}
-  material: {fileID: 2100000, guid: dfc08c90188302847afb04f628582097, type: 2}
-  scale: {x: 1, y: 1, z: 1}
+  prop: {fileID: 11400000, guid: fd27cbd3fd1e84dbc8990bb34092f08f, type: 2}
   highlight: {fileID: 8287527241048176530}
 --- !u!54 &4798128875038902233
 Rigidbody:
@@ -241,7 +239,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8818713001010676764}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 3914326965255041974, guid: 4b619285b1ef6479684eec0567350bf5, type: 3}
 --- !u!23 &8923328754162298569
 MeshRenderer:
   m_ObjectHideFlags: 0

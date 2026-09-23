@@ -4,11 +4,7 @@ using ITISKIRUHERE;
 
 public class ShiftProp : MonoBehaviour
 {
-	[SerializeField] Mesh mesh;
-	public Mesh Mesh { get => mesh; }
-	[SerializeField] Material material;
-	public Material Material { get => material; }
-	public Vector3 scale;
+	public Prop prop;
 
 	[SerializeField] GameObject highlight;
 
@@ -21,11 +17,21 @@ public class ShiftProp : MonoBehaviour
 	public void SetValues()
 	{
 		Transform model = transform.GetChild(0);
-		model.GetComponent<MeshFilter>().mesh = mesh;
-		scale = model.localScale;
+		prop.mesh = model.GetComponent<MeshFilter>().sharedMesh;
+		prop.scale = model.localScale;
 		highlight = transform.GetChild(1).gameObject;
-		highlight.transform.localScale = scale;
-		highlight.GetComponent<MeshFilter>().mesh = mesh;
+		highlight.transform.localScale = prop.scale;
+		highlight.GetComponent<MeshFilter>().mesh = prop.mesh;
+	}
+
+	public void ApplyValues()
+	{
+		Transform model = transform.GetChild(0);
+		model.GetComponent<MeshFilter>().sharedMesh = prop.mesh;
+		model.GetComponent<MeshCollider>().sharedMesh = prop.mesh;
+		model.localScale = prop.scale;
+		highlight = transform.GetChild(1).gameObject;
+		highlight.transform.localScale = prop.scale;
 	}
 
 	public void TryFixHighlight()
@@ -35,7 +41,7 @@ public class ShiftProp : MonoBehaviour
 		if (!highlight.TryGetComponent<MeshFilter>(out var meshFilter)) return;
 
 		Undo.RecordObject(meshFilter, "Fix Highlight Mesh");
-		meshFilter.mesh = Mesh;
+		meshFilter.mesh = prop.mesh;
 		highlight.GetComponent<AdvancedOutline>().RefreshRenderers();
 	}
 }
@@ -59,6 +65,15 @@ public class ShiftPropEditor : Editor
 			}
 		}
 
+		if (GUILayout.Button("Apply Values"))
+		{
+			foreach(Object obj in targets)
+			{
+				ShiftProp prop = (ShiftProp)obj;
+				prop.ApplyValues();
+			}
+		}
+
 		if (GUILayout.Button("Try Fix Highlight"))
 		{
 			foreach (Object obj in targets)
@@ -78,6 +93,7 @@ public class ShiftPropEditor : Editor
 		}
 
 		EditorGUILayout.EndHorizontal();
+		EditorGUILayout.LabelField("Set the properties of the child model for \"Set Values\" to work");
 	}
 #endif
 }

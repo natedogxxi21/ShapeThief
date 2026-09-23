@@ -53,6 +53,9 @@ public partial class PlayerTouchMovement : MonoBehaviour
 
 	private void HandleFingerDown(Finger touchedFinger)
 	{
+		if (HUD.Instance.IsScreenPosReserved(touchedFinger.currentTouch.screenPosition))
+		{ return; }
+
 		// Left half of screen
 		if (touchedFinger.screenPosition.x <= Screen.width / 2f)
 		{
