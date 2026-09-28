@@ -9,6 +9,7 @@ public class Pause_Ui : MonoBehaviour
         InstructionPanel.SetActive(false);
         MainMenuPanel.SetActive(true);
         GameOverPanel.SetActive(false);
+        Time.timeScale = 1f;
     }
     public void OnEnable()
     {

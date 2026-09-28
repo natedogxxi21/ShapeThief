@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class CountdownTimer : MonoBehaviour
 {
@@ -47,5 +48,20 @@ public class CountdownTimer : MonoBehaviour
         GameOverPanel.SetActive(true);
 
         Time.timeScale = 0f;
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 }
