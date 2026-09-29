@@ -5636,7 +5636,7 @@ MonoBehaviour:
       m_Flags: 0
     m_Flags: 0
   kbmTest:
-    m_Name: 
+    m_Name: Kbm Test
     m_Type: 0
     m_ExpectedControlType: 
     m_Id: db6859b7-0c3c-4841-913d-d38f1f887ff4
@@ -5653,7 +5653,7 @@ Transform:
   m_GameObject: {fileID: 1980144972}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.101, z: 0}
+  m_LocalPosition: {x: 15.5, y: 0.101, z: 11.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

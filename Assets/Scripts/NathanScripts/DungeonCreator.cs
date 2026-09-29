@@ -134,20 +134,20 @@ private void CreateWalls(GameObject wallParent)
             var wallPosition = new Vector3(row, 0, bottomLeftV.z);
             AddWallPositionToList(wallPosition, possibleWallHorizontalPosition, possibleDoorHorizontalPosition);
         }
-        for(int row = 0; row < (int)topRightCorner.x; row++)
+        for(int row = (int)topLeftV.x; row < (int)topRightV.x; row++)
         {
-            var wallPosition = new Vector3(row,0, topRightV.z);
+            var wallPosition = new Vector3(row, 0, topRightV.z);
             AddWallPositionToList(wallPosition, possibleWallHorizontalPosition, possibleDoorHorizontalPosition);
         }
         for (int col = (int)bottomLeftV.z; col < (int)topLeftV.z; col++)
         {
             var wallPosition = new Vector3(bottomLeftV.x, 0, col);
-            AddWallPositionToList(wallPosition, possibleWallVerticalPosition, possibleDoorHorizontalPosition);
+            AddWallPositionToList(wallPosition, possibleWallVerticalPosition, possibleDoorVerticalPosition);
         }
         for (int col = (int)bottomRightV.z; col < (int)topRightV.z; col++)
         {
             var wallPosition = new Vector3(bottomRightV.x, 0, col);
-            AddWallPositionToList(wallPosition, possibleWallVerticalPosition, possibleDoorHorizontalPosition);
+            AddWallPositionToList(wallPosition, possibleWallVerticalPosition, possibleDoorVerticalPosition);
         }
     }
 
