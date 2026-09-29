@@ -876,9 +876,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5867333322195691873, guid: f72dd3920f54d2d41969aa2725498e52, type: 3}
+      propertyPath: m_fontSize
+      value: 31.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 8861208233909084706, guid: f72dd3920f54d2d41969aa2725498e52, type: 3}
+      propertyPath: m_fontSize
+      value: 31.65
+      objectReference: {fileID: 0}
     - target: {fileID: 8939822902661460195, guid: f72dd3920f54d2d41969aa2725498e52, type: 3}
       propertyPath: m_Name
       value: Upgrade_Panel 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8939822902661460195, guid: f72dd3920f54d2d41969aa2725498e52, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
