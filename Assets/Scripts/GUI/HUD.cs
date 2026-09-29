@@ -37,6 +37,7 @@ public partial class HUD : MonoBehaviour
 		runButton.button.onClick.AddListener(RunButtonPressed);
 		playerShift.ShiftEvent.AddListener(OnShiftEvent);
 		PlayerStats.OnMoneyChanged.AddListener(OnMoneyChanged);
+		OnMoneyChanged(PlayerStats.Money, PlayerStats.Money);
 	}
 
 	void Update()

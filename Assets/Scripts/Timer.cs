@@ -15,6 +15,7 @@ public class CountdownTimer : MonoBehaviour
     private void Start()
     {
         timerIsRunning = true;
+        DisplayTime(timeRemaining);
     }
 
     private void Update()
