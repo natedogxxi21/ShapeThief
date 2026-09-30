@@ -9,7 +9,8 @@ public class Exit_Level : MonoBehaviour
     {
         Debug.Log("Something entered the exit pad!");
         Debug.Log("Tag: " + other.gameObject.tag);
-        if (!other.CompareTag("Player"))
+       
+        if (!other.transform.root.CompareTag("Player"))
         return;
 
         if (PlayerStats.Money >= requiredMoney)
