@@ -11,14 +11,18 @@ public class GuardBehaviour : MonoBehaviour
 		Post, // Standing and turning head
 		Wander, // Randomly navigate around
 		Investigate, // Walk towards a point
-		Chase // Run towards a point
+		Chase, // Run towards a point
+		Return // Walking back to spawn point
 	}
 
-	static readonly float[] stateTickDurations = { 10f, 4f, .2f, .2f, .2f };
+	static readonly float[] stateTickDurations = { 10f, 4f, .2f, .2f, .2f, 1f };
+
 
 	GuardController controller;
+	[SerializeField] GuardVision vision;
 	GuardState state = GuardState.Idle;
 	Timer stateTickTimer;
+	Vector3 spawnPoint;
 
 	Vector3 postPoint;
 	float postDirection;
@@ -26,12 +30,19 @@ public class GuardBehaviour : MonoBehaviour
 
 	[SerializeField] Timer wanderTimer;
 
+	GameObject seenPlayer = null;
 	Vector3 investigatePoint;
 
-	void Awake()
+	bool chaseInvestigating = false;
+	[SerializeField] Timer chaseInvestigateTimer;
+
+	void Start()
 	{
 		controller = GetComponent<GuardController>();
 		Wander();
+		spawnPoint = transform.position;
+		vision.onPlayerSeen.AddListener(OnPlayerSeen);
+		vision.onPlayerLost.AddListener(OnPlayerLost);
 	}
 
 	void Update()
@@ -47,7 +58,6 @@ public class GuardBehaviour : MonoBehaviour
 		stateTickTimer = stateTickDurations[(int)state];
 		switch (state)
 		{
-
 			case GuardState.Post:
 				postFacingLeft = !postFacingLeft;
 				break;
@@ -68,7 +78,32 @@ public class GuardBehaviour : MonoBehaviour
 				break;
 
 			case GuardState.Chase:
+				if (seenPlayer != null)
+				{
+					investigatePoint = seenPlayer.transform.position;
+				}
+
 				controller.RunTo(investigatePoint);
+
+				if (!controller.traveling) // reached the player or last seen location
+				{
+					if (chaseInvestigating)
+					{
+						if (chaseInvestigateTimer.Completed)
+						{
+							Return();
+						}
+					}
+					else // not yet investigating
+					{
+						chaseInvestigateTimer = 3;
+						chaseInvestigating = true;
+					}
+				}
+				break;
+
+			case GuardState.Return:
+				controller.WalkTo(spawnPoint);
 				break;
 		}
 	}
@@ -85,12 +120,23 @@ public class GuardBehaviour : MonoBehaviour
 		SetState(GuardState.Wander);
 		wanderTimer = 3f;
 	}
+	public void Investigate() => SetState(GuardState.Investigate);
+	public void Chase() => SetState(GuardState.Chase);
+	public void Return() => SetState(GuardState.Return);
 
 	void SetState(GuardState newState)
 	{
 		state = newState;
 		stateTickTimer = stateTickDurations[(int)newState];
 	}
+
+	void OnPlayerSeen(GameObject player)
+	{
+		seenPlayer = player;
+		Chase();
+	}
+
+	void OnPlayerLost(GameObject player) => seenPlayer = null;
 
 	Vector3 GetWanderPoint()
 	{

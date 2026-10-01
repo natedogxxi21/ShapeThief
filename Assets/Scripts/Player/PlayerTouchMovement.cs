@@ -6,8 +6,7 @@ using Unity.Scripting.LifecycleManagement;
 
 public partial class PlayerTouchMovement : MonoBehaviour
 {
-	[AutoStaticsCleanup] public static PlayerTouchMovement example;
-	[SerializeField] FloatingJoystick joystick;
+	[AutoStaticsCleanup] public static PlayerTouchMovement Instance;
 
 	[SerializeField] Rigidbody rb;
 	[SerializeField] Transform model;
@@ -35,8 +34,9 @@ public partial class PlayerTouchMovement : MonoBehaviour
 	float targetAngle = 0;
 	const float turnSpeed = 10;
 
-	void Start()
+	void Awake()
 	{
+		Instance = this;
 		Application.targetFrameRate = 120;
 	}
 
@@ -63,8 +63,8 @@ public partial class PlayerTouchMovement : MonoBehaviour
 			{
 				movementFinger = touchedFinger;
 				moveInput = Vector2.zero;
-				joystick.gameObject.SetActive(true);
-				joystick.rectTransform.anchoredPosition = ClampStartPosition(touchedFinger.screenPosition);
+				HUD.Instance.moveJoystick.gameObject.SetActive(true);
+				HUD.Instance.moveJoystick.rectTransform.anchoredPosition = ClampStartPosition(touchedFinger.screenPosition);
 			}
 		}
 		// Right half
@@ -80,20 +80,20 @@ public partial class PlayerTouchMovement : MonoBehaviour
 		if (movedFinger == movementFinger)
 		{
 			Vector2 knobPosition;
-			float maxMovement = joystick.size.x / 2f;
+			float maxMovement = HUD.Instance.moveJoystick.size.x / 2f;
 			ETouch.Touch currentTouch = movedFinger.currentTouch;
-			float distance = Vector2.Distance(currentTouch.screenPosition, joystick.rectTransform.anchoredPosition);
+			float distance = Vector2.Distance(currentTouch.screenPosition, HUD.Instance.moveJoystick.rectTransform.anchoredPosition);
 
 			if (distance > maxMovement)
 			{
-				knobPosition = (currentTouch.screenPosition - joystick.rectTransform.anchoredPosition).normalized * maxMovement;
+				knobPosition = (currentTouch.screenPosition - HUD.Instance.moveJoystick.rectTransform.anchoredPosition).normalized * maxMovement;
 			}
 			else
 			{
-				knobPosition = currentTouch.screenPosition - joystick.rectTransform.anchoredPosition;
+				knobPosition = currentTouch.screenPosition - HUD.Instance.moveJoystick.rectTransform.anchoredPosition;
 			}
 
-			joystick.knob.anchoredPosition = knobPosition;
+			HUD.Instance.moveJoystick.knob.anchoredPosition = knobPosition;
 			moveInput = knobPosition / maxMovement;
 
 			// Make model face moving direction
@@ -117,8 +117,8 @@ public partial class PlayerTouchMovement : MonoBehaviour
 		if (raisedFinger == movementFinger)
 		{
 			movementFinger = null;
-			joystick.knob.anchoredPosition = Vector2.zero;
-			joystick.gameObject.SetActive(false);
+			HUD.Instance.moveJoystick.knob.anchoredPosition = Vector2.zero;
+			HUD.Instance.moveJoystick.gameObject.SetActive(false);
 			moveInput = Vector2.zero;
 		}
 
@@ -131,18 +131,18 @@ public partial class PlayerTouchMovement : MonoBehaviour
 
 	Vector2 ClampStartPosition(Vector2 startPosition)
 	{
-		if (startPosition.x < joystick.size.x / 2)
+		if (startPosition.x < HUD.Instance.moveJoystick.size.x / 2)
 		{
-			startPosition.x = joystick.size.x / 2;
+			startPosition.x = HUD.Instance.moveJoystick.size.x / 2;
 		}
 
-		if (startPosition.y < joystick.size.y / 2)
+		if (startPosition.y < HUD.Instance.moveJoystick.size.y / 2)
 		{
-			startPosition.y = joystick.size.y / 2;
+			startPosition.y = HUD.Instance.moveJoystick.size.y / 2;
 		}
-		else if (startPosition.y > Screen.height - joystick.size.y / 2)
+		else if (startPosition.y > Screen.height - HUD.Instance.moveJoystick.size.y / 2)
 		{
-			startPosition.y = Screen.height - joystick.size.y / 2;
+			startPosition.y = Screen.height - HUD.Instance.moveJoystick.size.y / 2;
 		}
 
 		return startPosition;

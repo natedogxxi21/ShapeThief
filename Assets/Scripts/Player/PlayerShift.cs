@@ -3,9 +3,12 @@ using UnityEngine.InputSystem.EnhancedTouch;
 using ETouch = UnityEngine.InputSystem.EnhancedTouch;
 using System.Collections;
 using UnityEngine.Events;
+using Unity.Scripting.LifecycleManagement;
 
-public class PlayerShift : MonoBehaviour
+public partial class PlayerShift : MonoBehaviour
 {
+	[AutoStaticsCleanup] public static PlayerShift Instance;
+
 	[SerializeField] Rigidbody rb;
 	ShiftProp possibleShiftTarget;
 	ShiftProp shiftTarget;
@@ -33,6 +36,11 @@ public class PlayerShift : MonoBehaviour
 	public float ShiftCooldownPercent => ShiftCooldown / shiftCooldownDuration;
 
 	Finger castingFinger = null;
+
+	void Awake()
+	{
+		Instance = this;
+	}
 
 	void Update()
 	{

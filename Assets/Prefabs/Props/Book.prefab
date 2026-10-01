@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 70, y: 70, z: 70}
+  m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6480295684339561245}
@@ -112,7 +112,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: -66333826979096818, guid: bcc81f0d3b8239041b0602442a2d0978, type: 3}
+  m_Mesh: {fileID: -66333826979096818, guid: 818df777a71cdbb4cb911e8f253fda84, type: 3}
 --- !u!1 &3130328635581445890
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,7 +142,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 70, y: 70, z: 70}
+  m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6480295684339561245}
@@ -181,10 +181,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: dfc08c90188302847afb04f628582097, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -284,9 +280,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c58e6df9a2e1423699963c59356acac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShiftObject
-  mesh: {fileID: -66333826979096818, guid: 818df777a71cdbb4cb911e8f253fda84, type: 3}
-  material: {fileID: 2100000, guid: dfc08c90188302847afb04f628582097, type: 2}
-  scale: {x: 70, y: 70, z: 70}
   prop: {fileID: 11400000, guid: f444edd41c06f4ee58809bac8286234c, type: 2}
   highlight: {fileID: 3130328635581445890}
 --- !u!54 &8100674911876346722

@@ -1484,8 +1484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6f609e9027f6434e99b2a913b6b37e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HUD
-  playerMove: {fileID: 0}
-  playerShift: {fileID: 0}
+  moveJoystick: {fileID: 3121711347887008719}
   shiftButton: {fileID: 2632821848019586169}
   runButton: {fileID: 7750259187803116554}
   moneyCounterText: {fileID: 8968438791746746977}

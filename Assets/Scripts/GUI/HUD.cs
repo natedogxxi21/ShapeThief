@@ -8,8 +8,7 @@ using UnityEngine.UI;
 public partial class HUD : MonoBehaviour
 {
 	[AutoStaticsCleanup] public static HUD Instance;
-	[SerializeField] PlayerTouchMovement playerMove;
-	[SerializeField] PlayerShift playerShift;
+	public FloatingJoystick moveJoystick;
 	[SerializeField] ScreenButton shiftButton;
 	[SerializeField] ScreenButton runButton;
 	[SerializeField] TMP_Text moneyCounterText;
@@ -35,22 +34,22 @@ public partial class HUD : MonoBehaviour
 		inventoryButton.button.onClick.AddListener(InventoryButtonPressed);
 		inventoryCloseButton.onClick.AddListener(() => { SetInventoryOpen(false); });
 		runButton.button.onClick.AddListener(RunButtonPressed);
-		playerShift.ShiftEvent.AddListener(OnShiftEvent);
+		PlayerShift.Instance.ShiftEvent.AddListener(OnShiftEvent);
 		PlayerStats.OnMoneyChanged.AddListener(OnMoneyChanged);
 		OnMoneyChanged(PlayerStats.Money, PlayerStats.Money);
 	}
 
 	void Update()
 	{
-		if (playerShift.ShiftTimer > 0)
+		if (PlayerShift.Instance.ShiftTimer > 0)
 		{
-			shiftButton.label.text = playerShift.ShiftTimer.ToString("F1");
+			shiftButton.label.text = PlayerShift.Instance.ShiftTimer.ToString("F1");
 			shiftButton.image.fillAmount = 1;
 		}
-		else if (playerShift.ShiftCooldown > 0)
+		else if (PlayerShift.Instance.ShiftCooldown > 0)
 		{
 			shiftButton.label.text = "Shift";
-			shiftButton.image.fillAmount = 1 - playerShift.ShiftCooldownPercent;
+			shiftButton.image.fillAmount = 1 - PlayerShift.Instance.ShiftCooldownPercent;
 		}
 		else
 		{
@@ -110,7 +109,7 @@ public partial class HUD : MonoBehaviour
 		moneyCounterText.text = $"${money}";
 	}
 
-	void OnShiftEvent() => SetShiftAvailable(playerShift.ShiftAvailable);
+	void OnShiftEvent() => SetShiftAvailable(PlayerShift.Instance.ShiftAvailable);
 
 	public void SetShiftAvailable(bool ready)
 	{
@@ -118,7 +117,7 @@ public partial class HUD : MonoBehaviour
 		if (ready) { FlashShiftButton(); }
 	}
 
-	public void ShiftButtonPressed() => playerShift.Shift();
+	public void ShiftButtonPressed() => PlayerShift.Instance.Shift();
 
 	public void InventoryButtonPressed() => SetInventoryOpen(!inventoryOpen);
 	void SetInventoryOpen(bool open)
@@ -129,7 +128,7 @@ public partial class HUD : MonoBehaviour
 
 	public void RunButtonPressed()
 	{
-		bool running = playerMove.ToggleRun();
+		bool running = PlayerTouchMovement.Instance.ToggleRun();
 		runButton.label.text = running ? "Walk" : "Run";
 	}
 
@@ -147,7 +146,7 @@ public partial class HUD : MonoBehaviour
 
 	void ShiftToInventoryProp(Prop prop)
 	{
-		if (playerShift.ShiftInventory(prop))
+		if (PlayerShift.Instance.ShiftInventory(prop))
 		{
 			SetInventoryOpen(false);
 		}
