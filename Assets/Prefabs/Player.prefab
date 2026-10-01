@@ -112,7 +112,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00552169c8dc74971a0ca5bf5ba1df1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTouchMovement
-  joystick: {fileID: 0}
   rb: {fileID: 8117216087165049330}
   model: {fileID: 3351867066733618685}
   camYaw: {fileID: 8556929302710224108}
@@ -241,9 +240,9 @@ MonoBehaviour:
   shiftObjMask:
     serializedVersion: 2
     m_Bits: 64
-  shiftTransitionLength: 0.5
+  shiftTransitionLength: 1
   shiftDuration: 10
-  shiftCooldownDuration: 1
+  shiftCooldownDuration: 5
 --- !u!54 &8117216087165049330
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -8,17 +8,33 @@ public class GuardVision : MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
 	{
-		if (other.attachedRigidbody && other.attachedRigidbody.gameObject.CompareTag("Player"))
+		if (other.attachedRigidbody 
+		&& other.attachedRigidbody.gameObject.CompareTag("Player"))
 		{
-			onPlayerSeen.Invoke(other.attachedRigidbody.gameObject);
+			GameObject playerGO = other.attachedRigidbody.gameObject;
+			if (playerGO.TryGetComponent(out PlayerShift playerShift))
+			{
+				if (!playerShift.shifted)
+				{
+					onPlayerSeen.Invoke(playerGO);
+				}
+			}
 		}
 	}
 
 	void OnTriggerExit(Collider other)
 	{
-		if (other.attachedRigidbody && other.attachedRigidbody.gameObject.CompareTag("Player"))
+		if (other.attachedRigidbody
+		&& other.attachedRigidbody.gameObject.CompareTag("Player"))
 		{
-			onPlayerLost.Invoke(other.attachedRigidbody.gameObject);
+			GameObject playerGO = other.attachedRigidbody.gameObject;
+			if (playerGO.TryGetComponent(out PlayerShift playerShift))
+			{
+				if (!playerShift.shifted)
+				{
+					onPlayerLost.Invoke(playerGO);
+				}
+			}
 		}
 	}
 }

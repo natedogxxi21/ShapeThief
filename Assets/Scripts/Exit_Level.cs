@@ -5,7 +5,7 @@ public class Exit_Level : MonoBehaviour
 {
     [SerializeField] int requiredMoney = 10;
     [SerializeField] string nextSceneName;
-    public TextMeshProUGUI objectiveText;
+    public TMP_Text objectiveText;
 
     private void OnTriggerEnter(Collider other)
     {

@@ -28,7 +28,7 @@ public partial class PlayerShift : MonoBehaviour
 	[SerializeField] float shiftDuration;
 	[SerializeField] float shiftCooldownDuration;
 
-	bool shifted;
+	public bool shifted { get; private set; }
 	bool shiftTransitioning;
 	Vector3 targetShiftObjectScale;
 	public float ShiftTimer { get; private set; }
