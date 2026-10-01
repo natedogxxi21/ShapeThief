@@ -17,7 +17,6 @@ public class GuardBehaviour : MonoBehaviour
 
 	static readonly float[] stateTickDurations = { 10f, 4f, .2f, .2f, .2f, 1f };
 
-
 	GuardController controller;
 	[SerializeField] GuardVision vision;
 	GuardState state = GuardState.Idle;
