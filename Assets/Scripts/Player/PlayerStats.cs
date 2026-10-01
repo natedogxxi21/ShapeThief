@@ -17,4 +17,6 @@ public partial class PlayerStats : MonoBehaviour
 		Money += deltaMoney;
 		OnMoneyChanged.Invoke(prev, Money);
 	}
+
+	public static void ResetMoney() => Money = 0;
 }
