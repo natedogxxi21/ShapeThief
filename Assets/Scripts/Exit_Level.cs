@@ -1,17 +1,19 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class Exit_Level : MonoBehaviour
 {
     [SerializeField] int requiredMoney = 10;
     [SerializeField] string nextSceneName;
+    public TextMeshProUGUI objectiveText;
 
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Something entered the exit pad!");
         Debug.Log("Tag: " + other.gameObject.tag);
-       
+
         if (!other.transform.root.CompareTag("Player"))
-        return;
+            return;
 
         if (PlayerStats.Money >= requiredMoney)
         {
@@ -20,6 +22,12 @@ public class Exit_Level : MonoBehaviour
         else
         {
             Debug.Log("You need" + requiredMoney + " money to exit");
+            objectiveText.text = "You still need $" + (requiredMoney - PlayerStats.Money) + " more before you can leave";
+            objectiveText.gameObject.SetActive(true);
         }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        objectiveText.gameObject.SetActive(false);
     }
 }
