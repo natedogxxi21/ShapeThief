@@ -15,4 +15,4 @@ MonoBehaviour:
   propName: Chair
   mesh: {fileID: -6264831526926562434, guid: 818df777a71cdbb4cb911e8f253fda84, type: 3}
   material: {fileID: 2100000, guid: dfc08c90188302847afb04f628582097, type: 2}
-  scale: {x: 0.7, y: 0.7, z: 0.7}
+  scale: {x: 5, y: 5, z: 5}

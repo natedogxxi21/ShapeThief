@@ -15,4 +15,4 @@ MonoBehaviour:
   propName: Coffee Cup
   mesh: {fileID: 4176335007228740364, guid: 818df777a71cdbb4cb911e8f253fda84, type: 3}
   material: {fileID: 2100000, guid: dfc08c90188302847afb04f628582097, type: 2}
-  scale: {x: 90, y: 90, z: 90}
+  scale: {x: 9, y: 9, z: 9}

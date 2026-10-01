@@ -15,4 +15,4 @@ MonoBehaviour:
   propName: Mug
   mesh: {fileID: -7219886339314900476, guid: 818df777a71cdbb4cb911e8f253fda84, type: 3}
   material: {fileID: 2100000, guid: dfc08c90188302847afb04f628582097, type: 2}
-  scale: {x: 0.65, y: 0.65, z: 0.65}
+  scale: {x: 7, y: 7, z: 7}
