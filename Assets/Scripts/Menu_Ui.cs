@@ -54,7 +54,7 @@ public class Pause_Ui : MonoBehaviour
     public void StartGame()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("Tutorial Scene");
     }
     public GameObject InstructionPanel;
     public GameObject MainMenuPanel;
