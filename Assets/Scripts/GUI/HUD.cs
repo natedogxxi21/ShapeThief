@@ -148,6 +148,7 @@ public partial class HUD : MonoBehaviour
 	{
 		if (PlayerShift.Instance.ShiftInventory(prop))
 		{
+			inventory.Remove(prop);
 			SetInventoryOpen(false);
 		}
 	}
