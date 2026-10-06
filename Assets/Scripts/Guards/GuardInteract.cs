@@ -7,7 +7,7 @@ public class GuardInteract : MonoBehaviour
 	{
 		if (collision.gameObject.CompareTag("Player"))
 		{
-			SceneManager.LoadScene("Sabastian_Scene");
+			SceneManager.LoadScene("GameOver");
 		}
 	}
 }
