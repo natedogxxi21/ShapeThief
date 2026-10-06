@@ -12,8 +12,14 @@ public class CountdownTimer : MonoBehaviour
     public TextMeshProUGUI timerText;
     public GameObject GameOverPanel;
 
+    [Header("Guard Settings")]
+    public GameObject player;
+
+    private GuardBehaviour[] guards;
     private void Start()
     {
+        guards = FindObjectsByType<GuardBehaviour>();
+
         timerIsRunning = true;
         DisplayTime(timeRemaining);
     }
@@ -32,7 +38,7 @@ public class CountdownTimer : MonoBehaviour
                 Debug.Log("You Got Caught");
                 timeRemaining = 0;
                 timerIsRunning = false;
-                TriggerGameOver();
+                AlertAllGuards();
             }
         }
     }
@@ -44,12 +50,21 @@ public class CountdownTimer : MonoBehaviour
         timerText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
     }
 
-    void TriggerGameOver()
+    void AlertAllGuards()
+    {
+        foreach (GuardBehaviour guard in guards)
+        {
+            guard.Chase(player);
+        }
+            
+    }
+   /* void TriggerGameOver()
     {
         GameOverPanel.SetActive(true);
 
         Time.timeScale = 0f;
     }
+   */
 
     public void RestartGame()
     {

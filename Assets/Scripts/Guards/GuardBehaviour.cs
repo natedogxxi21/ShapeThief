@@ -121,6 +121,13 @@ public class GuardBehaviour : MonoBehaviour
 	}
 	public void Investigate() => SetState(GuardState.Investigate);
 	public void Chase() => SetState(GuardState.Chase);
+
+	public void Chase(GameObject player)
+	{
+		seenPlayer = player;
+		chaseInvestigating = false;
+		Chase();
+	}
 	public void Return() => SetState(GuardState.Return);
 
 	void SetState(GuardState newState)
