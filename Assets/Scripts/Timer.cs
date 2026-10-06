@@ -31,6 +31,7 @@ public class CountdownTimer : MonoBehaviour
             if (timeRemaining > 0)
             {
                 timeRemaining -= Time.deltaTime;
+                timeRemaining = Mathf.Max(0f, timeRemaining);
                 DisplayTime(timeRemaining);
             }
             else
