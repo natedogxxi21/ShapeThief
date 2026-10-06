@@ -12,9 +12,6 @@ public class CountdownTimer : MonoBehaviour
     public TextMeshProUGUI timerText;
     public GameObject GameOverPanel;
 
-    [Header("Guard Settings")]
-    public GameObject player;
-
     private GuardBehaviour[] guards;
     private void Start()
     {
@@ -55,7 +52,7 @@ public class CountdownTimer : MonoBehaviour
     {
         foreach (GuardBehaviour guard in guards)
         {
-            guard.Chase(player);
+            guard.Chase(PlayerShift.Instance.gameObject);
         }
             
     }

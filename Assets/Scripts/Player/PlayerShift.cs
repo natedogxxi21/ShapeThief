@@ -19,7 +19,7 @@ public partial class PlayerShift : MonoBehaviour
 	[SerializeField] MeshCollider shiftMeshCollider;
 	[SerializeField] LayerMask shiftObjMask;
 
-	public UnityEvent ShiftEvent { get; private set; } = new();
+	public UnityEvent OnShift { get; private set; } = new();
 	public bool ShiftAvailable => !shiftTransitioning &&
 						  (shiftTarget != null || shifted) &&
 											ShiftCooldown <= 0;
@@ -55,7 +55,7 @@ public partial class PlayerShift : MonoBehaviour
 		if (ShiftCooldown > 0)
 		{
 			ShiftCooldown -= Time.deltaTime;
-			ShiftEvent.Invoke();
+			OnShift.Invoke();
 		}
 	}
 
@@ -64,7 +64,7 @@ public partial class PlayerShift : MonoBehaviour
 		if (ShiftAvailable)
 		{
 			shiftTransitioning = true;
-			ShiftEvent.Invoke();
+			OnShift.Invoke();
 			if (!shifted)
 			{
 				shiftMeshCollider.sharedMesh = shiftTarget.prop.mesh;
@@ -83,7 +83,7 @@ public partial class PlayerShift : MonoBehaviour
 		{ return false; }
 
 		shiftTransitioning = true;
-		ShiftEvent.Invoke();
+		OnShift.Invoke();
 		shiftMeshCollider.sharedMesh = prop.mesh;
 		shiftMeshFilter.mesh = prop.mesh;
 		shiftMeshRenderer.material = prop.material;
@@ -128,7 +128,7 @@ public partial class PlayerShift : MonoBehaviour
 		shiftTransitioning = false;
 		shifted = toObject;
 
-		ShiftEvent.Invoke();
+		OnShift.Invoke();
 	}
 
 	void HandleFingerDown(Finger finger)
@@ -155,7 +155,7 @@ public partial class PlayerShift : MonoBehaviour
 			possibleShiftTarget = null;
 			if (shiftTarget != null) { shiftTarget.Highlight(false); }
 			shiftTarget = null;
-			ShiftEvent.Invoke();
+			OnShift.Invoke();
 		}
 	}
 
@@ -173,7 +173,7 @@ public partial class PlayerShift : MonoBehaviour
 					{
 						if (shiftTarget != null) { shiftTarget.Highlight(false); }
 						shiftTarget = possibleShiftTarget;
-						ShiftEvent.Invoke();
+						OnShift.Invoke();
 						shiftTarget.Highlight(true);
 					}
 				}

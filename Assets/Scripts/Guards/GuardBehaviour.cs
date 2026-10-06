@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -19,7 +20,8 @@ public class GuardBehaviour : MonoBehaviour
 
 	GuardController controller;
 	[SerializeField] GuardVision vision;
-	GuardState state = GuardState.Idle;
+	[SerializeField] GuardState state = GuardState.Idle;
+	[SerializeField] GuardState defaultState;
 	Timer stateTickTimer;
 	Vector3 spawnPoint;
 
@@ -27,6 +29,7 @@ public class GuardBehaviour : MonoBehaviour
 	float postDirection;
 	bool postFacingLeft;
 
+	[Space]
 	[SerializeField] Timer wanderTimer;
 
 	GameObject seenPlayer = null;
@@ -35,9 +38,17 @@ public class GuardBehaviour : MonoBehaviour
 	bool chaseInvestigating = false;
 	[SerializeField] Timer chaseInvestigateTimer;
 
-	void Start()
+	void Start() => StartCoroutine(WaitToLoadCoroutine());
+
+	IEnumerator WaitToLoadCoroutine()
 	{
+		while (GuardNavMesh.Instance == null || !GuardNavMesh.Instance.Initialized)
+		{
+			yield return null;
+		}
+
 		controller = GetComponent<GuardController>();
+		controller.enabled = true;
 		Wander();
 		spawnPoint = transform.position;
 		vision.onPlayerSeen.AddListener(OnPlayerSeen);
@@ -62,7 +73,7 @@ public class GuardBehaviour : MonoBehaviour
 				break;
 
 			case GuardState.Wander:
-				if (controller.traveling) { wanderTimer.Pause(); }
+				if (controller.Traveling) { wanderTimer.Pause(); }
 				else { wanderTimer.Resume(); }
 
 				if (wanderTimer.Completed)
@@ -84,7 +95,7 @@ public class GuardBehaviour : MonoBehaviour
 
 				controller.RunTo(investigatePoint);
 
-				if (!controller.traveling) // reached the player or last seen location
+				if (!controller.Traveling) // reached the player or last seen location
 				{
 					if (chaseInvestigating)
 					{
@@ -103,11 +114,37 @@ public class GuardBehaviour : MonoBehaviour
 
 			case GuardState.Return:
 				controller.WalkTo(spawnPoint);
+				if (controller.RemainingDistance < 0.3f)
+				{
+					switch (defaultState)
+					{
+						case GuardState.Idle:
+							Idle();
+							break;
+
+						case GuardState.Post:
+							Post(postPoint, postDirection);
+							break;
+
+						case GuardState.Wander:
+							Wander();
+							break;
+
+						default:
+							throw new Exception("Cannot accept Guard State " + defaultState + " as default state");
+					}
+				}
 				break;
 		}
 	}
 
 	public void Idle() => SetState(GuardState.Idle);
+	public void Post(Vector3 position, float direction)
+	{
+		postPoint = position;
+		postDirection = direction;
+		SetState(GuardState.Post);
+	}
 	public void Post(Vector3 position, Vector3 direction)
 	{
 		postPoint = position;
@@ -121,7 +158,6 @@ public class GuardBehaviour : MonoBehaviour
 	}
 	public void Investigate() => SetState(GuardState.Investigate);
 	public void Chase() => SetState(GuardState.Chase);
-
 	public void Chase(GameObject player)
 	{
 		seenPlayer = player;

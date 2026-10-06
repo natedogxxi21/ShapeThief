@@ -15,7 +15,9 @@ public partial class PlayerTouchMovement : MonoBehaviour
 	[SerializeField] float speed;
 	[SerializeField] float runSpeed;
 	[SerializeField] float lookSensitivity = 1;
-	bool running = false;
+	[SerializeField] float maxStamina;
+	[SerializeField] float staminaRecover;
+	[SerializeField] float runStaminaDrain;
 
 	[Header("Debug Keyboard & Mouse Controls")]
 	[SerializeField] InputAction kbmMove;
@@ -33,12 +35,16 @@ public partial class PlayerTouchMovement : MonoBehaviour
 	float pitch = 45;
 	float targetAngle = 0;
 	const float turnSpeed = 10;
+	public bool Running { get; private set; }
+	float stamina;
+	public float StaminaPercent => stamina / maxStamina;
 
 	void Awake()
 	{
 		Instance = this;
 		PlayerStats.ResetMoney();
 		Application.targetFrameRate = 120;
+		stamina = maxStamina;
 	}
 
 	void Update()
@@ -49,7 +55,20 @@ public partial class PlayerTouchMovement : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		rb.linearVelocity = (running ? runSpeed : speed) * ((moveInput.x * camYaw.right) + (moveInput.y * camYaw.forward));
+		rb.linearVelocity = (Running ? runSpeed : speed) * ((moveInput.x * camYaw.right) + (moveInput.y * camYaw.forward));
+
+		if (Running && stamina > 0)
+		{
+			if ((stamina -= runStaminaDrain * Time.fixedDeltaTime) <= 0)
+			{
+				ToggleRun();
+				stamina = 0;
+			}
+		}
+		else if (!Running)
+		{
+			stamina = Mathf.Min(stamina + (staminaRecover * Time.fixedDeltaTime), maxStamina);
+		}
 	}
 
 	private void HandleFingerDown(Finger touchedFinger)
@@ -151,8 +170,8 @@ public partial class PlayerTouchMovement : MonoBehaviour
 
 	public bool ToggleRun()
 	{
-		running = !running;
-		return running;
+		Running = !Running;
+		return Running;
 	}
 
 	void OnKBMMove(InputAction.CallbackContext ctx)

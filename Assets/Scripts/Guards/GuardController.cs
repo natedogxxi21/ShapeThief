@@ -9,9 +9,14 @@ public class GuardController : MonoBehaviour
 	[SerializeField] float walkSpeed;
 	[SerializeField] float runSpeed;
 
-	public bool traveling => navAgent.remainingDistance > 0.3f;
+	public bool Traveling => navAgent.velocity.sqrMagnitude > 0.3f;
+	public float RemainingDistance => navAgent.remainingDistance;
 
-	void Awake() => navAgent = GetComponent<NavMeshAgent>();
+	void OnEnable()
+	{
+		navAgent = GetComponent<NavMeshAgent>();
+		navAgent.enabled = true;
+	}
 
 	public void WalkTo(Vector3 pos) { navAgent.speed = walkSpeed; navAgent.SetDestination(pos); }
 	public void WalkTo(Transform target) { navAgent.speed = walkSpeed; navAgent.SetDestination(target.position); }

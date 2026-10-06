@@ -34,7 +34,7 @@ public partial class HUD : MonoBehaviour
 		inventoryButton.button.onClick.AddListener(InventoryButtonPressed);
 		inventoryCloseButton.onClick.AddListener(() => { SetInventoryOpen(false); });
 		runButton.button.onClick.AddListener(RunButtonPressed);
-		PlayerShift.Instance.ShiftEvent.AddListener(OnShiftEvent);
+		PlayerShift.Instance.OnShift.AddListener(OnShiftEvent);
 		PlayerStats.OnMoneyChanged.AddListener(OnMoneyChanged);
 		OnMoneyChanged(PlayerStats.Money, PlayerStats.Money);
 	}
@@ -51,11 +51,14 @@ public partial class HUD : MonoBehaviour
 			shiftButton.label.text = "Shift";
 			shiftButton.image.fillAmount = 1 - PlayerShift.Instance.ShiftCooldownPercent;
 		}
-		else
+		else 
 		{
 			shiftButton.label.text = "Shift";
 			shiftButton.image.fillAmount = 1;
 		}
+
+		runButton.label.text = PlayerTouchMovement.Instance.Running ? "Running" : "Walking";
+		runButton.image.fillAmount = PlayerTouchMovement.Instance.StaminaPercent;
 	}
 
 	public void FlashShiftButton()
@@ -99,7 +102,7 @@ public partial class HUD : MonoBehaviour
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -144,11 +147,21 @@ public partial class HUD : MonoBehaviour
 		}
 	}
 
+	public void RemoveFromInventory(Prop prop)
+	{
+		if (inventory.Contains(prop))
+		{
+			int index = inventory.IndexOf(prop);
+			Destroy(inventoryPanelContents.GetChild(index).gameObject);
+			inventory.Remove(prop);
+		}
+	}
+
 	void ShiftToInventoryProp(Prop prop)
 	{
 		if (PlayerShift.Instance.ShiftInventory(prop))
 		{
-			inventory.Remove(prop);
+			RemoveFromInventory(prop);
 			SetInventoryOpen(false);
 		}
 	}
