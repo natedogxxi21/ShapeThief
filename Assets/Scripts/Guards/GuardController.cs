@@ -11,6 +11,11 @@ public class GuardController : MonoBehaviour
 
 	public bool Traveling => navAgent.velocity.sqrMagnitude > 0.3f;
 	public float RemainingDistance => navAgent.remainingDistance;
+	public float StoppingDistance
+	{ 
+		get => navAgent.stoppingDistance;
+		set => navAgent.stoppingDistance = value;
+	}
 
 	void OnEnable()
 	{

@@ -10,4 +10,4 @@ public class GuardInteract : MonoBehaviour
 			SceneManager.LoadScene("GameOver");
 		}
 	}
-}
+}	

@@ -1576,7 +1576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5212e3c7b157c408e5d78c0c90bf5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CountdownTimer
-  timeRemaining: 10
+  timeRemaining: 60
   timerIsRunning: 0
   timerText: {fileID: 6426980794540341402}
   GameOverPanel: {fileID: 0}
