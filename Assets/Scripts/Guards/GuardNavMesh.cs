@@ -16,7 +16,7 @@ public partial class GuardNavMesh : MonoBehaviour
 		navMesh = GetComponent<NavMeshSurface>();
 	}
 
-	void Start()
+	public void Build()
 	{
 		navMesh.BuildNavMesh();
 		Initialized = true;

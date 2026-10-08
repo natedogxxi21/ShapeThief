@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using System;
+
 using UnityEngine;
 using System.Linq;
 
-public class DungeonGenerator : MonoBehaviour
+public class DungeonGenerator 
 {
-    RoomNode rootNode;
+    //RoomNode rootNode;
     List<RoomNode> allNodesCollection = new List<RoomNode>();
     private int dungeonWidth;
     private int dungeonLength;

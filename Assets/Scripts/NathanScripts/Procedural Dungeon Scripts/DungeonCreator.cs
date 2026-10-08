@@ -6,6 +6,9 @@ using UnityEngine.UIElements;
 
 public class DungeonCreator : MonoBehaviour
 {
+    public DungeonSpawnManager spawnManager;
+    // public NavigationBaker dungeonNavMesh;
+    public GuardNavMesh guardNavMesh;
     public int dungeonwidth, dungeonLength;
     public int roomWidthMin, roomLengthMin;
     public int maxIterations;
@@ -17,6 +20,8 @@ public class DungeonCreator : MonoBehaviour
     public float roomTopCornerModifier;
     [Range(0, 2)]
 
+//New DungeonSpawnManager
+
     public int roomOffset;
     public GameObject wallVertical, wallHorizontal;
     List<Vector3Int> possibleDoorVerticalPosition;
@@ -24,13 +29,13 @@ public class DungeonCreator : MonoBehaviour
     List<Vector3Int> possibleWallHorizontalPosition;
     List<Vector3Int> possibleWallVerticalPosition;
 
-
+//Adding new Room Grid identifications
+private List<RoomGrid> roomGrids = new List<RoomGrid>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         CreateDungeon();
-
     }
 
     private void CreateDungeon()
@@ -53,17 +58,66 @@ public class DungeonCreator : MonoBehaviour
     possibleWallHorizontalPosition = new List<Vector3Int>();
     possibleWallVerticalPosition = new List<Vector3Int>();
 
+//Adding changes to DungeonCreator 10/07/2026
+//Changes so we can create a grid system. Changing create mesh line and adding RoomGrid code
+       roomGrids.Clear();
+       
         for (int i = 0; i < listOfRooms.Count; i++)
         {
-            CreateMesh(listOfRooms[i].BottomLeftAreaCorner, listOfRooms[i].TopRightAreaCorner);
+            CreateMesh(
+                listOfRooms[i].BottomLeftAreaCorner, listOfRooms[i].TopRightAreaCorner);
+                
+          //Only creats a spawn grid for actual rooms
+            if (listOfRooms[i] is RoomNode room)
+            {
+                RoomGrid grid = new RoomGrid(room);
+                roomGrids.Add(grid);
+
+            }
         }
         CreateWalls(wallParent);
+        
+//Here we Add spawn Manager with the Create Dungeon
 
+    // if (dungeonNavMesh != null)
+    //     {
+    //         dungeonNavMesh.BuildNavMesh();
+    //     }
+    if (guardNavMesh != null)
+        {
+            guardNavMesh.Build();
+        }
+
+
+    if (spawnManager != null)
+        {
+            spawnManager.Initialize(roomGrids);
+        }
     }
     
 
+    private void OnDrawGizmos()
+    {
+        if (roomGrids == null)
+        return;
 
-private void CreateWalls(GameObject wallParent)
+        Gizmos.color = Color.green;
+
+        foreach (RoomGrid grid in roomGrids)
+        {
+            foreach (SpawnCell cell in grid.Cells)
+            {
+                Vector3 center = cell.WorldPosition;
+
+
+                Gizmos.DrawWireCube(
+                    center,
+                    new Vector3(1f, 0.05f, 1f)
+                );
+            }
+        }
+    }
+    private void CreateWalls(GameObject wallParent)
     {
         foreach (var wallPosition in possibleWallHorizontalPosition)
         {
