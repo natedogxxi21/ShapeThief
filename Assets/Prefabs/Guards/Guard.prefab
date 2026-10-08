@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6318130618298722746}
   - component: {fileID: 3916829691914565300}
   - component: {fileID: 7195222768170491396}
-  m_Layer: 9
+  m_Layer: 1
   m_Name: ViewCone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,9 +50,10 @@ MonoBehaviour:
   viewDistance: 30
   visionBlockers:
     serializedVersion: 2
-    m_Bits: 264
+    m_Bits: 266
   noticeDistance: 3
   safeSpeed: 0.2
+  touchedColliders: []
 --- !u!64 &7195222768170491396
 MeshCollider:
   m_ObjectHideFlags: 0
