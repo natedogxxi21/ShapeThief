@@ -48,6 +48,12 @@ public class CountdownTimer : MonoBehaviour
         timerText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
     }
 
+    public void AddTime(float extraTime)
+    {
+        timeRemaining += extraTime;
+        DisplayTime(timeRemaining);
+    }
+
     void AlertAllGuards()
     {
         foreach (GuardBehaviour guard in guards)
