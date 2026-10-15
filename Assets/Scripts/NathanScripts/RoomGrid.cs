@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 public class RoomGrid
 {
-       public RoomNode Room { get; private set; }
+    public RoomNode Room { get; private set; }
 
     public List<SpawnCell> Cells { get; private set; }
 

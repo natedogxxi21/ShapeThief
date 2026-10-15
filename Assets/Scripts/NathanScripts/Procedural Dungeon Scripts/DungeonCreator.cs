@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -20,6 +21,10 @@ public class DungeonCreator : MonoBehaviour
     public float roomTopCornerModifier;
     [Range(0, 2)]
 
+    public DungeonRoomPrefabs startRoom;
+    public List<DungeonRoomPrefabs> roomPrefabs;
+    private List<DungeonRoomPrefabs> spawnedRooms = new List<DungeonRoomPrefabs>();
+
 //New DungeonSpawnManager
 
     public int roomOffset;
@@ -38,8 +43,12 @@ private List<RoomGrid> roomGrids = new List<RoomGrid>();
         CreateDungeon();
     }
 
-    private void CreateDungeon()
+    public void CreateDungeon()
     {
+        DestroyAllChildren();
+        //DungeonRoomPrefabs first = Instantiate(startRoom, Vector3.zero, Quaternion.identity); 
+        //spawnedRooms.Add(first);
+        
         DungeonGenerator generator = new DungeonGenerator(dungeonwidth,  dungeonLength);
         var listOfRooms = generator.CalculateDungeon(maxIterations, 
         roomWidthMin, 
@@ -181,7 +190,8 @@ private List<RoomGrid> roomGrids = new List<RoomGrid>();
         dungeonFloor.transform.localScale = Vector3.one;
         dungeonFloor.GetComponent<MeshFilter>().mesh = mesh;
         dungeonFloor.GetComponent<MeshRenderer>().material = material;
-    
+        dungeonFloor.transform.parent = transform;
+
     //After GameObject wallParent is created and identified within void Create Mesh, now we can write the logic for creating the walls and doors.
         for (int row = (int)bottomLeftV.x; row < (int)bottomRightV.x; row++)
         {
@@ -218,5 +228,16 @@ private List<RoomGrid> roomGrids = new List<RoomGrid>();
         {
             wallList.Add(point);
         } 
+    }
+
+    private void DestroyAllChildren()
+    {
+        while(transform.childCount != 0)
+        {
+            foreach(Transform item in transform)
+            {
+                DestroyImmediate(item.gameObject);
+            }
+        }
     }
 }
