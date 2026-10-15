@@ -50,4 +50,9 @@ public class Keypad : MonoBehaviour
 
         enteredCode = "";
     }
+
+    public void ExitCode()
+    {
+        CodePad.SetActive(false);
+    }
 }
