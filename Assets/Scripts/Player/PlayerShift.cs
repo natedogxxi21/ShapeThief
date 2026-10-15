@@ -21,14 +21,14 @@ public partial class PlayerShift : MonoBehaviour
 
 	public UnityEvent OnShift { get; private set; } = new();
 	public bool ShiftAvailable => !shiftTransitioning &&
-						  (shiftTarget != null || shifted) &&
+						  (shiftTarget != null || Shifted) &&
 											ShiftCooldown <= 0;
 
 	[SerializeField] float shiftTransitionLength;
 	[SerializeField] float shiftDuration;
 	[SerializeField] float shiftCooldownDuration;
 
-	public bool shifted { get; private set; }
+	public bool Shifted { get; private set; }
 	bool shiftTransitioning;
 	Vector3 targetShiftObjectScale;
 	public float ShiftTimer { get; private set; }
@@ -65,7 +65,7 @@ public partial class PlayerShift : MonoBehaviour
 		{
 			shiftTransitioning = true;
 			OnShift.Invoke();
-			if (!shifted)
+			if (!Shifted)
 			{
 				shiftMeshCollider.sharedMesh = shiftTarget.prop.mesh;
 				shiftMeshFilter.mesh = shiftTarget.prop.mesh;
@@ -73,13 +73,13 @@ public partial class PlayerShift : MonoBehaviour
 				targetShiftObjectScale = shiftTarget.prop.scale;
 				HUD.Instance.AddToInventory(shiftTarget.prop);
 			}
-			StartCoroutine(ShiftCoroutine(!shifted));
+			StartCoroutine(ShiftCoroutine(!Shifted));
 		}
 	}
 
 	public bool ShiftInventory(Prop prop)
 	{
-		if (shiftTransitioning || shifted || ShiftCooldown > 0)
+		if (shiftTransitioning || Shifted || ShiftCooldown > 0)
 		{ return false; }
 
 		shiftTransitioning = true;
@@ -89,7 +89,7 @@ public partial class PlayerShift : MonoBehaviour
 		shiftMeshRenderer.material = prop.material;
 		targetShiftObjectScale = prop.scale;
 		HUD.Instance.AddToInventory(prop);
-		StartCoroutine(ShiftCoroutine(!shifted));
+		StartCoroutine(ShiftCoroutine(!Shifted));
 
 		return true;
 	}
@@ -126,7 +126,7 @@ public partial class PlayerShift : MonoBehaviour
 		else { ShiftCooldown = shiftCooldownDuration; }
 
 		shiftTransitioning = false;
-		shifted = toObject;
+		Shifted = toObject;
 
 		OnShift.Invoke();
 	}
@@ -140,8 +140,7 @@ public partial class PlayerShift : MonoBehaviour
 		{
 			castingFinger = finger;
 			Ray ray = Camera.main.ScreenPointToRay(finger.currentTouch.screenPosition);
-			Debug.DrawLine(ray.origin, ray.origin + (ray.direction * 100), Color.red, 4);
-			if (Physics.Raycast(ray, out RaycastHit hit, 100, shiftObjMask))
+			if (Physics.Raycast(ray, out RaycastHit hit, 50, shiftObjMask))
 			{
 				if (hit.transform.TryGetComponent(out ShiftProp shiftObject))
 				{
@@ -165,7 +164,7 @@ public partial class PlayerShift : MonoBehaviour
 		{
 			castingFinger = null;
 			Ray ray = Camera.main.ScreenPointToRay(finger.currentTouch.screenPosition);
-			if (Physics.Raycast(ray, out RaycastHit hit, 100, shiftObjMask))
+			if (Physics.Raycast(ray, out RaycastHit hit, 50, shiftObjMask))
 			{
 				if (hit.transform.TryGetComponent(out ShiftProp shiftObject))
 				{

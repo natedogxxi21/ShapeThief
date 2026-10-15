@@ -21,6 +21,7 @@ public class GuardBehaviour : MonoBehaviour
 
 	GuardController controller;
 	[SerializeField] GuardVision vision;
+	[SerializeField] GuardHearing hearing;
 	[SerializeField] GuardState state = GuardState.Idle;
 	[SerializeField] GuardState defaultState;
 	Timer stateTickTimer;
@@ -50,6 +51,8 @@ public class GuardBehaviour : MonoBehaviour
 		{
 			yield return null;
 		}
+
+		GuardNavMesh.Instance.RegisterGuard(this);
 
 		controller = GetComponent<GuardController>();
 		controller.enabled = true;

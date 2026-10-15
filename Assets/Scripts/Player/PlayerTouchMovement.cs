@@ -57,7 +57,7 @@ public partial class PlayerTouchMovement : MonoBehaviour
 	{
 		rb.linearVelocity = (Running ? runSpeed : speed) * ((moveInput.x * camYaw.right) + (moveInput.y * camYaw.forward));
 
-		if (Running && stamina > 0)
+		if (Running && stamina > 0 && moveInput.sqrMagnitude > 0.01f)
 		{
 			if ((stamina -= runStaminaDrain * Time.fixedDeltaTime) <= 0)
 			{
@@ -65,7 +65,7 @@ public partial class PlayerTouchMovement : MonoBehaviour
 				stamina = 0;
 			}
 		}
-		else if (!Running)
+		else if (!Running || moveInput.sqrMagnitude < 0.01f)
 		{
 			stamina = Mathf.Min(stamina + (staminaRecover * Time.fixedDeltaTime), maxStamina);
 		}

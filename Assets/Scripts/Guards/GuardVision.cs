@@ -66,7 +66,7 @@ public class GuardVision : MonoBehaviour
 			return;
 		}
 
-		if (!shift.shifted)
+		if (!shift.Shifted)
 		{
 			movementNoticed = 0f;
 			SetPlayerSeen(player, true);

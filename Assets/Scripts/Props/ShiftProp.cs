@@ -1,5 +1,7 @@
 using UnityEngine;
 using ITISKIRUHERE;
+using System;
+using Object = UnityEngine.Object;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -9,11 +11,49 @@ public class ShiftProp : MonoBehaviour
 {
 	public Prop prop;
 
-	[SerializeField] GameObject highlight;
+	[SerializeField] GameObject highlightGO;
+	AdvancedOutline highlight;
 
-	public void Highlight(bool on)
+	bool highlighted = false;
+	bool dashed = false;
+
+	void Awake()
 	{
-		if (highlight != null) { highlight.SetActive(on); }
+		if (!highlightGO.TryGetComponent(out AdvancedOutline outline))
+		{ throw new Exception("Could not find AdvancedOutline on " + gameObject.name); }
+
+		highlight = outline;
+	}
+
+	public void Highlight(bool v) { highlighted = v; EvaluateHighlight(); }
+	public void HighlightDashed(bool v) { dashed = v; EvaluateHighlight(); }
+
+	void EvaluateHighlight()
+	{
+		print(1);
+		if (highlight != null)
+		{
+			print(2);
+			if (highlighted)
+			{
+				print(3);
+				highlightGO.SetActive(true);
+				highlight.DashedPattern = false;
+				highlight.OutlineColor = new Color(0, .4f, 1, 1);
+				highlight.RefreshRenderers();
+			}
+			else if (dashed)
+			{
+				highlightGO.SetActive(true);
+				highlight.DashedPattern = true;
+				highlight.OutlineColor = new Color(0, 1, .5f, .3f);
+				highlight.RefreshRenderers();
+			}
+			else
+			{
+				highlightGO.SetActive(false);
+			}
+		}
 	}
 
 #if UNITY_EDITOR
@@ -32,7 +72,7 @@ public class ShiftProp : MonoBehaviour
 		prop.mesh = model.GetComponent<MeshFilter>().sharedMesh;
 		prop.scale = model.localScale;
 
-		highlight = highlightTransform.gameObject;
+		highlightGO = highlightTransform.gameObject;
 		highlightTransform.localScale = prop.scale;
 		highlightFilter.sharedMesh = prop.mesh; // sharedMesh avoids instancing the mesh in edit mode
 
@@ -58,7 +98,7 @@ public class ShiftProp : MonoBehaviour
 		modelCollider.sharedMesh = prop.mesh;
 		model.localScale = prop.scale;
 
-		highlight = highlightTransform.gameObject;
+		highlightGO = highlightTransform.gameObject;
 		highlightTransform.localScale = prop.scale;
 	}
 

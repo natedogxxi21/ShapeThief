@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShiftObject
   prop: {fileID: 11400000, guid: 7aa80b8096bed418fada7cca43573c7f, type: 2}
-  highlight: {fileID: 5299550489163282012}
+  highlightGO: {fileID: 5299550489163282012}
 --- !u!54 &3673932073818527692
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -304,8 +304,8 @@ MonoBehaviour:
   _rainbowColor: 0
   _rainbowSpeed: 0.5
   _dashedPattern: 0
-  _dashScale: 0.1
-  _dashSpeed: 9.2
+  _dashScale: 0.06
+  _dashSpeed: 10
   _precomputeOutline: 0
   _bakeKeys: []
   _bakeValues: []
