@@ -128,6 +128,7 @@ GameObject:
   - component: {fileID: 8107953371501542836}
   - component: {fileID: 6348533768894243675}
   - component: {fileID: 8266984550574199643}
+  - component: {fileID: 195112947654372558}
   - component: {fileID: 8117216087165049330}
   m_Layer: 8
   m_Name: Player
@@ -174,7 +175,7 @@ MonoBehaviour:
   runSpeed: 8
   lookSensitivity: 0.3
   maxStamina: 100
-  staminaRecover: 15
+  staminaRecover: 10
   runStaminaDrain: 30
   kbmMove:
     m_Name: Kbm Move
@@ -300,6 +301,18 @@ MonoBehaviour:
   shiftTransitionLength: 1
   shiftDuration: 10
   shiftCooldownDuration: 5
+--- !u!114 &195112947654372558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6824835901451335580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 876db635daef74647bfcf387978ccb26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteract
 --- !u!54 &8117216087165049330
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -322,7 +335,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
