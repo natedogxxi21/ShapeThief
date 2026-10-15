@@ -39,6 +39,7 @@ public class ShiftProp : MonoBehaviour
 				print(3);
 				highlightGO.SetActive(true);
 				highlight.DashedPattern = false;
+				highlight.OutlineWidth = 15;
 				highlight.OutlineColor = new Color(0, .4f, 1, 1);
 				highlight.RefreshRenderers();
 			}
@@ -46,7 +47,8 @@ public class ShiftProp : MonoBehaviour
 			{
 				highlightGO.SetActive(true);
 				highlight.DashedPattern = true;
-				highlight.OutlineColor = new Color(0, 1, .5f, .3f);
+				highlight.OutlineWidth = 10;
+				highlight.OutlineColor = new Color(0, 1, .5f, .15f);
 				highlight.RefreshRenderers();
 			}
 			else
