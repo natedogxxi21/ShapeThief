@@ -319,7 +319,7 @@ GameObject:
   - component: {fileID: 8164229360250629468}
   m_Layer: 9
   m_Name: Guard
-  m_TagString: Untagged
+  m_TagString: EnemySpawnBlocker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -356,6 +356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GuardBehaviour
   vision: {fileID: 3916829691914565300}
+  hearing: {fileID: 0}
   state: 0
   defaultState: 2
   investigateSightIcon: {fileID: 8046809013985692415}

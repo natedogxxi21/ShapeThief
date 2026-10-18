@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -19,15 +20,27 @@ public class DungeonCreator : MonoBehaviour
     public float roomBottomCornerModifier;
     [Range(0.7f, 1.0f)]
     public float roomTopCornerModifier;
-    [Range(0, 2)]
 
-    public DungeonRoomPrefabs startRoom;
-    public List<DungeonRoomPrefabs> roomPrefabs;
-    private List<DungeonRoomPrefabs> spawnedRooms = new List<DungeonRoomPrefabs>();
+
+    [Header("Starting Room")]
+    public GameObject startingRoomPrefab;
+    public Transform playerTransform;
+
+    public int startingRoomWidth = 15;
+    public int startingRoomLength = 15;
+
+
+    [Range(0,2)]
+    public int roomOffset;
+
+    //Keeping this down here so that I can include more room prefabs later
+    //public DungeonRoomPrefabs startRoom;
+    //public List<DungeonRoomPrefabs> roomPrefabs;
+    //private List<DungeonRoomPrefabs> spawnedRooms = new List<DungeonRoomPrefabs>();
 
 //New DungeonSpawnManager
+    
 
-    public int roomOffset;
     public GameObject wallVertical, wallHorizontal;
     List<Vector3Int> possibleDoorVerticalPosition;
     List<Vector3Int> possibleDoorHorizontalPosition;
@@ -56,8 +69,15 @@ private List<RoomGrid> roomGrids = new List<RoomGrid>();
         roomBottomCornerModifier, 
         roomTopCornerModifier, 
         roomOffset,
-        corridorWidth
+        corridorWidth,
+        startingRoomWidth,
+        startingRoomLength
         );
+
+        //for creating starting room
+        RoomNode startingRoom = listOfRooms
+            .OfType<RoomNode>()
+            .FirstOrDefault(room => room.isStartingRoom);
 
     //For Generating the Walls and Doors
     GameObject wallParent = new GameObject("WallParent");
@@ -74,8 +94,15 @@ private List<RoomGrid> roomGrids = new List<RoomGrid>();
         for (int i = 0; i < listOfRooms.Count; i++)
         {
             CreateMesh(
-                listOfRooms[i].BottomLeftAreaCorner, listOfRooms[i].TopRightAreaCorner);
+            listOfRooms[i].BottomLeftAreaCorner, listOfRooms[i].TopRightAreaCorner);
+
+        //idk
+        //if (startingRoom != null && startingRoomPrefab != null)
+          //  {
                 
+
+           // }    
+
           //Only creats a spawn grid for actual rooms
             if (listOfRooms[i] is RoomNode room)
             {
@@ -83,7 +110,53 @@ private List<RoomGrid> roomGrids = new List<RoomGrid>();
                 roomGrids.Add(grid);
 
             }
+            //This will allow the first node to be our starting room before branching to more rooms
+        }  
+         
+        if (startingRoom != null && startingRoomPrefab != null)
+        {
+            Vector3 roomPosition = new Vector3(
+                (startingRoom.BottomLeftAreaCorner.x + startingRoom.TopRightAreaCorner.x) / 2f,
+                0f,
+                (startingRoom.BottomLeftAreaCorner.y + startingRoom.TopRightAreaCorner.y) /2f
+            );
+
+            GameObject decorations = Instantiate(startingRoomPrefab,
+            roomPosition,
+            Quaternion.identity, 
+            transform);
+
+            Transform spawnPoint = decorations.transform.Find("PlayerSpawnPoint");
+
+            if (playerTransform != null && spawnPoint != null)
+            {
+               
+                playerTransform.SetPositionAndRotation(
+                    spawnPoint.position,
+                    spawnPoint.rotation
+                );
+
+                Rigidbody rb = playerTransform.GetComponent<Rigidbody>();
+
+                if (rb != null)
+                {
+                     rb.linearVelocity = Vector3.zero;
+                     rb.angularVelocity = Vector3.zero;
+                }
+
+
+            }
+            else
+            {
+               return;
+            }
         }
+
+        else if (startingRoom == null)
+        {
+            Debug.LogError("No starting room generated");
+        }
+
         CreateWalls(wallParent);
         
 //Here we Add spawn Manager with the Create Dungeon
@@ -102,8 +175,8 @@ private List<RoomGrid> roomGrids = new List<RoomGrid>();
         {
             spawnManager.Initialize(roomGrids);
         }
-    }
     
+    }    
 
     private void OnDrawGizmos()
     {
@@ -112,6 +185,7 @@ private List<RoomGrid> roomGrids = new List<RoomGrid>();
 
         Gizmos.color = Color.green;
 
+        
         foreach (RoomGrid grid in roomGrids)
         {
             foreach (SpawnCell cell in grid.Cells)
@@ -214,6 +288,7 @@ private List<RoomGrid> roomGrids = new List<RoomGrid>();
             AddWallPositionToList(wallPosition, possibleWallVerticalPosition, possibleDoorVerticalPosition);
         }
     }
+
 
     private void AddWallPositionToList(Vector3 wallPosition, List<Vector3Int> wallList, List<Vector3Int> doorList)
     {

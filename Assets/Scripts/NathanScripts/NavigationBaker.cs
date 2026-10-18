@@ -16,13 +16,11 @@ public class NavigationBaker : MonoBehaviour
     {
         if (navMeshSurface == null)
         {
-            Debug.LogError("DungeonNavMesh: No NavMeshSurface found.");
             return;
         }
 
         navMeshSurface.BuildNavMesh();
 
-        Debug.Log("Dungeon NavMesh built successfully.");
     }
 
 

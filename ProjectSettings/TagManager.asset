@@ -7,6 +7,7 @@ TagManager:
   - SpawnPoint
   - Rooms
   - KeyPad
+  - EnemySpawnBlocker
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - Highlight
   - Player
   - Guard
-  - 
-  - 
+  - Loot
+  - SpawnBlocker
   - 
   - 
   - 

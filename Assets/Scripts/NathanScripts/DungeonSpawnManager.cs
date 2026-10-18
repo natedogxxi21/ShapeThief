@@ -32,22 +32,29 @@ public class DungeonSpawnManager : MonoBehaviour
     public int minObjectsPerRoom = 3;
     public int maxObjectsPerRoom = 5;
 
+
+    public Collider[] collider;
+
     private List<RoomGrid> roomGrids;
+    private float radius;
 
     public void Initialize(List<RoomGrid> grids)
     {
         roomGrids = grids;
-
+        
         SpawnDungeonContents();
     }
 
+    
     private void SpawnDungeonContents()
     {
-        if (roomGrids == null || roomGrids.Count == 0)
+        if (roomGrids == null || roomGrids.Count == 0 )
         {
             Debug.LogWarning("DungeonSpawnManager: No room grids were provided.");
             return;
         }
+
+     
 
         foreach (RoomGrid roomGrid in roomGrids)
         {
@@ -57,10 +64,25 @@ public class DungeonSpawnManager : MonoBehaviour
         }
     }
 
+    public void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("EnemySpawnBlocker"))
+        {
+           print("Enemy Spawn Is Blocked!");
+
+           return; 
+        }
+        
+        
+    }
     private void SpawnEnemies(RoomGrid roomGrid)
     {
         if (enemyPrefab == null)
         return;
+
+        
+        
+   
 
         //Decides of the room will get enemies
         if (Random.value > enemySpawnChance)
@@ -154,7 +176,7 @@ public class DungeonSpawnManager : MonoBehaviour
 
             Instantiate(
             objectPrefab,
-            cell.WorldPosition,
+            cell.WorldPosition + Vector3.up * 1.5f,
             Quaternion.identity,
             transform
             );
