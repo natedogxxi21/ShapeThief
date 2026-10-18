@@ -6,7 +6,7 @@ public class GuardVision : MonoBehaviour
 {
 	public readonly UnityEvent<GameObject> onPlayerSeen = new();
 	public readonly UnityEvent<GameObject> onPlayerLost = new();
-	public readonly UnityEvent<GameObject> onPlayerNoticed = new();
+	public readonly UnityEvent<Vector3> onPlayerNoticed = new();
 	public float Suspicion => playerSeen ? 1f : movementNoticed / noticeDistance;
 
 	[Header("General")]
@@ -77,7 +77,7 @@ public class GuardVision : MonoBehaviour
 		float prevNotice = movementNoticed;
 		movementNoticed += moved - safeSpeed * Time.fixedDeltaTime;
 		movementNoticed = Mathf.Clamp(movementNoticed, 0f, noticeDistance);
-		if (movementNoticed > prevNotice) { onPlayerNoticed.Invoke(player); }
+		if (movementNoticed > prevNotice) { onPlayerNoticed.Invoke(player.transform.position); }
 
 		// Hysteresis: spotted at full meter, lost only once it fully drains.
 		if (movementNoticed >= noticeDistance) SetPlayerSeen(player, true);

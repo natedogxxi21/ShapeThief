@@ -30,13 +30,10 @@ public class ShiftProp : MonoBehaviour
 
 	void EvaluateHighlight()
 	{
-		print(1);
 		if (highlight != null)
 		{
-			print(2);
 			if (highlighted)
 			{
-				print(3);
 				highlightGO.SetActive(true);
 				highlight.DashedPattern = false;
 				highlight.OutlineWidth = 15;
@@ -55,6 +52,15 @@ public class ShiftProp : MonoBehaviour
 			{
 				highlightGO.SetActive(false);
 			}
+		}
+	}
+
+	void OnCollisionEnter(Collision collision)
+	{
+		if (collision.impulse.sqrMagnitude >= .5f)
+		{
+			Vector3 pos = collision.contactCount > 0 ? collision.GetContact(0).point : transform.position;
+			AudioCueManager.PlayCollisionSound(prop, pos, collision.impulse.magnitude);
 		}
 	}
 

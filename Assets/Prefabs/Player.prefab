@@ -331,6 +331,12 @@ MonoBehaviour:
       m_Action: Kbm Test
       m_Flags: 0
     m_Flags: 0
+  footstepTimer:
+    <EndTime>k__BackingField: 0
+    <Duration>k__BackingField: 0
+    <Paused>k__BackingField: 0
+    pausedTime: 0
+  footstepFrequency: 0.35
 --- !u!114 &8266984550574199643
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,9 +1,10 @@
 using UnityEngine;
 using System.Collections;
+using Unity.Scripting.LifecycleManagement;
 
-public class SFXManager : MonoBehaviour
+public partial class SFXManager : MonoBehaviour
 {
-	static SFXManager Instance;
+	[AutoStaticsCleanup] static SFXManager Instance;
 	[SerializeField] GameObject SFXObject;
 	
 	void Awake()
@@ -78,7 +79,7 @@ public class SFXManager : MonoBehaviour
 	}
 	#endregion PlayClip()
 
-	public static AudioSource PlayRandomClip(AudioClip[] audioClips, float volume, float deltaPitch)
+	public static AudioSource PlayRandomClip(ref AudioClip[] audioClips, float volume, Vector3 location, float deltaPitch)
 	{
 		if (Instance == null) { return null; }
 		
@@ -88,7 +89,8 @@ public class SFXManager : MonoBehaviour
 		
 		audioSource.clip = audioClips[clipIndex];
 		audioSource.volume = volume;
-		audioSource.spatialBlend = 0;
+		audioSource.spatialBlend = 1;
+		audioSource.transform.position = location;
 		audioSource.pitch += deltaPitch;
 		audioSource.Play();
 		

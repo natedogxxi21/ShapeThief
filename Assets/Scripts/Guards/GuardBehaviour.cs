@@ -1,34 +1,31 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
+
+public enum GuardState
+{
+	Idle, // Nothing
+	Post, // Standing and turning head
+	Wander, // Randomly navigate around
+	Investigate, // Walk towards a point
+	Chase, // Run towards a point
+	Return // Walking back to spawn point
+}
 
 [RequireComponent(typeof(GuardController))]
 public class GuardBehaviour : MonoBehaviour
 {
-	public enum GuardState
-	{
-		Idle, // Nothing
-		Post, // Standing and turning head
-		Wander, // Randomly navigate around
-		Investigate, // Walk towards a point
-		Chase, // Run towards a point
-		Return // Walking back to spawn point
-	}
-
 	static readonly float[] stateTickDurations = { 10f, 4f, .2f, .2f, .2f, 1f };
 
 	GuardController controller;
 	[SerializeField] GuardVision vision;
-	[SerializeField] GuardHearing hearing;
-	[SerializeField] GuardState state = GuardState.Idle;
+	public GuardHearing hearing;
+	float TotalSuspicion => vision.Suspicion + hearing.Suspicion;
+	public GuardState State { get; private set; } = GuardState.Idle;
 	[SerializeField] GuardState defaultState;
 	Timer stateTickTimer;
 	Vector3 spawnPoint;
-
-	[SerializeField] GameObject investigateSightIcon;
-	[SerializeField] GameObject chaseIcon;
 
 	Vector3 postPoint;
 	float postDirection;
@@ -41,7 +38,7 @@ public class GuardBehaviour : MonoBehaviour
 	Vector3 investigatePoint;
 
 	bool chaseInvestigating = false;
-	[SerializeField] Timer chaseInvestigateTimer;
+	public Timer chaseInvestigateTimer;
 
 	void Start() => StartCoroutine(WaitToLoadCoroutine());
 
@@ -61,37 +58,23 @@ public class GuardBehaviour : MonoBehaviour
 		vision.onPlayerSeen.AddListener(OnPlayerSeen);
 		vision.onPlayerLost.AddListener(OnPlayerLost);
 		vision.onPlayerNoticed.AddListener(OnPlayerNoticed);
+		hearing.onPlayerHeard.AddListener(OnPlayerHeard);
+		hearing.onPlayerNoticed.AddListener(OnPlayerNoticed);
 	}
 
 	void Update()
 	{
-		if (stateTickTimer.Completed)
-		{
-			TickState();
-		}
+		if (TotalSuspicion >= 1)
+		{ Chase(investigatePoint); }
 
-		// visibility of icons set by State Functions
-		if (state == GuardState.Investigate)
-		{
-			Image icon = investigateSightIcon.GetComponent<Image>();
-			icon.fillAmount = vision.Suspicion;
-			icon.color = Color.Lerp(Color.white, Color.yellow, vision.Suspicion);
-			icon.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.one * 1.5f, vision.Suspicion);
-		}
-		else if (state == GuardState.Chase)
-		{
-			Image icon = chaseIcon.GetComponent<Image>();
-			float p = chaseInvestigateTimer.Remaining / chaseInvestigateTimer.Duration;
-			icon.fillAmount = p;
-			icon.color = Color.Lerp(Color.white, Color.yellow, p);
-			icon.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.one * 1.5f, p);
-		}
+		if (stateTickTimer.Completed)
+		{ TickState(); }
 	}
 
 	void TickState()
 	{
-		stateTickTimer = stateTickDurations[(int)state];
-		switch (state)
+		stateTickTimer = stateTickDurations[(int)State];
+		switch (State)
 		{
 			case GuardState.Post:
 				postFacingLeft = !postFacingLeft;
@@ -110,7 +93,7 @@ public class GuardBehaviour : MonoBehaviour
 
 			case GuardState.Investigate:
 				controller.WalkTo(investigatePoint);
-				if (vision.Suspicion <= 0)
+				if (TotalSuspicion <= 0)
 				{
 					Return();
 				}
@@ -190,33 +173,33 @@ public class GuardBehaviour : MonoBehaviour
 	}
 	public void Investigate(Vector3 point)
 	{
-		investigateSightIcon.SetActive(true);
-		chaseIcon.SetActive(false);
-
 		investigatePoint = point;
 		SetState(GuardState.Investigate);
 	}
 	public void Chase(GameObject player)
 	{
-		investigateSightIcon.SetActive(false);
-		chaseIcon.SetActive(true);
-
 		seenPlayer = player;
 		chaseInvestigating = false;
 		chaseInvestigateTimer = 3;
 		investigatePoint = seenPlayer.transform.position;
 		SetState(GuardState.Chase);
 	}
+	public void Chase(Vector3 position)
+	{
+		chaseInvestigating = false;
+		chaseInvestigateTimer = 3;
+		investigatePoint = position;
+		SetState(GuardState.Chase);
+	}
 	public void Return()
 	{
-		investigateSightIcon.SetActive(false);
-		chaseIcon.SetActive(false);
+		seenPlayer = null;
 		SetState(GuardState.Return);
 	}
 
 	void SetState(GuardState newState)
 	{
-		state = newState;
+		State = newState;
 		stateTickTimer = stateTickDurations[(int)newState];
 		controller.StoppingDistance = newState == GuardState.Investigate ? 5f : 0f;
 		TickState();
@@ -224,13 +207,15 @@ public class GuardBehaviour : MonoBehaviour
 
 	void OnPlayerSeen(GameObject player) => Chase(player);
 	void OnPlayerLost(GameObject player) => seenPlayer = null;
-	void OnPlayerNoticed(GameObject player)
+	void OnPlayerNoticed(Vector3 position)
 	{
-		if (state != GuardState.Chase)
+		if (State != GuardState.Chase)
 		{
-			Investigate(player.transform.position);
+			Investigate(position);
 		}
 	}
+
+	void OnPlayerHeard(Vector3 pos) => Chase(pos);
 
 	Vector3 GetWanderPoint()
 	{

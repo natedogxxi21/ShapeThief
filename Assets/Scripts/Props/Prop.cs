@@ -7,4 +7,6 @@ public class Prop : ScriptableObject
 	public Mesh mesh;
 	public Material material;
 	public Vector3 scale;
+
+	public AudioClip[] collisionSounds;
 }

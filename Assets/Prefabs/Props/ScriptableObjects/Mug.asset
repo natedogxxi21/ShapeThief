@@ -16,3 +16,7 @@ MonoBehaviour:
   mesh: {fileID: -7219886339314900476, guid: 818df777a71cdbb4cb911e8f253fda84, type: 3}
   material: {fileID: 2100000, guid: dfc08c90188302847afb04f628582097, type: 2}
   scale: {x: 7, y: 7, z: 7}
+  collisionSounds:
+  - {fileID: 8300000, guid: 5689710d5fafc4f388ee656a518399a2, type: 3}
+  - {fileID: 8300000, guid: 7e1850a7a7efa4e60aeba37f4262bd74, type: 3}
+  - {fileID: 8300000, guid: 0cc7521dc86c747dfbdc1df7f11e1dea, type: 3}

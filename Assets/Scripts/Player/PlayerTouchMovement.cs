@@ -38,6 +38,8 @@ public partial class PlayerTouchMovement : MonoBehaviour
 	public bool Running { get; private set; }
 	float stamina;
 	public float StaminaPercent => stamina / maxStamina;
+	[SerializeField] Timer footstepTimer;
+	[SerializeField] float footstepFrequency = .3f;
 
 	void Awake()
 	{
@@ -45,12 +47,22 @@ public partial class PlayerTouchMovement : MonoBehaviour
 		PlayerStats.ResetMoney();
 		Application.targetFrameRate = 120;
 		stamina = maxStamina;
+		footstepTimer = footstepFrequency;
 	}
 
 	void Update()
 	{
 		float angle = Mathf.LerpAngle(model.localEulerAngles.y, targetAngle, turnSpeed * Time.deltaTime);
 		model.localEulerAngles = new Vector3(0, angle, 0);
+		if (moveInput.sqrMagnitude > 0.1f)
+		{ footstepTimer.Resume(); }
+		else { footstepTimer.Pause(); }
+
+		if (footstepTimer.Completed)
+		{
+			AudioCueManager.PlayFootstep(transform.position, Running);
+			footstepTimer.Reset();
+		}
 	}
 
 	void FixedUpdate()
@@ -197,7 +209,7 @@ public partial class PlayerTouchMovement : MonoBehaviour
 			{ targetAngle = (Mathf.Atan2(moveInput.x, moveInput.y) * Mathf.Rad2Deg) + yaw; }
 		}
 	}
-	void OnKBMTest(InputAction.CallbackContext ctx) => PlayerStats.ChangeMoney(100);
+	void OnKBMTest(InputAction.CallbackContext ctx) => AudioCueManager.PlayTestSound(transform.position);
 
 	void OnEnable()
 	{

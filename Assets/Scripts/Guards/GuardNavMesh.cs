@@ -17,6 +17,10 @@ public partial class GuardNavMesh : MonoBehaviour
 	{
 		Instance = this;
 		navMesh = GetComponent<NavMeshSurface>();
+		if (navMesh.navMeshData != null)
+		{
+			Initialized = true;	
+		}
 	}
 
 	public void Build()
