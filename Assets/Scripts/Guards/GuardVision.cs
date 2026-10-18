@@ -112,13 +112,16 @@ public class GuardVision : MonoBehaviour
 
 		foreach (Collider collider in touchedColliders)
 		{
-			Rigidbody rb = collider.attachedRigidbody;
-			if (!rb || !rb.CompareTag("Player")) continue;
+			if (collider)
+			{
+				Rigidbody rb = collider.attachedRigidbody;
+				if (!rb || !rb.CompareTag("Player")) continue;
 
-			player = rb.gameObject;
-			if (player.TryGetComponent(out shift))
-			{ return true; }
-			else { continue; }
+				player = rb.gameObject;
+				if (player.TryGetComponent(out shift))
+				{ return true; }
+				else { continue; }
+			}
 		}
 
 		return false;

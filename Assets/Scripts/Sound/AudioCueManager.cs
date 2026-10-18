@@ -1,5 +1,5 @@
-using Unity.Scripting.LifecycleManagement;
 using UnityEngine;
+using Unity.Scripting.LifecycleManagement;
 
 public partial class AudioCueManager : MonoBehaviour
 {
@@ -16,7 +16,7 @@ public partial class AudioCueManager : MonoBehaviour
 		float deltaPitch = Random.Range(.5f, 1f);
 		SFXManager.PlayClip(Instance.footstepClip, volume, position, deltaPitch);
 		CueGuards(volume, position);
-		Instantiate(Instance.particleEffectPrefab, position, Quaternion.identity);
+		MakeParticles(position, volume);
 	}
 
 	public static void PlayCollisionSound(Prop prop, Vector3 position, float velocity)
@@ -25,7 +25,7 @@ public partial class AudioCueManager : MonoBehaviour
 		float deltaPitch = Random.Range(-.1f, .1f);
 		SFXManager.PlayRandomClip(ref prop.collisionSounds, volume, position, deltaPitch);
 		CueGuards(volume, position);
-		Instantiate(Instance.particleEffectPrefab, position, Quaternion.identity);
+		MakeParticles(position, volume);
 	}
 
 	public static void PlayTestSound(Vector3 position)
@@ -33,7 +33,14 @@ public partial class AudioCueManager : MonoBehaviour
 		float deltaPitch = Random.Range(-.1f, .1f);
 		SFXManager.PlayClip(Instance.testClip, 1, position, deltaPitch);
 		CueGuards(loudness: 3, position);
-		Instantiate(Instance.particleEffectPrefab, position, Quaternion.identity);
+		MakeParticles(position, 3);
+	}
+
+	static void MakeParticles(Vector3 position, float volume)
+	{
+		float speed = 3.25f + (volume / 3);
+		var particleMain = Instantiate(Instance.particleEffectPrefab, position, Quaternion.identity).GetComponent<ParticleSystem>().main;
+		particleMain.startSpeed = speed;
 	}
 
 	static void CueGuards(float loudness, Vector3 position)

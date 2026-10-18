@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/General/Scenes/Menus/GameOver.unity
     guid: 57cbb32cddeba4b1fa5f5449dd654385
   - enabled: 0
-    path: Assets/General/Scenes/Main.unity
+    path: Assets/General/Scenes/TyTesting.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 0
     path: Assets/General/Scenes/Backup.unity
