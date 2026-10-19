@@ -18,6 +18,7 @@ public partial class HUD : MonoBehaviour
 	[SerializeField] GameObject inventoryPanel;
 	[SerializeField] RectTransform inventoryPanelContents;
 	[SerializeField] GameObject inventoryPropButtonPrefab;
+	[SerializeField] GameObject smokeBombInventoryButton;
 	readonly List<Prop> inventory = new();
 
 	static readonly Color activeColor = new(1, .94f, 0);
@@ -51,7 +52,7 @@ public partial class HUD : MonoBehaviour
 			shiftButton.label.text = "Shift";
 			shiftButton.image.fillAmount = 1 - PlayerShift.Instance.ShiftCooldownPercent;
 		}
-		else 
+		else
 		{
 			shiftButton.label.text = "Shift";
 			shiftButton.image.fillAmount = 1;
@@ -156,13 +157,39 @@ public partial class HUD : MonoBehaviour
 			inventory.Remove(prop);
 		}
 	}
-
-	void ShiftToInventoryProp(Prop prop)
+    void ShiftToInventoryProp(Prop prop)
+    {
+        if (PlayerShift.Instance.ShiftInventory(prop))
+        {
+            RemoveFromInventory(prop);
+            SetInventoryOpen(false);
+        }
+    }
+    public void AddSmokeBombToInventory()
 	{
-		if (PlayerShift.Instance.ShiftInventory(prop))
+		if (smokeBombInventoryButton != null)
+			return;
+
+		smokeBombInventoryButton = Instantiate(inventoryPropButtonPrefab, inventoryPanelContents);
+
+		smokeBombInventoryButton.name = "Smoke Bomb";
+
+		smokeBombInventoryButton.GetComponent<Button>().onClick.AddListener(() =>
 		{
-			RemoveFromInventory(prop);
-			SetInventoryOpen(false);
-		}
+			UpgradeManager upgradeManager = FindAnyObjectByType<UpgradeManager>();
+
+			if (upgradeManager != null)
+				upgradeManager.UseSmokeBomb();
+		});
+		smokeBombInventoryButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Smoke Bomb";
+	}
+	public void RemoveSmokeBombFromInventory()
+	{
+		if (smokeBombInventoryButton == null)
+			return;
+
+		Destroy(smokeBombInventoryButton);
+		smokeBombInventoryButton = null;
+		SetInventoryOpen(false);
 	}
 }

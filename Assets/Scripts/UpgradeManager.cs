@@ -8,16 +8,24 @@ public class UpgradeManager : MonoBehaviour
     [Header("Time Upgrade")]
     [SerializeField] private int timeUpgradeCost = 100;
     [SerializeField] private float extraTime = 30f;
-    public ParticleSystem SmokeBomb;
+
+    [Header("Smoke Bomb")]
+    [SerializeField] private ParticleSystem SmokeBomb;
+    [SerializeField] private Transform Player;
+
+    private bool smokeBombObtained = false;
+    private bool smokeBombUsed = false; 
 
 
     public void Start()
     {
-        SmokeBomb.Stop();
+        if (SmokeBomb != null) 
+        SmokeBomb.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
     }
     private void OnCollisionEnter(Collision collision)
     {
         BuyExtraTime();
+        ObtainSmokeBomb();
 
 
     }
@@ -36,8 +44,33 @@ public class UpgradeManager : MonoBehaviour
         return true;
     }
 
-    public void SmokeDeployed()
+    public void ObtainSmokeBomb()
     {
-        SmokeBomb.Play();
+        if (smokeBombObtained)
+        return;
+
+        smokeBombObtained = true;
+        HUD.Instance.AddSmokeBombToInventory();
     }
+
+    public void UseSmokeBomb()
+    {
+        if (!smokeBombObtained)
+            return;
+
+        if (SmokeBomb == null || Player == null)
+        {
+            return;
+        }
+        smokeBombObtained = false;
+
+        SmokeBomb.transform.position = Player.position;
+        SmokeBomb.Stop();
+        SmokeBomb.Play();
+
+        HUD.Instance.RemoveSmokeBombFromInventory();
+
+    }
+
+
 }
