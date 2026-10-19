@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -27,6 +28,22 @@ public class GuardVision : MonoBehaviour
 	float movementNoticed;
 	bool playerSeen;
 
+	[Header("Smoke Blindness")]
+	[SerializeField] float blindnessDuration = 4f;
+
+	float blindeduntil;
+	bool IsBlinded => Time.time < blindeduntil;
+
+	public void Blind(float duration)
+		{
+		blindeduntil = Mathf.Max(blindeduntil, Time.time + duration);
+
+		if (player)
+		{
+			movementNoticed = 0f;
+			SetPlayerSeen(player,false);
+		}
+		}
 	void OnTriggerEnter(Collider other)
 	{
 		if (player) return;
@@ -55,6 +72,13 @@ public class GuardVision : MonoBehaviour
 	{
 		if (!player) return;
 
+		if (IsBlinded)
+		{
+			movementNoticed = 0f;
+			SetPlayerSeen(player, false);
+			lastPlayerPos = player.transform.position;
+			return;
+		}
 		Vector3 pos = player.transform.position;
 		float moved = Vector3.Distance(pos, lastPlayerPos);
 		lastPlayerPos = pos;
