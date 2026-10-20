@@ -36,8 +36,8 @@ namespace ITISKIRUHERE
         [Header("Aesthetic Effects")]
         [SerializeField] bool _pulseWidth;
         [SerializeField] [Range( 0.1f, 10f )] float _pulseSpeed = 2f;
-        [SerializeField] [Range( 0f, 10f )] float _pulseMinWidth = 1.5f;
-        [SerializeField] [Range( 0f, 10f )] float _pulseMaxWidth = 5f;
+        [SerializeField] [Range( 0f, 50f )] float _pulseMinWidth = 1.5f;
+        [SerializeField] [Range( 0f, 50f )] float _pulseMaxWidth = 5f;
 
         [Space]
         [SerializeField] bool _rainbowColor;

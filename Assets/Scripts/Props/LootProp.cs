@@ -1,5 +1,3 @@
-using ITISKIRUHERE;
-using UnityEditor;
 using UnityEngine;
 
 public class LootProp : MonoBehaviour

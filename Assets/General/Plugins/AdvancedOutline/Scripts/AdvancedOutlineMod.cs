@@ -325,7 +325,7 @@ namespace ITISKIRUHERE
 			{
 				if (!meshFilter) continue;
 
-				Mesh originalMesh = GetComponent<LootProp>().mesh;
+				Mesh originalMesh = transform.parent.GetComponent<LootProp>().mesh;
 
 				Mesh meshCopy;
 				if (!_clonedMeshes.TryGetValue(meshFilter, out meshCopy))
