@@ -1,15 +1,23 @@
 using UnityEngine;
+using TMPro;
 
 public class RandomCode : MonoBehaviour
 {
     private int rawCode;
     private string formattedCode;
 
+    public TextMeshPro worldCodeText;
+
     private void Awake()
     {
         rawCode = Random.Range(0, 10000);
         formattedCode = rawCode.ToString("D4");
         Debug.Log("4 Digit Code " + formattedCode);
+
+        if (worldCodeText != null )
+        {
+            worldCodeText.text = formattedCode;
+        }
     }
 
     public string GetCode()
