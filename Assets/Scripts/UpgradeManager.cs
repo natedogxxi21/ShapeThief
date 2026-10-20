@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;
+
 public class UpgradeManager : MonoBehaviour
 {
     [Header("References")]
@@ -12,6 +12,8 @@ public class UpgradeManager : MonoBehaviour
     [Header("Smoke Bomb")]
     [SerializeField] private ParticleSystem SmokeBomb;
     [SerializeField] private Transform Player;
+    [SerializeField] private GuardVision[] guards;
+    [SerializeField] private float blindDuration = 4f;
 
     private bool smokeBombObtained = false;
     private bool smokeBombUsed = false; 
@@ -67,6 +69,13 @@ public class UpgradeManager : MonoBehaviour
         SmokeBomb.transform.position = Player.position;
         SmokeBomb.Stop();
         SmokeBomb.Play();
+
+        foreach (GuardVision guard in guards)
+        {
+            if (guard != null)
+                guard.Blind(blindDuration);
+
+        }
 
         HUD.Instance.RemoveSmokeBombFromInventory();
 

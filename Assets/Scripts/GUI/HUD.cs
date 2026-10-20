@@ -107,7 +107,6 @@ public partial class HUD : MonoBehaviour
 		return false;
 	}
 
-
 	void OnMoneyChanged(int prev, int money)
 	{
 		moneyCounterText.text = $"${money}";
@@ -157,32 +156,35 @@ public partial class HUD : MonoBehaviour
 			inventory.Remove(prop);
 		}
 	}
-    void ShiftToInventoryProp(Prop prop)
-    {
-        if (PlayerShift.Instance.ShiftInventory(prop))
-        {
-            RemoveFromInventory(prop);
-            SetInventoryOpen(false);
-        }
-    }
-    public void AddSmokeBombToInventory()
+
+	void ShiftToInventoryProp(Prop prop)
+	{
+		if (PlayerShift.Instance.ShiftInventory(prop))
+		{
+			RemoveFromInventory(prop);
+			SetInventoryOpen(false);
+		}
+	}
+
+	public void AddSmokeBombToInventory()
 	{
 		if (smokeBombInventoryButton != null)
 			return;
 
 		smokeBombInventoryButton = Instantiate(inventoryPropButtonPrefab, inventoryPanelContents);
-
 		smokeBombInventoryButton.name = "Smoke Bomb";
-
-		smokeBombInventoryButton.GetComponent<Button>().onClick.AddListener(() =>
-		{
-			UpgradeManager upgradeManager = FindAnyObjectByType<UpgradeManager>();
-
-			if (upgradeManager != null)
-				upgradeManager.UseSmokeBomb();
-		});
 		smokeBombInventoryButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Smoke Bomb";
+		smokeBombInventoryButton.GetComponent<Button>().onClick.AddListener(UseSmokeBomb);
 	}
+
+	void UseSmokeBomb()
+	{
+		UpgradeManager upgradeManager = FindAnyObjectByType<UpgradeManager>();
+
+		if (upgradeManager != null)
+			upgradeManager.UseSmokeBomb();
+	}
+	
 	public void RemoveSmokeBombFromInventory()
 	{
 		if (smokeBombInventoryButton == null)

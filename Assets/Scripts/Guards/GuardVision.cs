@@ -27,6 +27,20 @@ public class GuardVision : MonoBehaviour
 	float movementNoticed;
 	bool playerSeen;
 
+	float blindedUntil;
+	bool IsBlinded => Time.time < blindedUntil;
+
+	public void Blind(float duration)
+	{
+		blindedUntil = Mathf.Max(blindedUntil, Time.time + duration);
+
+		if (player)
+		{
+			SetPlayerSeen(player, false);
+			movementNoticed = 0f;
+		}
+	}
+
 	void OnTriggerEnter(Collider other)
 	{
 		if (player) return;
@@ -54,6 +68,14 @@ public class GuardVision : MonoBehaviour
 	void FixedUpdate()
 	{
 		if (!player) return;
+
+		if (IsBlinded)
+		{
+			movementNoticed = 0f;
+			SetPlayerSeen(player, false);
+			lastPlayerPos = player.transform.position;
+			return;
+		}
 
 		Vector3 pos = player.transform.position;
 		float moved = Vector3.Distance(pos, lastPlayerPos);
