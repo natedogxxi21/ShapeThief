@@ -267,22 +267,22 @@ private List<RoomGrid> roomGrids = new List<RoomGrid>();
         dungeonFloor.transform.parent = transform;
 
     //After GameObject wallParent is created and identified within void Create Mesh, now we can write the logic for creating the walls and doors.
-        for (int row = (int)bottomLeftV.x; row < (int)bottomRightV.x; row++)
+        for (int row = (int)bottomLeftV.x; row <= (int)bottomRightV.x; row++)
         {
             var wallPosition = new Vector3(row, 0, bottomLeftV.z);
             AddWallPositionToList(wallPosition, possibleWallHorizontalPosition, possibleDoorHorizontalPosition);
         }
-        for(int row = (int)topLeftV.x; row < (int)topRightV.x; row++)
+        for(int row = (int)topLeftV.x; row <= (int)topRightV.x; row++)
         {
             var wallPosition = new Vector3(row, 0, topRightV.z);
             AddWallPositionToList(wallPosition, possibleWallHorizontalPosition, possibleDoorHorizontalPosition);
         }
-        for (int col = (int)bottomLeftV.z; col < (int)topLeftV.z; col++)
+        for (int col = (int)bottomLeftV.z; col <= (int)topLeftV.z; col++)
         {
             var wallPosition = new Vector3(bottomLeftV.x, 0, col);
             AddWallPositionToList(wallPosition, possibleWallVerticalPosition, possibleDoorVerticalPosition);
         }
-        for (int col = (int)bottomRightV.z; col < (int)topRightV.z; col++)
+        for (int col = (int)bottomRightV.z; col <= (int)topRightV.z; col++)
         {
             var wallPosition = new Vector3(bottomRightV.x, 0, col);
             AddWallPositionToList(wallPosition, possibleWallVerticalPosition, possibleDoorVerticalPosition);

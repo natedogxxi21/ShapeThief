@@ -8,7 +8,7 @@ public class MainMenuUI : MonoBehaviour
 
 	public void StartGame()
 	{
-		SceneManager.LoadScene("Tutorial Scene");
+		SceneManager.LoadScene("Nathan Scene");
 	}
 
 	public void QuitGame()

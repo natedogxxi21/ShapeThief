@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 7257804840502245777}
   m_Layer: 0
   m_Name: Loot
-  m_TagString: Untagged
+  m_TagString: EnemySpawnBlocker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

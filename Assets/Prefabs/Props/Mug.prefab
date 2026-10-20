@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 459689540704032310}
   m_Layer: 6
   m_Name: Mug
-  m_TagString: Untagged
+  m_TagString: EnemySpawnBlocker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
