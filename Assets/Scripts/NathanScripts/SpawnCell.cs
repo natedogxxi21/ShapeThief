@@ -24,14 +24,6 @@ public class SpawnCell
 
     }
 
-    public void OnTriggerEnter(Collider other)
-    {
-        if(other.CompareTag("EnemySpawnBlocker"))
-        {
-
-           return; 
-        }
-          
-    }
+   
 }
 

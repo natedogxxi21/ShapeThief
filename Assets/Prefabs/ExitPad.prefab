@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Exit_Level
   requiredMoney: 40
-  nextSceneName: Sabastian_Scene
+  nextSceneName: Nathan Scene
   seeBehindPad: {fileID: 1117224400179819009}
   objectiveText: {fileID: 5894003219131400199}
 --- !u!1 &4089923891962229370
