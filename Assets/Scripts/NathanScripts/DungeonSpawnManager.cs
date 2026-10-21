@@ -290,7 +290,7 @@ private SpawnCell GetAvailableEnemyCell(RoomGrid roomGrid)
         foreach (SpawnCell cell in roomGrid.Cells)
         {
 
-            if (cell.IsOccupied && !cell.CanSpawnObject)
+            if (cell.IsOccupied || !cell.CanSpawnObject)
                 continue;
            
 

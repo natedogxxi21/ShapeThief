@@ -6,9 +6,16 @@ public class MainMenuUI : MonoBehaviour
 	public GameObject MainMenuPanel;
 	public GameObject InstructionPanel;
 
+	
+
 	public void StartGame()
 	{
 		SceneManager.LoadScene("Nathan Scene");
+	}
+
+	public void Tutorial()
+	{
+		SceneManager.LoadScene("Tutorial Scene");
 	}
 
 	public void QuitGame()
