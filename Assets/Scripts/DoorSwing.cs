@@ -16,12 +16,15 @@ public class DoorSwing : MonoBehaviour
         if (!collision.gameObject.CompareTag("Player"))
             return;
 
-        Vector3 hitDirection = collision.relativeVelocity;
-        hitDirection.y = 0;
+        Vector3 direction = collision.relativeVelocity;
+       direction.y = 0;
 
-        if (hitDirection.sqrMagnitude > 0.01f)
+        if (direction.sqrMagnitude > 0.01f)
         {
-            rb.AddTorque(Vector3.up * pushForce, ForceMode.Impulse);
+            Vector3 push = direction.normalized * pushForce;
+
+            rb.AddForceAtPosition
+            (direction.normalized * pushForce, collision.GetContact(0).point, ForceMode.Impulse);
         }
     }
 }
