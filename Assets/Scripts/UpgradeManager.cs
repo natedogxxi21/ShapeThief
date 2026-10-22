@@ -1,9 +1,11 @@
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class UpgradeManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private CountdownTimer countdownTimer;
+    [SerializeField] private PlayerTouchMovement playerMovement;
 
     [Header("Time Upgrade")]
     [SerializeField] private int timeUpgradeCost = 100;
@@ -15,20 +17,24 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] private GuardVision[] guards;
     [SerializeField] private float blindDuration = 4f;
 
+    [Header("Stamina Upgrade")]
+    [SerializeField] private int staminaUpgradeCost = 20;
+    [SerializeField] private float extraStamina = 25f;
+
     private bool smokeBombObtained = false;
-    private bool smokeBombUsed = false; 
+    private bool smokeBombUsed = false;
 
 
     public void Start()
     {
-        if (SmokeBomb != null) 
-        SmokeBomb.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        if (SmokeBomb != null)
+            SmokeBomb.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
     }
     private void OnCollisionEnter(Collision collision)
     {
         BuyExtraTime();
         ObtainSmokeBomb();
-
+        BuyStaminaUpgrade();
 
     }
     public bool BuyExtraTime()
@@ -49,7 +55,7 @@ public class UpgradeManager : MonoBehaviour
     public void ObtainSmokeBomb()
     {
         if (smokeBombObtained)
-        return;
+            return;
 
         smokeBombObtained = true;
         HUD.Instance.AddSmokeBombToInventory();
@@ -81,5 +87,22 @@ public class UpgradeManager : MonoBehaviour
 
     }
 
+    public bool BuyStaminaUpgrade()
+    {
+        if (PlayerStats.Money < staminaUpgradeCost)
+        {
+            Debug.Log("Something wronger");
+            return false;
+        }
+        if (playerMovement == null)
+        {
+            Debug.Log("Something wrong");
+            return false;
+        }
+        PlayerStats.ChangeMoney(-staminaUpgradeCost);
 
+        playerMovement.UpgradeStamina(extraStamina);
+        Debug.Log("Stamina upgraded");
+        return true;
+    }
 }

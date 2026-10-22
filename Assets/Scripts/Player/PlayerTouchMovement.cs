@@ -52,7 +52,7 @@ public partial class PlayerTouchMovement : MonoBehaviour
 
 	void Update()
 	{
-		float angle = Mathf.LerpAngle(model.localEulerAngles.y, targetAngle, turnSpeed * Time.deltaTime);
+        float angle = Mathf.LerpAngle(model.localEulerAngles.y, targetAngle, turnSpeed * Time.deltaTime);
 		model.localEulerAngles = new Vector3(0, angle, 0);
 		if (moveInput.sqrMagnitude > 0.1f)
 		{ footstepTimer.Resume(); }
@@ -217,7 +217,7 @@ public partial class PlayerTouchMovement : MonoBehaviour
 		ETouch.Touch.onFingerDown += HandleFingerDown;
 		ETouch.Touch.onFingerUp += HandleFingerUp;
 		ETouch.Touch.onFingerMove += HandleFingerMove;
-		#if UNITY_EDITOR
+#if UNITY_EDITOR
 		kbmMove.performed += OnKBMMove;
 		kbmTurn.performed += OnKBMTurn;
 		kbmLook.performed += OnKBMLook;
@@ -234,7 +234,7 @@ public partial class PlayerTouchMovement : MonoBehaviour
 		ETouch.Touch.onFingerDown -= HandleFingerDown;
 		ETouch.Touch.onFingerUp -= HandleFingerUp;
 		ETouch.Touch.onFingerMove -= HandleFingerMove;
-		#if UNITY_EDITOR
+#if UNITY_EDITOR
 		kbmMove.performed -= OnKBMMove;
 		kbmTurn.performed -= OnKBMTurn;
 		kbmLook.performed -= OnKBMLook;
@@ -246,4 +246,12 @@ public partial class PlayerTouchMovement : MonoBehaviour
 #endif
 		EnhancedTouchSupport.Disable();
 	}
+
+	public void UpgradeStamina(float amount)
+	{
+        Debug.Log($"BEFORE upgrade: Current={stamina}, Max={maxStamina}, Amount={amount}");
+        maxStamina += amount;
+		stamina += amount;
+        Debug.Log($"AFTER upgrade: Current={stamina}, Max={maxStamina}");
+    }
 }
