@@ -24,7 +24,7 @@ public class UpgradeManager : MonoBehaviour
     private bool smokeBombObtained = false;
     private bool smokeBombUsed = false;
 
-
+   
     public void Start()
     {
         if (SmokeBomb != null)

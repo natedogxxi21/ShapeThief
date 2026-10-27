@@ -582,7 +582,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 118.15
+  m_fontSize: 80.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -719,7 +719,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 49.65
+  m_fontSize: 36.15
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -883,6 +883,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6127989826424586348}
+  - {fileID: 5880118667547228757}
   - {fileID: 552261905853201978}
   - {fileID: 6951550839062484467}
   m_Father: {fileID: 3092843586851202803}
@@ -1466,7 +1467,6 @@ RectTransform:
   - {fileID: 4973809800562381528}
   - {fileID: 3320286929241168589}
   - {fileID: 8475907679905817351}
-  - {fileID: 5880118667547228757}
   - {fileID: 7857432505160387868}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1496,6 +1496,7 @@ MonoBehaviour:
   inventoryPanel: {fileID: 9022734541147901699}
   inventoryPanelContents: {fileID: 80298895752865450}
   inventoryPropButtonPrefab: {fileID: 4933636395806931466, guid: 376bc094a6e8a4c8b80fe55e9adb7c33, type: 3}
+  smokeBombInventoryButton: {fileID: 0}
   reservedRects:
   - {fileID: 6127989826424586348}
   - {fileID: 6951550839062484467}
@@ -1606,17 +1607,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7230509776101681062}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3092843586851202803}
+  m_Father: {fileID: 4973809800562381528}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.4, y: 0.85}
   m_AnchorMax: {x: 0.6, y: 1}
-  m_AnchoredPosition: {x: 0, y: -15}
-  m_SizeDelta: {x: 0, y: -30}
+  m_AnchoredPosition: {x: -719.4, y: 10.499939}
+  m_SizeDelta: {x: 299.76004, y: -21}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8878245573341216536
 CanvasRenderer:
@@ -1675,7 +1676,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 118.15
+  m_fontSize: 80.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2028,7 +2029,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 64
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1

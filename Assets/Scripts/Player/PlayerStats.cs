@@ -10,7 +10,12 @@ public partial class PlayerStats : MonoBehaviour
 
 	public static MoneyChangedEvent OnMoneyChanged = new();
 
-	public static void ChangeMoney(int deltaMoney)
+
+    public void Awake()
+    {
+        ResetMoney();
+    }
+    public static void ChangeMoney(int deltaMoney)
 	{
 		int prev = Money;
 		Money += deltaMoney;
