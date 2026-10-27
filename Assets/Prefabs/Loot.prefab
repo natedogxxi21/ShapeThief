@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7566169864937736391}
-  m_Mesh: {fileID: 6664959949897491518, guid: 8908811505cc6b448a5b8940c98122cb, type: 3}
+  m_Mesh: {fileID: 0}
 --- !u!23 &3017409603590350246
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -191,6 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LootProp
   mesh: {fileID: 6664959949897491518, guid: 8908811505cc6b448a5b8940c98122cb, type: 3}
   lootValue: 20
+  collectClip: {fileID: 8300000, guid: 19f47c52cc7234847869a8b078858f9f, type: 3}
 --- !u!54 &3707238966935679632
 Rigidbody:
   m_ObjectHideFlags: 0
