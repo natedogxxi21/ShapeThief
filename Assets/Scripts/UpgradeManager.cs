@@ -38,9 +38,21 @@ public class UpgradeManager : MonoBehaviour
 
         if (playerMovement != null && UpgradeData.BonusStamina > 0f)
             playerMovement.UpgradeStamina(UpgradeData.BonusStamina);
+        RestoreSmokeBomb();
 
-        if (UpgradeData.HasSmokeBomb && HUD.Instance != null)
+        Debug.Log("Smoke Bomb saved: " + UpgradeData.HasSmokeBomb);
+
+    }
+
+    private void RestoreSmokeBomb()
+    {
+        smokeBombObtained = UpgradeData.HasSmokeBomb;
+
+        if (smokeBombObtained && HUD.Instance != null)
+        {
             HUD.Instance.AddSmokeBombToInventory();
+            Debug.Log("Smoke Bomb restored in the new level.");
+        }
     }
 
 
@@ -52,9 +64,16 @@ public class UpgradeManager : MonoBehaviour
                 return BuyExtraTime();
 
             case 1:
-                if (smokeBombObtained)
+                if (UpgradeData.HasSmokeBomb)
                     return false;
 
+                if(PlayerStats.Money < SmokeBombCost)
+                {
+                    Debug.Log("You are Broke");
+                        return false;
+                }
+
+                PlayerStats.ChangeMoney(-SmokeBombCost);
                 ObtainSmokeBomb();
                 return true;
 
@@ -67,13 +86,16 @@ public class UpgradeManager : MonoBehaviour
                     return false;
         }
     }
-    /*private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         BuyExtraTime();
         ObtainSmokeBomb();
         BuyStaminaUpgrade();
 
-    }*/
+        Debug.Log("Smoke Bomb saved: " + UpgradeData.HasSmokeBomb);
+
+
+    }
     public bool BuyExtraTime()
     {
         if (PlayerStats.Money < timeUpgradeCost)
@@ -96,20 +118,28 @@ public class UpgradeManager : MonoBehaviour
             return;
 
         UpgradeData.HasSmokeBomb = true;
+        smokeBombObtained = true;
 
-        if(HUD.Instance != null)
-        HUD.Instance.AddSmokeBombToInventory();
+        if (HUD.Instance != null)
+        {
+            HUD.Instance.AddSmokeBombToInventory();
+        }
+        else
+        {
+            Debug.LogWarning("WHAT THE F");
+        }
     }
 
     public void UseSmokeBomb()
     {
-        if (!smokeBombObtained)
+        if (!UpgradeData.HasSmokeBomb)
             return;
 
         if (SmokeBomb == null || Player == null)
         {
             return;
         }
+        UpgradeData.HasSmokeBomb = false;
         smokeBombObtained = false;
 
         SmokeBomb.transform.position = Player.position;
@@ -123,6 +153,7 @@ public class UpgradeManager : MonoBehaviour
 
         }
 
+        if(HUD.Instance != null)
         HUD.Instance.RemoveSmokeBombFromInventory();
 
     }

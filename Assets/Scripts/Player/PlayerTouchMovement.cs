@@ -44,7 +44,6 @@ public partial class PlayerTouchMovement : MonoBehaviour
 	void Awake()
 	{
 		Instance = this;
-		PlayerStats.ResetMoney();
 		Application.targetFrameRate = 120;
 		stamina = maxStamina;
 		footstepTimer = footstepFrequency;

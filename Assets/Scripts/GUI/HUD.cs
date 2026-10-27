@@ -28,9 +28,12 @@ public partial class HUD : MonoBehaviour
 	bool inventoryOpen = false;
 	Coroutine shiftButtonFlashCoroutine;
 
-	void Start()
+    private void Awake()
+    {
+        Instance = this;
+    }
+    void Start()
 	{
-		Instance = this;
 		shiftButton.button.onClick.AddListener(ShiftButtonPressed);
 		inventoryButton.button.onClick.AddListener(InventoryButtonPressed);
 		inventoryCloseButton.onClick.AddListener(() => { SetInventoryOpen(false); });
@@ -169,8 +172,12 @@ public partial class HUD : MonoBehaviour
 	public void AddSmokeBombToInventory()
 	{
 		if (smokeBombInventoryButton != null)
-			return;
-
+		{
+			if(inventoryPropButtonPrefab == null || inventoryPanelContents == null)
+			{
+				return;
+			}
+		}
 		smokeBombInventoryButton = Instantiate(inventoryPropButtonPrefab, inventoryPanelContents);
 		smokeBombInventoryButton.name = "Smoke Bomb";
 		smokeBombInventoryButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Smoke Bomb";

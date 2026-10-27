@@ -2,11 +2,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using System;
 
 public class Exit_Level : MonoBehaviour
 {
-	[SerializeField] int requiredMoney = 10;
+    [Header("Exit Requirements")]
+    [SerializeField] private int additionalMoneyRequired = 50;
 	[SerializeField] string nextSceneName;
 	[SerializeField] GameObject seeBehindPad;
 
@@ -16,10 +16,12 @@ public class Exit_Level : MonoBehaviour
 	[Header("UI")]
 	public TMP_Text objectiveText;
 
-	private bool transitionStarted;
+    private int moneyAtLevelStart;
+    private bool exitActivated;
 
 	void Start()
 	{
+        moneyAtLevelStart = PlayerStats.Money;
 		if(objectiveText != null) 
 			objectiveText.gameObject.SetActive(false);
 
@@ -35,72 +37,57 @@ public class Exit_Level : MonoBehaviour
 
 		PlayerStats.OnMoneyChanged.AddListener(OnMoneyChanged);
 
-		OnMoneyChanged(0,PlayerStats.Money);
+		OnMoneyChanged(PlayerStats.Money,PlayerStats.Money);
 	}
 
-    private void OnDestroy()
-    {
-        if (PlayerStats.OnMoneyChanged != null)
-            PlayerStats.OnMoneyChanged.RemoveListener(OnMoneyChanged);
-    }
 
     private void OnMoneyChanged(int prev, int newMoney)
     {
         if (seeBehindPad != null)
-            seeBehindPad.SetActive(newMoney >= requiredMoney);
+            seeBehindPad.SetActive(newMoney >= moneyAtLevelStart + additionalMoneyRequired);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!other.transform.root.CompareTag("Player"))
             return;
-
-        if (transitionStarted)
+        if (exitActivated)
             return;
 
-        if (PlayerStats.Money >= requiredMoney)
+        int requiredTotal = moneyAtLevelStart + additionalMoneyRequired;
+
+       if(PlayerStats.Money >= requiredTotal)
         {
-            if (upgradeMenu == null)
+            if(upgradeMenu == null)
             {
-                Debug.LogError("Upgrade menu is not assigned!");
                 return;
             }
-
-            transitionStarted = true;
-
-            if (objectiveText != null)
-                objectiveText.gameObject.SetActive(false);
-
-            // Open the upgrade menu and wait for it to close.
-            upgradeMenu.OpenUpgradeMenu(LoadNextScene);
+            exitActivated = true;
+            upgradeMenu.OpenUpgradeMenu(LoadNextLevel);
         }
         else
         {
-            Debug.Log("You need " + requiredMoney + " money to exit.");
+            int stillNeeded = requiredTotal - PlayerStats.Money;
 
-            if (objectiveText != null)
-            {
-                objectiveText.text =
-                    "You still need $" +
-                    (requiredMoney - PlayerStats.Money) +
-                    " more before you can leave";
-
-                objectiveText.gameObject.SetActive(true);
-            }
+            objectiveText.text = "You Still need$ " + stillNeeded + "more before you can leave";
+            objectiveText.gameObject.SetActive(true);
         }
     }
-
-    private void LoadNextScene()
+    private void LoadNextLevel()
     {
         SceneManager.LoadScene(nextSceneName);
     }
-
     private void OnTriggerExit(Collider other)
     {
         if (!other.transform.root.CompareTag("Player"))
             return;
 
-        if (objectiveText != null)
-            objectiveText.gameObject.SetActive(false);
+        objectiveText.gameObject.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        if (PlayerStats.OnMoneyChanged != null)
+            PlayerStats.OnMoneyChanged.RemoveListener(OnMoneyChanged);
     }
 }

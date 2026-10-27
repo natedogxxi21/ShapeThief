@@ -4,19 +4,24 @@ using UnityEngine.Events;
 
 public partial class PlayerStats : MonoBehaviour
 {
-	[AutoStaticsCleanup]
 	public static int Money { get; private set; }
 
 	public class MoneyChangedEvent : UnityEvent<int, int> {};
-	[AutoStaticsCleanup]
+
 	public static MoneyChangedEvent OnMoneyChanged = new();
 
 	public static void ChangeMoney(int deltaMoney)
 	{
 		int prev = Money;
 		Money += deltaMoney;
-		OnMoneyChanged.Invoke(prev, Money);
+		OnMoneyChanged?.Invoke(prev, Money);
 	}
 
-	public static void ResetMoney() => Money = 0;
+	public static void ResetMoney()
+	{
+		int previousMoney = Money;
+		Money = 0;
+		OnMoneyChanged?.Invoke(previousMoney, Money);
+	}
+
 }
