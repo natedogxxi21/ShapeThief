@@ -1,4 +1,3 @@
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class UpgradeManager : MonoBehaviour
@@ -8,7 +7,7 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] private PlayerTouchMovement playerMovement;
 
     [Header("Time Upgrade")]
-    [SerializeField] private int timeUpgradeCost = 100;
+    [SerializeField] public int timeUpgradeCost = 100;
     [SerializeField] private float extraTime = 30f;
 
     [Header("Smoke Bomb")]
@@ -16,9 +15,10 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] private Transform Player;
     [SerializeField] private GuardVision[] guards;
     [SerializeField] private float blindDuration = 4f;
+    [SerializeField] public int SmokeBombCost = 50;
 
     [Header("Stamina Upgrade")]
-    [SerializeField] private int staminaUpgradeCost = 20;
+    [SerializeField] public int staminaUpgradeCost = 20;
     [SerializeField] private float extraStamina = 25f;
 
     private bool smokeBombObtained = false;
@@ -28,15 +28,52 @@ public class UpgradeManager : MonoBehaviour
     public void Start()
     {
         if (SmokeBomb != null)
+        {
             SmokeBomb.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+        }
+
+        if (countdownTimer != null && UpgradeData.BonusTime > 0f)
+            countdownTimer.AddTime(UpgradeData.BonusTime);
+
+        if (playerMovement != null && UpgradeData.BonusStamina > 0f)
+            playerMovement.UpgradeStamina(UpgradeData.BonusStamina);
+
+        if (UpgradeData.HasSmokeBomb && HUD.Instance != null)
+            HUD.Instance.AddSmokeBombToInventory();
     }
-    private void OnCollisionEnter(Collision collision)
+
+
+    public bool PurchaseUpgrade(int upgradeIndex)
+    {
+        switch (upgradeIndex)
+        {
+            case 0:
+                return BuyExtraTime();
+
+            case 1:
+                if (smokeBombObtained)
+                    return false;
+
+                ObtainSmokeBomb();
+                return true;
+
+
+                case 2:
+                return BuyStaminaUpgrade();
+
+            default:
+                Debug.LogWarning("Upgrade is broken");
+                    return false;
+        }
+    }
+    /*private void OnCollisionEnter(Collision collision)
     {
         BuyExtraTime();
         ObtainSmokeBomb();
         BuyStaminaUpgrade();
 
-    }
+    }*/
     public bool BuyExtraTime()
     {
         if (PlayerStats.Money < timeUpgradeCost)
@@ -46,6 +83,7 @@ public class UpgradeManager : MonoBehaviour
         }
 
         PlayerStats.ChangeMoney(-timeUpgradeCost);
+        UpgradeData.BonusTime += extraTime;
         countdownTimer.AddTime(extraTime);
 
         Debug.Log("Time upgrade purchased!");
@@ -54,10 +92,12 @@ public class UpgradeManager : MonoBehaviour
 
     public void ObtainSmokeBomb()
     {
-        if (smokeBombObtained)
+        if (UpgradeData.HasSmokeBomb)
             return;
 
-        smokeBombObtained = true;
+        UpgradeData.HasSmokeBomb = true;
+
+        if(HUD.Instance != null)
         HUD.Instance.AddSmokeBombToInventory();
     }
 
@@ -100,7 +140,7 @@ public class UpgradeManager : MonoBehaviour
             return false;
         }
         PlayerStats.ChangeMoney(-staminaUpgradeCost);
-
+        UpgradeData.BonusStamina += extraStamina;
         playerMovement.UpgradeStamina(extraStamina);
         Debug.Log("Stamina upgraded");
         return true;
