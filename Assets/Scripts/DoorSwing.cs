@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DoorSwing : MonoBehaviour
 {
-    public float pushForce = 10f;
+    public float pushForce = 2f;
 
     private Rigidbody rb;
 

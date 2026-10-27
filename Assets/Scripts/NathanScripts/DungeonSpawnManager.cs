@@ -162,7 +162,7 @@ public class DungeonSpawnManager : MonoBehaviour
 
             Instantiate(
             itemPrefab,
-            cell.WorldPosition + Vector3.up * 0.5f,
+            cell.WorldPosition ,
             Quaternion.identity,
             transform
             );

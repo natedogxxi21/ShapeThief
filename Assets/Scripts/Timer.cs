@@ -59,6 +59,7 @@ public class CountdownTimer : MonoBehaviour
         foreach (GuardBehaviour guard in guards)
         {
             guard.Chase(PlayerShift.Instance.gameObject);
+            Debug.Log("Booty");
         }
             
     }
