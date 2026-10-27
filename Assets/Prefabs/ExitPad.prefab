@@ -308,7 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbca60157e143954189fd32df21eb2eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Exit_Level
-  requiredMoney: 120
+  requiredMoney: 80
   nextSceneName: Nathan Scene
   seeBehindPad: {fileID: 1117224400179819009}
   objectiveText: {fileID: 5894003219131400199}

@@ -27051,7 +27051,7 @@ Transform:
   m_GameObject: {fileID: 505683577}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 48.9, y: -0.15, z: 49.4}
+  m_LocalPosition: {x: 48.9, y: -0.1, z: 49.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -81630,11 +81630,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3836853327721848896, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: timeRemaining
-      value: 150
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6093312590393961592, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 27.45
+      value: 29.85
       objectReference: {fileID: 0}
     - target: {fileID: 6393414177414952191, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_Name
@@ -81642,7 +81642,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6426980794540341402, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 56.95
+      value: 63.5
       objectReference: {fileID: 0}
     - target: {fileID: 6669424879269237201, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
@@ -81650,7 +81650,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8968438791746746977, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 56.95
+      value: 63.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -82697,6 +82697,8 @@ MonoBehaviour:
   roomOffset: 1
   wallVertical: {fileID: 6707263632203575883, guid: 832c274675b35244c90583fe9442a919, type: 3}
   wallHorizontal: {fileID: 8194266006747058734, guid: 86ef0f2a91f435e409a805b0fc9d4480, type: 3}
+  doorVertical: {fileID: 0}
+  doorHorizontal: {fileID: 0}
 --- !u!1 &1526781291
 GameObject:
   m_ObjectHideFlags: 0
@@ -113223,10 +113225,10 @@ MonoBehaviour:
   enemyPrefab: {fileID: 934461108330891716, guid: d4aea719d44e14126841dd142b59d439, type: 3}
   itemPrefab: {fileID: 8019664621828130348, guid: ada5b6cc84ba94b9f936d3159ae94673, type: 3}
   objectSpawnLocation: 0
-  enemySpawnChance: 0.701
+  enemySpawnChance: 0.55
   minEnemiesPerRoom: 1
   maxEnemiesPerRooom: 2
-  itemSpawnChance: 0.669
+  itemSpawnChance: 0.655
   minItemsPerRoom: 1
   maxItemsPerRoom: 2
   props:
@@ -113243,7 +113245,7 @@ MonoBehaviour:
     minPerRoom: 1
     maxPerRoom: 3
     spawnLocation: 3
-    verticalOffset: 0
+    verticalOffset: -0.1
   - propName: Mug
     prefab: {fileID: 1226859771069493251, guid: 480c4b975cc8f4393b50a95dd136c5bd, type: 3}
     spawnChance: 0.333

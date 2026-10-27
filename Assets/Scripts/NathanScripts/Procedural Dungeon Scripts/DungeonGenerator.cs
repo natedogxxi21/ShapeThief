@@ -43,8 +43,6 @@ public DungeonGenerator(int dungeonWidth, int dungeonLength)
             //We are going to create a new class called Room generator
             RoomGenerator roomGenerator = new RoomGenerator (maxIterations, roomLengthMin, roomWidthMin);         
             List<RoomNode> roomList = roomGenerator.GenerateRoomsInGivenSpaces(roomSpaces, roomBottomCornerModifier,  roomTopCornerModifier,  roomOffset);
-            
-
 
             //Creating code for creating the connecting Corridors that will be connecting our rooms together.
             CorridorsGenerator corridorGenerator = new CorridorsGenerator();

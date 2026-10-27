@@ -42,6 +42,7 @@ public class DungeonCreator : MonoBehaviour
     
 
     public GameObject wallVertical, wallHorizontal;
+    public GameObject doorVertical, doorHorizontal;
     List<Vector3Int> possibleDoorVerticalPosition;
     List<Vector3Int> possibleDoorHorizontalPosition;
     List<Vector3Int> possibleWallHorizontalPosition;
@@ -74,6 +75,11 @@ private List<RoomGrid> roomGrids = new List<RoomGrid>();
         startingRoomLength
         );
 
+        //Corridor list
+        List<CorridorNode> corridors = listOfRooms
+        .OfType<CorridorNode>()
+        .ToList();
+
         //for creating starting room
         RoomNode startingRoom = listOfRooms
             .OfType<RoomNode>()
@@ -82,6 +88,8 @@ private List<RoomGrid> roomGrids = new List<RoomGrid>();
     //For Generating the Walls and Doors
     GameObject wallParent = new GameObject("WallParent");
     wallParent.transform.parent = transform;
+    GameObject doorParent = new GameObject("DoorParent");
+    doorParent.transform.parent = transform;
     possibleDoorVerticalPosition = new List<Vector3Int>();
     possibleDoorHorizontalPosition = new List<Vector3Int>();
     possibleWallHorizontalPosition = new List<Vector3Int>();
@@ -144,7 +152,6 @@ private List<RoomGrid> roomGrids = new List<RoomGrid>();
                      rb.angularVelocity = Vector3.zero;
                 }
 
-
             }
             else
             {
@@ -157,7 +164,18 @@ private List<RoomGrid> roomGrids = new List<RoomGrid>();
             Debug.LogError("No starting room generated");
         }
 
+        Debug.Log($"Horizontal door candidates: {possibleDoorHorizontalPosition.Count}");
+Debug.Log($"Vertical door candidates: {possibleDoorVerticalPosition.Count}");
+
+foreach (var p in possibleDoorHorizontalPosition)
+    Debug.Log($"Horizontal door candidate at: {p}");
+
+foreach (var p in possibleDoorVerticalPosition)
+    Debug.Log($"Vertical door candidate at: {p}");
+
         CreateWalls(wallParent);
+
+        CreateDoors(doorParent);
         
 //Here we Add spawn Manager with the Create Dungeon
 
@@ -176,6 +194,7 @@ private List<RoomGrid> roomGrids = new List<RoomGrid>();
             spawnManager.Initialize(roomGrids);
         }
     
+
     }    
 
     private void OnDrawGizmos()
@@ -199,6 +218,91 @@ private List<RoomGrid> roomGrids = new List<RoomGrid>();
                 );
             }
         }
+    }
+
+    private void CreateDoors(GameObject doorParent)
+    {
+        SpawnCenteredDoors(
+        possibleDoorHorizontalPosition,
+        doorHorizontal,
+        doorParent,
+        true
+    );
+
+    SpawnCenteredDoors(
+        possibleDoorVerticalPosition,
+        doorVertical,
+        doorParent,
+        false
+    );
+    }
+
+private void SpawnCenteredDoors(
+    List<Vector3Int> positions,
+    GameObject doorPrefab,
+    GameObject doorParent,
+    bool horizontal)
+{
+    if (doorPrefab == null || positions.Count == 0)
+        return;
+
+    // Group positions along the same wall.
+    var groups = positions
+        .GroupBy(p => horizontal ? p.z : p.x);
+
+    foreach (var group in groups)
+    {
+        var sorted = group
+            .OrderBy(p => horizontal ? p.x : p.z)
+            .ToList();
+
+        int i = 0;
+
+        while (i < sorted.Count)
+        {
+            int j = i + 1;
+
+            while (j < sorted.Count)
+            {
+                int previous = horizontal
+                    ? sorted[j - 1].x
+                    : sorted[j - 1].z;
+
+                int current = horizontal
+                    ? sorted[j].x
+                    : sorted[j].z;
+
+                if (current != previous + 1)
+                    break;
+
+                j++;
+            }
+
+            int runLength = j - i;
+
+            if (runLength >= 3)
+            {
+                // Spawn one door at the center of this run.
+                Vector3Int first = sorted[i];
+                Vector3Int last = sorted[j - 1];
+
+                Vector3 center = ((Vector3)first + (Vector3)last) / 2f;
+
+                Instantiate(
+                    doorPrefab,
+                    center,
+                    Quaternion.identity,
+                    doorParent.transform
+                );
+            }
+
+            i = j;
+        }
+    }
+}
+    private void CreateDoor(GameObject doorParent, Vector3Int doorPosition, GameObject doorPrefab)
+    {
+        Instantiate(doorPrefab, doorPosition, Quaternion.identity, doorParent.transform);
     }
     private void CreateWalls(GameObject wallParent)
     {
@@ -293,7 +397,16 @@ private List<RoomGrid> roomGrids = new List<RoomGrid>();
     private void AddWallPositionToList(Vector3 wallPosition, List<Vector3Int> wallList, List<Vector3Int> doorList)
     {
         Vector3Int point = Vector3Int.CeilToInt(wallPosition);
-        if (wallList.Contains(point))
+
+    
+        
+      
+      // If a door already exists here, dont spawn another
+       if (doorList.Contains(point))
+       return;
+
+
+       if (wallList.Contains(point))
         {
             doorList.Add(point);
             wallList.Remove(point);
@@ -305,6 +418,99 @@ private List<RoomGrid> roomGrids = new List<RoomGrid>();
         } 
     }
 
+    private void ConsolidateDoorPositions()
+{
+    ConsolidateDoors(
+        possibleDoorHorizontalPosition,
+        possibleWallHorizontalPosition,
+        true
+    );
+
+    ConsolidateDoors(
+        possibleDoorVerticalPosition,
+        possibleWallVerticalPosition,
+        false
+    );
+}
+
+private void ConsolidateDoors(
+    List<Vector3Int> doorCandidates,
+    List<Vector3Int> wallPositions,
+    bool horizontal)
+{
+    HashSet<Vector3Int> remaining =
+        new HashSet<Vector3Int>(doorCandidates);
+
+    doorCandidates.Clear();
+
+    while (remaining.Count > 0)
+    {
+        Vector3Int first = remaining.First();
+
+        // Find every candidate in this continuous wall segment.
+        List<Vector3Int> segment = remaining
+            .Where(p => horizontal
+                ? p.z == first.z
+                : p.x == first.x)
+            .OrderBy(p => horizontal ? p.x : p.z)
+            .ToList();
+
+        // Split the segment into continuous runs.
+        List<List<Vector3Int>> runs = new List<List<Vector3Int>>();
+        List<Vector3Int> run = new List<Vector3Int>();
+
+        foreach (Vector3Int point in segment)
+        {
+            if (run.Count > 0)
+            {
+                // ????
+                int previous = horizontal
+                    ? run[run.Count - 1].x
+                    : run[run.Count - 1].z;
+
+                int current = horizontal ? point.x : point.z;
+
+                if (current != previous + 1)
+                {
+                    runs.Add(run);
+                    run = new List<Vector3Int>();
+                }
+            }
+
+            run.Add(point);
+        }
+
+        if (run.Count > 0)
+            runs.Add(run);
+
+        foreach (List<Vector3Int> currentRun in runs)
+        {
+            foreach (Vector3Int point in currentRun)
+                remaining.Remove(point);
+
+            // A valid opening must fit three adjacent grid positions.
+            if (currentRun.Count < 3)
+            {
+                foreach (Vector3Int point in currentRun)
+                    wallPositions.Add(point);
+
+                continue;
+            }
+
+            int start = (currentRun.Count - 3) / 2;
+
+            for (int i = 0; i < currentRun.Count; i++)
+            {
+                Vector3Int point = currentRun[i];
+
+                if (i >= start && i < start + 3)
+                    doorCandidates.Add(point);
+                else
+                    wallPositions.Add(point);
+            }
+        }
+    }
+}
     private void DestroyAllChildren()
     {
         while(transform.childCount != 0)
