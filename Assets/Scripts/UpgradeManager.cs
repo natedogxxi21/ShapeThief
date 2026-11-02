@@ -22,7 +22,7 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] private float extraStamina = 25f;
 
     private bool smokeBombObtained = false;
-    private bool smokeBombUsed = false;
+    //private bool smokeBombUsed = false;
 
    
     public void Start()

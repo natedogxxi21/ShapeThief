@@ -9,12 +9,12 @@ public partial class PlayerTouchMovement : MonoBehaviour
 	[AutoStaticsCleanup] public static PlayerTouchMovement Instance;
 
 	[SerializeField] Rigidbody rb;
+	[SerializeField] CameraController cam;
 	[SerializeField] Transform model;
 	[SerializeField] Transform camYaw;
 	[SerializeField] Transform camPitch;
 	[SerializeField] float speed;
 	[SerializeField] float runSpeed;
-	[SerializeField] float lookSensitivity = 1;
 	[SerializeField] float maxStamina;
 	[SerializeField] float staminaRecover;
 	[SerializeField] float runStaminaDrain;
@@ -28,13 +28,10 @@ public partial class PlayerTouchMovement : MonoBehaviour
 
 	Finger movementFinger;
 	Vector2 moveInput;
-
 	Finger lookFinger;
-	Vector2 lookInput;
-	float yaw = 0;
-	float pitch = 45;
-	float targetAngle = 0;
-	const float turnSpeed = 10;
+
+	float charModelTargetAngle = 0;
+	const float charModelTurnSpeed = 10;
 	public bool Running { get; private set; }
 	float stamina;
 	public float StaminaPercent => stamina / maxStamina;
@@ -51,7 +48,7 @@ public partial class PlayerTouchMovement : MonoBehaviour
 
 	void Update()
 	{
-        float angle = Mathf.LerpAngle(model.localEulerAngles.y, targetAngle, turnSpeed * Time.deltaTime);
+		float angle = Mathf.LerpAngle(model.localEulerAngles.y, charModelTargetAngle, charModelTurnSpeed * Time.deltaTime);
 		model.localEulerAngles = new Vector3(0, angle, 0);
 		if (moveInput.sqrMagnitude > 0.1f)
 		{ footstepTimer.Resume(); }
@@ -128,18 +125,12 @@ public partial class PlayerTouchMovement : MonoBehaviour
 			moveInput = knobPosition / maxMovement;
 
 			// Make model face moving direction
-			targetAngle = (Mathf.Atan2(moveInput.x, moveInput.y) * Mathf.Rad2Deg) + yaw;
+			charModelTargetAngle = (Mathf.Atan2(moveInput.x, moveInput.y) * Mathf.Rad2Deg) + cam.yaw;
 		}
 
 		if (movedFinger == lookFinger)
 		{
-			lookInput = Touchscreen.current.touches[movedFinger.index].delta.value;
-
-			yaw += lookInput.x * lookSensitivity;
-			pitch = Mathf.Clamp(pitch - (lookInput.y * lookSensitivity), 10, 80);
-
-			camYaw.localEulerAngles = new Vector3(0, yaw, 0);
-			camPitch.localEulerAngles = new Vector3(pitch, 0, 0);
+			cam.ProcessLookInput(Touchscreen.current.touches[movedFinger.index].delta.value);
 		}
 	}
 
@@ -156,7 +147,6 @@ public partial class PlayerTouchMovement : MonoBehaviour
 		if (raisedFinger == lookFinger)
 		{
 			lookFinger = null;
-			lookInput = Vector2.zero;
 		}
 	}
 
@@ -189,23 +179,18 @@ public partial class PlayerTouchMovement : MonoBehaviour
 	{
 		moveInput = ctx.ReadValue<Vector2>();
 		if (moveInput.sqrMagnitude > 0.05f)
-		{ targetAngle = (Mathf.Atan2(moveInput.x, moveInput.y) * Mathf.Rad2Deg) + yaw; }
+		{ charModelTargetAngle = (Mathf.Atan2(moveInput.x, moveInput.y) * Mathf.Rad2Deg) + cam.yaw; }
 	}
 	void OnKBMTurn(InputAction.CallbackContext ctx) => kbmTurning = ctx.ReadValue<float>() > 0.5f;
 	void OnKBMLook(InputAction.CallbackContext ctx)
 	{
 		if (kbmTurning)
 		{
-			lookInput = ctx.ReadValue<Vector2>();
-
 			const float addKBMSensitivity = 5;
-			yaw += lookInput.x * lookSensitivity * addKBMSensitivity;
-			pitch = Mathf.Clamp(pitch - (lookInput.y * lookSensitivity * addKBMSensitivity), 10, 80);
+			cam.ProcessLookInput(ctx.ReadValue<Vector2>() * addKBMSensitivity);
 
-			camYaw.localEulerAngles = new Vector3(0, yaw, 0);
-			camPitch.localEulerAngles = new Vector3(pitch, 0, 0);
 			if (moveInput.sqrMagnitude > 0.05f)
-			{ targetAngle = (Mathf.Atan2(moveInput.x, moveInput.y) * Mathf.Rad2Deg) + yaw; }
+			{ charModelTargetAngle = (Mathf.Atan2(moveInput.x, moveInput.y) * Mathf.Rad2Deg) + cam.yaw; }
 		}
 	}
 	void OnKBMTest(InputAction.CallbackContext ctx) => AudioCueManager.PlayTestSound(transform.position);
@@ -248,9 +233,9 @@ public partial class PlayerTouchMovement : MonoBehaviour
 
 	public void UpgradeStamina(float amount)
 	{
-        Debug.Log($"BEFORE upgrade: Current={stamina}, Max={maxStamina}, Amount={amount}");
-        maxStamina += amount;
+		Debug.Log($"BEFORE upgrade: Current={stamina}, Max={maxStamina}, Amount={amount}");
+		maxStamina += amount;
 		stamina += amount;
-        Debug.Log($"AFTER upgrade: Current={stamina}, Max={maxStamina}");
-    }
+		Debug.Log($"AFTER upgrade: Current={stamina}, Max={maxStamina}");
+	}
 }

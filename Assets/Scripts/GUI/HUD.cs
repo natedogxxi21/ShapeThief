@@ -9,6 +9,7 @@ public partial class HUD : MonoBehaviour
 {
 	[AutoStaticsCleanup] public static HUD Instance;
 	public FloatingJoystick moveJoystick;
+	public Transform indicators;
 	[SerializeField] ScreenButton shiftButton;
 	[SerializeField] ScreenButton runButton;
 	[SerializeField] TMP_Text moneyCounterText;
