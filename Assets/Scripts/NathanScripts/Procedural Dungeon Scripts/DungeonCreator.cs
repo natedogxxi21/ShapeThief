@@ -291,7 +291,7 @@ private void SpawnCenteredDoors(
                 Instantiate(
                     doorPrefab,
                     center,
-                    Quaternion.identity,
+                    doorPrefab.transform.rotation,
                     doorParent.transform
                 );
             }
@@ -302,7 +302,7 @@ private void SpawnCenteredDoors(
 }
     private void CreateDoor(GameObject doorParent, Vector3Int doorPosition, GameObject doorPrefab)
     {
-        Instantiate(doorPrefab, doorPosition, Quaternion.identity, doorParent.transform);
+        Instantiate(doorPrefab, doorPosition, doorPrefab.transform.rotation, doorParent.transform);
     }
     private void CreateWalls(GameObject wallParent)
     {

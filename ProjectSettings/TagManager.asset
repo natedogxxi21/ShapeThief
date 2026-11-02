@@ -8,6 +8,7 @@ TagManager:
   - Rooms
   - KeyPad
   - EnemySpawnBlocker
+  - Ignore
   layers:
   - Default
   - TransparentFX

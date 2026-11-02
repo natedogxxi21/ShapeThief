@@ -12092,9 +12092,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbca60157e143954189fd32df21eb2eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Exit_Level
-  requiredMoney: 120
+  additionalMoneyRequired: 50
   nextSceneName: Nathan Scene
   seeBehindPad: {fileID: 1146889051}
+  upgradeMenu: {fileID: 0}
   objectiveText: {fileID: 1437695640}
 --- !u!65 &237378328
 BoxCollider:
@@ -81538,7 +81539,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 386809882074214816, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 37.05
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 552261905853201978, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_SizeDelta.x
@@ -81630,11 +81631,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3836853327721848896, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: timeRemaining
-      value: 5
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 6093312590393961592, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 29.85
+      value: 29.5
       objectReference: {fileID: 0}
     - target: {fileID: 6393414177414952191, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_Name
@@ -81642,15 +81643,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6426980794540341402, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 63.5
+      value: 62.6
       objectReference: {fileID: 0}
     - target: {fileID: 6669424879269237201, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 65.95
+      value: 31.1
       objectReference: {fileID: 0}
     - target: {fileID: 8968438791746746977, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 63.5
+      value: 62.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -82686,7 +82687,7 @@ MonoBehaviour:
   roomWidthMin: 18
   roomLengthMin: 18
   maxIterations: 20
-  corridorWidth: 5
+  corridorWidth: 3
   material: {fileID: 2100000, guid: 729f49c4b6ed50742b437608fd67cd3c, type: 2}
   roomBottomCornerModifier: 0.186
   roomTopCornerModifier: 0.828
@@ -82698,7 +82699,7 @@ MonoBehaviour:
   wallVertical: {fileID: 6707263632203575883, guid: 832c274675b35244c90583fe9442a919, type: 3}
   wallHorizontal: {fileID: 8194266006747058734, guid: 86ef0f2a91f435e409a805b0fc9d4480, type: 3}
   doorVertical: {fileID: 0}
-  doorHorizontal: {fileID: 0}
+  doorHorizontal: {fileID: 8517863505612932284, guid: de9fb113ba46cba4cb9de3a49b06c211, type: 3}
 --- !u!1 &1526781291
 GameObject:
   m_ObjectHideFlags: 0
@@ -113245,7 +113246,7 @@ MonoBehaviour:
     minPerRoom: 1
     maxPerRoom: 3
     spawnLocation: 3
-    verticalOffset: -0.1
+    verticalOffset: 0.1
   - propName: Mug
     prefab: {fileID: 1226859771069493251, guid: 480c4b975cc8f4393b50a95dd136c5bd, type: 3}
     spawnChance: 0.333

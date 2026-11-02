@@ -40,13 +40,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6955775910381929409}
     m_Modifications:
+    - target: {fileID: 3923772120720022414, guid: 5453f62a7a76763419abea4ce847e29e, type: 3}
+      propertyPath: m_UseSpring
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4261526722044645105, guid: 5453f62a7a76763419abea4ce847e29e, type: 3}
       propertyPath: m_Name
       value: Door
       objectReference: {fileID: 0}
     - target: {fileID: 6403460184990830890, guid: 5453f62a7a76763419abea4ce847e29e, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6403460184990830890, guid: 5453f62a7a76763419abea4ce847e29e, type: 3}
+      propertyPath: m_AngularDamping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6403460184990830890, guid: 5453f62a7a76763419abea4ce847e29e, type: 3}
       propertyPath: m_IncludeLayers.m_Bits
-      value: 0
+      value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 6825709605219595588, guid: 5453f62a7a76763419abea4ce847e29e, type: 3}
       propertyPath: pushForce

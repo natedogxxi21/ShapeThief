@@ -16,9 +16,11 @@ public class DoorSwing : MonoBehaviour
         if (!collision.gameObject.CompareTag("Player"))
             return;
 
-        Vector3 direction = collision.relativeVelocity;
-       direction.y = 0;
+        if (!collision.gameObject.CompareTag("EnemySpawnBlocker"))
+            return;
 
+            Vector3 direction = collision.relativeVelocity;
+            direction.y = 0;
         if (direction.sqrMagnitude > 0.01f)
         {
             Vector3 push = direction.normalized * pushForce;
