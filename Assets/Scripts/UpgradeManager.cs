@@ -89,7 +89,7 @@ public class UpgradeManager : MonoBehaviour
                     return false;
         }
     }
-    private void OnCollisionEnter(Collision collision)
+   /* private void OnCollisionEnter(Collision collision)
     {
         BuyExtraTime();
         ObtainSmokeBomb();
@@ -98,7 +98,7 @@ public class UpgradeManager : MonoBehaviour
         Debug.Log("Smoke Bomb saved: " + UpgradeData.HasSmokeBomb);
 
 
-    }
+    }*/
     public bool BuyExtraTime()
     {
         if (PlayerStats.Money < timeUpgradeCost)
