@@ -11,6 +11,7 @@ public partial class HUD : MonoBehaviour
 	public FloatingJoystick moveJoystick;
 	public Transform indicators;
 	[SerializeField] ScreenButton shiftButton;
+	[SerializeField] ScreenButton storeButton;
 	[SerializeField] ScreenButton runButton;
 	[SerializeField] TMP_Text moneyCounterText;
 
@@ -28,18 +29,21 @@ public partial class HUD : MonoBehaviour
 	[SerializeField] RectTransform[] reservedRects;
 	bool inventoryOpen = false;
 	Coroutine shiftButtonFlashCoroutine;
+	Coroutine storeButtonFlashCoroutine;
 
-    private void Awake()
-    {
-        Instance = this;
-    }
-    void Start()
+	private void Awake()
+	{
+		Instance = this;
+	}
+	void Start()
 	{
 		shiftButton.button.onClick.AddListener(ShiftButtonPressed);
+		storeButton.button.onClick.AddListener(StoreButtonPressed);
 		inventoryButton.button.onClick.AddListener(InventoryButtonPressed);
 		inventoryCloseButton.onClick.AddListener(() => { SetInventoryOpen(false); });
 		runButton.button.onClick.AddListener(RunButtonPressed);
 		PlayerShift.Instance.OnShift.AddListener(OnShiftEvent);
+		PlayerShift.Instance.OnStore.AddListener(OnStoreEvent);
 		PlayerStats.OnMoneyChanged.AddListener(OnMoneyChanged);
 		OnMoneyChanged(PlayerStats.Money, PlayerStats.Money);
 	}
@@ -51,7 +55,7 @@ public partial class HUD : MonoBehaviour
 			shiftButton.label.text = PlayerShift.Instance.ShiftTimer.ToString("F1");
 			shiftButton.image.fillAmount = 1;
 		}
-		else if (PlayerShift.Instance.ShiftCooldown > 0)
+		else if (PlayerShift.Instance.ShiftCooldownTimer > 0)
 		{
 			shiftButton.label.text = "Shift";
 			shiftButton.image.fillAmount = 1 - PlayerShift.Instance.ShiftCooldownPercent;
@@ -61,6 +65,10 @@ public partial class HUD : MonoBehaviour
 			shiftButton.label.text = "Shift";
 			shiftButton.image.fillAmount = 1;
 		}
+
+		shiftButton.image.fillAmount = PlayerShift.Instance.StoreCooldownTimer > 0
+													? 1 - PlayerShift.Instance.StoreCooldownPercent
+													: 1;
 
 		runButton.label.text = PlayerTouchMovement.Instance.Running ? "Running" : "Walking";
 		runButton.image.fillAmount = PlayerTouchMovement.Instance.StaminaPercent;
@@ -83,6 +91,26 @@ public partial class HUD : MonoBehaviour
 				yield return null;
 			}
 			shiftButton.image.color = normalColor;
+		}
+	}
+
+	public void FlashStoreButton()
+	{
+		if (storeButtonFlashCoroutine != null) { StopCoroutine(storeButtonFlashCoroutine); }
+		storeButtonFlashCoroutine = StartCoroutine(FlashStoreButtonCoroutine());
+
+		IEnumerator FlashStoreButtonCoroutine(float duration = 1)
+		{
+			storeButton.image.color = activeColor;
+			float timer = duration;
+			while (timer > 0)
+			{
+				timer -= Time.deltaTime;
+				Color color = Color.Lerp(normalColor, activeColor, Mathf.Max(0, timer) / duration);
+				shiftButton.image.color = color;
+				yield return null;
+			}
+			storeButton.image.color = normalColor;
 		}
 	}
 
@@ -117,6 +145,7 @@ public partial class HUD : MonoBehaviour
 	}
 
 	void OnShiftEvent() => SetShiftAvailable(PlayerShift.Instance.ShiftAvailable);
+	void OnStoreEvent() => SetStoreAvailable(PlayerShift.Instance.StoreAvailable);
 
 	public void SetShiftAvailable(bool ready)
 	{
@@ -124,7 +153,15 @@ public partial class HUD : MonoBehaviour
 		if (ready) { FlashShiftButton(); }
 	}
 
+	public void SetStoreAvailable(bool ready)
+	{
+		shiftButton.button.interactable = ready;
+		if (ready) { FlashShiftButton(); }
+	}
+
 	public void ShiftButtonPressed() => PlayerShift.Instance.Shift();
+
+	public void StoreButtonPressed() => PlayerShift.Instance.Store();
 
 	public void InventoryButtonPressed() => SetInventoryOpen(!inventoryOpen);
 	void SetInventoryOpen(bool open)
@@ -174,7 +211,7 @@ public partial class HUD : MonoBehaviour
 	{
 		if (smokeBombInventoryButton != null)
 		{
-			if(inventoryPropButtonPrefab == null || inventoryPanelContents == null)
+			if (inventoryPropButtonPrefab == null || inventoryPanelContents == null)
 			{
 				return;
 			}
@@ -192,7 +229,7 @@ public partial class HUD : MonoBehaviour
 		if (upgradeManager != null)
 			upgradeManager.UseSmokeBomb();
 	}
-	
+
 	public void RemoveSmokeBombFromInventory()
 	{
 		if (smokeBombInventoryButton == null)

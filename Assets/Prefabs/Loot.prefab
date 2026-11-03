@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 450953634470906136}
   - component: {fileID: 1359658489455378333}
   - component: {fileID: 3017409603590350246}
-  - component: {fileID: 8106984037975756360}
+  - component: {fileID: 8230650803576456317}
   - component: {fileID: 3687823727780629218}
   m_Layer: 0
   m_Name: Gem
@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7566169864937736391}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300000, guid: e47ecc374d02845f2ae2d7f89b82789d, type: 2}
 --- !u!23 &3017409603590350246
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -69,6 +69,8 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d88a6c0ae7fd34dd6a3b313078c91436, type: 2}
+  - {fileID: 2100000, guid: ffe8a10c8b6d84c4588581df21cf5f3f, type: 2}
+  - {fileID: 2100000, guid: 58a6f548225794625a36e468fb5b0dec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -92,7 +94,7 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8106984037975756360
+--- !u!114 &8230650803576456317
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,26 +103,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 7566169864937736391}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a7278f52ae2546558f0c95d2b81d1cc, type: 3}
+  m_Script: {fileID: 11500000, guid: 7bc005968ab7a6547879f75e85698284, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ITISKIRUHERE.AdvancedOutlineMod
+  m_EditorClassIdentifier: Assembly-CSharp::ITISKIRUHERE.AdvancedOutline
   _outlineMaskShader: {fileID: 4800000, guid: c2f5089722420f44ea03b3dbb08dca7e, type: 3}
   _outlineFillShader: {fileID: 4800000, guid: 6cdd088550bc7e6478ae291e0e83fabb, type: 3}
+  _materialSet: {fileID: 11400000, guid: 1534359bfff6e481da9b1bc0fb59f783, type: 2}
   _outlineMode: 1
-  _outlineColor: {r: 1, g: 0.9372549, b: 0, a: 1}
-  _outlineWidth: 9
+  _outlineColor: {r: 1, g: 0.983102, b: 0, a: 1}
+  _outlineWidth: 19.3
   _pulseWidth: 1
-  _pulseSpeed: 4
-  _pulseMinWidth: 1
-  _pulseMaxWidth: 10
+  _pulseSpeed: 4.18
+  _pulseMinWidth: 2.6
+  _pulseMaxWidth: 11.5
   _rainbowColor: 0
-  _rainbowSpeed: 0.5
+  _rainbowSpeed: 5
   _dashedPattern: 0
   _dashScale: 0.03
   _dashSpeed: 15
-  _precomputeOutline: 0
-  _bakeKeys: []
-  _bakeValues: []
+  _bakedRenderers:
+  - renderer: {fileID: 3017409603590350246}
+    originalMesh: {fileID: 6664959949897491518, guid: 8908811505cc6b448a5b8940c98122cb, type: 3}
+    bakedMesh: {fileID: 4300000, guid: e47ecc374d02845f2ae2d7f89b82789d, type: 2}
 --- !u!64 &3687823727780629218
 MeshCollider:
   m_ObjectHideFlags: 0

@@ -22,18 +22,24 @@ public partial class PlayerShift : MonoBehaviour
 	public UnityEvent OnShift { get; private set; } = new();
 	public bool ShiftAvailable => !shiftTransitioning &&
 						  (shiftTarget != null || Shifted) &&
-											ShiftCooldown <= 0;
+											ShiftCooldownTimer <= 0;
+	public UnityEvent OnStore { get; private set; } = new();
+	public bool StoreAvailable => shiftTarget != null && StoreCooldownTimer <= 0;
 
 	[SerializeField] float shiftTransitionLength;
 	[SerializeField] float shiftDuration;
 	[SerializeField] float shiftCooldownDuration;
+	[SerializeField] float storeCooldownDuration;
 
 	public bool Shifted { get; private set; }
 	bool shiftTransitioning;
 	Vector3 targetShiftObjectScale;
-	public float ShiftTimer { get; private set; }
-	public float ShiftCooldown { get; private set; }
-	public float ShiftCooldownPercent => ShiftCooldown / shiftCooldownDuration;
+	public float ShiftTimer { get; private set; } // duration player stays shifted
+	public float ShiftCooldownTimer { get; private set; }
+	public float ShiftCooldownPercent => ShiftCooldownTimer / shiftCooldownDuration;
+
+	public float StoreCooldownTimer { get; private set; }
+	public float StoreCooldownPercent => StoreCooldownTimer / storeCooldownDuration;
 
 	Finger castingFinger = null;
 
@@ -52,10 +58,22 @@ public partial class PlayerShift : MonoBehaviour
 				Shift();
 			}
 		}
-		if (ShiftCooldown > 0)
+		if (ShiftCooldownTimer > 0)
 		{
-			ShiftCooldown -= Time.deltaTime;
-			OnShift.Invoke();
+			ShiftCooldownTimer -= Time.deltaTime;
+			if (ShiftCooldownTimer <= 0)
+			{
+				OnShift.Invoke();
+			}
+		}
+		
+		if (ShiftCooldownTimer > 0)
+		{
+			ShiftCooldownTimer -= Time.deltaTime;
+			if (ShiftCooldownTimer <= 0)
+			{
+				OnStore.Invoke();
+			}
 		}
 	}
 
@@ -71,15 +89,23 @@ public partial class PlayerShift : MonoBehaviour
 				shiftMeshFilter.mesh = shiftTarget.prop.mesh;
 				shiftMeshRenderer.material = shiftTarget.prop.material;
 				targetShiftObjectScale = shiftTarget.prop.scale;
-				HUD.Instance.AddToInventory(shiftTarget.prop);
 			}
 			StartCoroutine(ShiftCoroutine(!Shifted));
 		}
 	}
 
+	public void Store()
+	{
+		if (StoreAvailable)
+		{
+			OnStore.Invoke();
+			HUD.Instance.AddToInventory(shiftTarget.prop);
+		}
+	}
+
 	public bool ShiftInventory(Prop prop)
 	{
-		if (shiftTransitioning || Shifted || ShiftCooldown > 0)
+		if (shiftTransitioning || Shifted || ShiftCooldownTimer > 0)
 		{ return false; }
 
 		shiftTransitioning = true;
@@ -123,7 +149,7 @@ public partial class PlayerShift : MonoBehaviour
 		rb.position = transform.position;
 
 		if (toObject) { ShiftTimer = shiftDuration; }
-		else { ShiftCooldown = shiftCooldownDuration; }
+		else { ShiftCooldownTimer = shiftCooldownDuration; }
 
 		shiftTransitioning = false;
 		Shifted = toObject;

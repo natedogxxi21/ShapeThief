@@ -6,10 +6,11 @@ public class GuardHearing : MonoBehaviour
 	public readonly UnityEvent<Vector3> onPlayerHeard = new();
 	public readonly UnityEvent<Vector3> onPlayerNoticed = new();
 
-	// Cues quieter than this are ignored.
+	// cues quieter than this are ignored.
 	public const float AudibleCutoff = 0.05f;
 
 	float soundHeard;
+	bool alarmed;
 	Timer stopListeningTimer;
 	[SerializeField] float investigateSoundThreshold;
 	[SerializeField] float hearPlayerThreshold;
@@ -17,12 +18,12 @@ public class GuardHearing : MonoBehaviour
 	public float Suspicion => soundHeard / hearPlayerThreshold;
 
 #if UNITY_EDITOR
-	// Editor-only: recent cues, used by the inspector graph to flash a dot on the curve.
+	// recent cues, used by the inspector graph to flash a dot on the curve.
 	public struct CueRecord
 	{
 		public float distance;
 		public float relativeLoudness;
-		public float time; // Time.realtimeSinceStartup
+		public float time;
 	}
 
 	public const float CueDebugLifetime = 1f;
@@ -57,17 +58,21 @@ public class GuardHearing : MonoBehaviour
 		RecordCue(pos, relative);
 #endif
 
+		alarmed = soundHeard > hearPlayerThreshold;
 		soundHeard += relative;
 		stopListeningTimer = .5f;
-		if (soundHeard > hearPlayerThreshold)
+		if (!alarmed && soundHeard > hearPlayerThreshold)
 		{
+			alarmed = true;
 			onPlayerHeard.Invoke(pos);
 		}
 
-		if (soundHeard > investigateSoundThreshold)
-		{
-			onPlayerNoticed.Invoke(pos);
-		}
+		// maybe the guards wont walk to noises they heard for now, might be too intricate for a mobile game
+		// (especially because nobody is playing with the speakers)
+		// if (soundHeard > investigateSoundThreshold)
+		// {
+		// 	// onPlayerNoticed.Invoke(pos);
+		// }
 	}
 
 	void FixedUpdate()
@@ -75,6 +80,7 @@ public class GuardHearing : MonoBehaviour
 		if (soundHeard > 0 && stopListeningTimer.Completed)
 		{
 			soundHeard = Mathf.Max(0, soundHeard - (suspicionDrain * Time.fixedDeltaTime));
+			alarmed = false;
 		}
 	}
 

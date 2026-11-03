@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class LootProp : MonoBehaviour
 {
-	public Mesh mesh;
 	[SerializeField] int lootValue;
 	[SerializeField] AudioClip collectClip;
 	bool collected;

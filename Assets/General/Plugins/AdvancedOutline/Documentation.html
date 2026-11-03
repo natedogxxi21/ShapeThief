@@ -125,14 +125,16 @@
     <ol>
       <li><a href="#overview">1. Overview</a></li>
       <li><a href="#quick-start">2. Quick Start Setup Guide</a></li>
-      <li><a href="#properties">3. Component Properties Reference</a></li>
-      <li><a href="#api">4. Script Reference (API)</a></li>
-      <li><a href="#shaders">5. Shader Details &amp; Rendering Pipeline</a></li>
-      <li><a href="#troubleshooting">6. Troubleshooting &amp; FAQ</a></li>
+      <li><a href="#baking">3. Persistent Baking (Prefab-Safe Workflow)</a></li>
+      <li><a href="#properties">4. Component Properties Reference</a></li>
+      <li><a href="#api">5. Script Reference (API)</a></li>
+      <li><a href="#shaders">6. Shader Details &amp; Rendering Pipeline</a></li>
+      <li><a href="#troubleshooting">7. Troubleshooting &amp; FAQ</a></li>
     </ol>
 
     <h2 id="overview">1. Overview</h2>
-    <p>The <strong>Advanced Outline System</strong> is a high-performance, feature-rich screen-space outline solution for Unity. It uses the stencil buffer to render crisp, pixel-perfect outlines around meshes, including static meshes and skinned mesh hierarchies. The system dynamically creates temporary mesh clones at runtime to compute and assign smooth normals, resolving ugly outlines on hard-edged shapes without altering original asset files on disk.</p>
+    <p>The <strong>Advanced Outline System</strong> is a high-performance, feature-rich screen-space outline solution for Unity. It uses the stencil buffer to render crisp, pixel-perfect outlines around meshes, including static meshes and skinned mesh hierarchies. Smooth normals are stored in a generated copy of each mesh, so hard-edged shapes outline cleanly without altering your original model files.</p>
+    <p>All data the outline needs (outline meshes and materials) is <strong>baked into real project assets</strong> with one click. Prefabs and scenes then contain everything required, the component never modifies anything in edit mode, and opening a prefab no longer dirties it. Objects that were never baked still work in Play Mode through an in-memory fallback.</p>
 
     <h2 id="quick-start">2. Quick Start Setup Guide</h2>
     <p>Follow these steps to apply outlines to any object in your scene:</p>
@@ -141,19 +143,76 @@
         <strong>Add the Component:</strong> Select the GameObject you want to outline. In the Inspector, click <strong>Add Component</strong>, search for <code>Advanced Outline</code>, and add it.
       </li>
       <li>
-        <strong>Shader Assignment:</strong> The component automatically finds and instantiates the necessary shaders (<code>Advanced Outline Mask</code> and <code>Advanced Outline Fill</code>).
+        <strong>Shader Assignment:</strong> When the component is added it automatically finds the <code>Advanced Outline Mask</code> and <code>Advanced Outline Fill</code> shaders and any existing Material Set in the project.
       </li>
       <li>
-        <strong>Configure Visuals:</strong> Choose the preferred <strong>Outline Mode</strong> (e.g., <code>OutlineVisible</code>, <code>OutlineAll</code>), select an **Outline Color**, and adjust the **Outline Width** in the Inspector.
+        <strong>Configure Visuals:</strong> Choose the preferred <strong>Outline Mode</strong> (e.g., <code>OutlineVisible</code>, <code>OutlineAll</code>), select an <strong>Outline Color</strong>, and adjust the <strong>Outline Width</strong> in the Inspector.
+      </li>
+      <li>
+        <strong>Bake:</strong> Click <strong>Bake Outline Assets</strong> at the top of the component. The outline is now visible in the editor and stored permanently. For prefabs, do this in Prefab Mode or with the prefab asset selected (see <a href="#baking">section 3</a>).
       </li>
     </ol>
 
-    <h2 id="properties">3. Component Properties Reference</h2>
-    
-    <h3>3.1. General Settings</h3>
+    <h2 id="baking">3. Persistent Baking (Prefab-Safe Workflow)</h2>
+    <p>Earlier versions generated meshes and materials in memory every time the component enabled, <em>including in edit mode and Prefab Mode</em>. That wrote temporary objects into the prefab/scene on save. The component now never does this in edit mode. Instead, you bake once and the result is stored as assets.</p>
+
+    <h3>3.1. What Baking Creates</h3>
     <ul>
-      <li><strong>Mask Shader:</strong> Shader used to mark object geometry in the stencil buffer.</li>
-      <li><strong>Fill Shader:</strong> Shader used to extrude and render the outline color.</li>
+      <li><strong>Outline mesh assets</strong> (<code>Meshes/&lt;MeshName&gt;_&lt;id&gt;_Outline.asset</code>): a copy of each source mesh with smooth normals in UV4 and, for multi-material meshes, one extra submesh covering the whole mesh. One asset per source mesh, shared by every object that uses it. Your original models are never modified.</li>
+      <li><strong>A Material Set</strong> (<code>AdvancedOutlineMaterialSet.asset</code> plus <code>Materials/*.mat</code>): five shared materials, one per ZTest variant. They are never modified at runtime; colour, width and dash settings are per-object and written through property blocks.</li>
+      <li><strong>References on the renderers:</strong> each baked <code>MeshFilter</code>/<code>SkinnedMeshRenderer</code> points at its outline mesh and each renderer's material list ends with the mask and fill materials. A record of the original meshes is kept on the component so the bake can be undone.</li>
+    </ul>
+    <p>Default location: <code>Assets/AdvancedOutline/Generated/</code>. To use another location, create a Material Set there (<em>Create &rarr; Advanced Outline &rarr; Material Set</em>) and assign it; the <code>Meshes</code> and <code>Materials</code> folders are created next to it.</p>
+
+    <h3>3.2. Baking a Prefab</h3>
+    <ol>
+      <li>Open the prefab in <strong>Prefab Mode</strong> (or select the prefab asset in the Project window).</li>
+      <li>Add <strong>Advanced Outline</strong> and configure it.</li>
+      <li>Click <strong>Bake Outline Assets</strong>, then save the prefab (not needed when baking directly from the Project window).</li>
+    </ol>
+    <p>Baking on a prefab <em>instance</em> in a scene only creates overrides on that instance; the inspector tells you when this is the case.</p>
+
+    <h3>3.3. Inspector Buttons</h3>
+    <ul>
+      <li><strong>Bake Outline Assets / Re-Bake:</strong> restores the original meshes, then rebuilds all outline data from them. Safe to repeat.</li>
+      <li><strong>Remove Bake:</strong> restores the original meshes, removes the outline materials and clears the record. Do this before deleting the component, otherwise the (invisible) outline materials stay on the renderers.</li>
+      <li><strong>Show Material Set:</strong> highlights the Material Set asset.</li>
+    </ul>
+    <p>Changing <em>Outline Mode</em> or the <em>Material Set</em> in the inspector swaps the baked materials automatically (one Undo step). Colour, width and effects need no re-bake.</p>
+
+    <h3>3.4. Menu Items</h3>
+    <ul>
+      <li><code>Tools &rarr; Advanced Outline &rarr; Bake Selected</code>: bakes every Advanced Outline in the selected scene objects and prefab assets.</li>
+      <li><code>Tools &rarr; Advanced Outline &rarr; Remove Bake From Selected</code></li>
+      <li><code>Tools &rarr; Advanced Outline &rarr; Strip Outline Materials From Selected</code>: repair tool that removes leftover outline materials from renderers, for example from data written by versions before 1.2. It cannot restore meshes that were lost; reassign those manually.</li>
+    </ul>
+
+    <h3>3.5. When to Re-Bake</h3>
+    <p>The inspector shows a warning (&ldquo;out of date&rdquo;) and tells you why. Re-bake after you:</p>
+    <ul>
+      <li>change the mesh or material list of an outlined renderer (the outline materials must stay at the end of the list),</li>
+      <li>re-import or edit the source model,</li>
+      <li>add new child renderers that should be outlined.</li>
+    </ul>
+
+    <h3>3.6. Requirements &amp; Notes</h3>
+    <ul>
+      <li>Reading mesh data may require <strong>Read/Write Enabled</strong> on the source model's import settings. If a mesh cannot be read, the bake skips it and logs a warning naming the mesh. Baked outline meshes are always readable.</li>
+      <li>Skinned meshes are supported. Smooth normals are not stored for them (custom UVs are not skinned), so they extrude along their regular, animated vertex normals, as before.</li>
+      <li>Renderers that are not mesh or skinned mesh renderers (particles, sprites, lines) are ignored. Renderers owned by a nested Advanced Outline belong to that component.</li>
+      <li>Disabling the component hides the outline but does not remove baked passes from the renderers; use <strong>Remove Bake</strong> to stop paying for them.</li>
+    </ul>
+
+    <h3>3.7. Un-baked Objects (Runtime Fallback)</h3>
+    <p>If an object is not baked, the outline is generated in memory <strong>in Play Mode and builds only</strong>, using shared meshes and materials, and removed again when the component is disabled. This keeps objects created at runtime (for example <code>AddComponent&lt;AdvancedOutline&gt;()</code> on a spawned object) working. Nothing is generated in edit mode, in Prefab Mode or on prefab assets. For builds, either bake, or keep the two shader references assigned on the component so they are included in the build.</p>
+
+    <h2 id="properties">4. Component Properties Reference</h2>
+    
+    <h3>4.1. General Settings</h3>
+    <ul>
+      <li><strong>Mask Shader:</strong> Shader used to mark object geometry in the stencil buffer (used when creating materials).</li>
+      <li><strong>Fill Shader:</strong> Shader used to extrude and render the outline color (used when creating materials).</li>
+      <li><strong>Material Set:</strong> The persistent materials shared by all outlines. Created automatically on the first bake.</li>
       <li><strong>Outline Mode:</strong>
         <ul>
           <li><code>OutlineAll</code>: Renders the outline around the entire mesh.</li>
@@ -164,10 +223,10 @@
         </ul>
       </li>
       <li><strong>Outline Color:</strong> Base outline color.</li>
-      <li><strong>Outline Width:</strong> Thickness of the outline stroke (0 to 10).</li>
+      <li><strong>Outline Width:</strong> Thickness of the outline stroke (0 to 50).</li>
     </ul>
 
-    <h3>3.2. Aesthetic Effects (Blendable)</h3>
+    <h3>4.2. Aesthetic Effects (Blendable)</h3>
     <ul>
       <li><strong>Pulse Width:</strong> Oscillates the outline width over time.
         <ul>
@@ -188,12 +247,10 @@
       </li>
     </ul>
 
-    <h3>3.3. Performance &amp; Baking</h3>
-    <ul>
-      <li><strong>Precompute Outline:</strong> When checked, computes and serializes smooth normals within the Unity Editor. This avoids per-vertex calculations on <code>Awake()</code> at runtime, eliminating loading spikes.</li>
-    </ul>
+    <h3>4.3. Persistent Outline Data</h3>
+    <p>The panel at the top of the component replaces the old <em>Precompute Outline</em> checkbox. See <a href="#baking">section 3</a>. Effects (colour, width, pulse, rainbow, dashes) never require re-baking.</p>
 
-    <h2 id="api">4. Script Reference (API)</h2>
+    <h2 id="api">5. Script Reference (API)</h2>
     <p>Access and control the system dynamically through code using the following interface:</p>
 
     <table>
@@ -218,7 +275,7 @@
         <tr>
           <td><code>OutlineWidth</code></td>
           <td><code>float</code></td>
-          <td>Gets or sets the outline thickness (0 to 10).</td>
+          <td>Gets or sets the outline thickness (0 to 50).</td>
         </tr>
         <tr>
           <td><code>PulseWidth</code></td>
@@ -236,14 +293,47 @@
           <td>Enables or disables the dashed crawling-ants pattern.</td>
         </tr>
         <tr>
+          <td><code>PulseSpeed</code>, <code>PulseMinWidth</code>, <code>PulseMaxWidth</code></td>
+          <td><code>float</code></td>
+          <td>Pulse animation settings.</td>
+        </tr>
+        <tr>
+          <td><code>RainbowSpeed</code></td>
+          <td><code>float</code></td>
+          <td>Rate of the rainbow colour cycle.</td>
+        </tr>
+        <tr>
+          <td><code>DashScale</code>, <code>DashSpeed</code></td>
+          <td><code>float</code></td>
+          <td>Dash density and crawl speed.</td>
+        </tr>
+        <tr>
+          <td><code>MaterialSet</code></td>
+          <td><code>AdvancedOutlineMaterialSet</code></td>
+          <td>The persistent material set used by this component.</td>
+        </tr>
+        <tr>
+          <td><code>IsBaked</code></td>
+          <td><code>bool</code> (read-only)</td>
+          <td>True when outline data has been baked into this object's renderers.</td>
+        </tr>
+        <tr>
           <td><code>RefreshRenderers()</code></td>
           <td><code>void</code></td>
-          <td>Forces the component to rebuild renderer caches and recalculate mesh copies. Call this if hierarchy changes at runtime.</td>
+          <td>Rebuilds the renderer cache. In Play Mode it also generates live outline data for un-baked renderers. Call this if the hierarchy changes at runtime. Never modifies assets or serialized data in edit mode.</td>
+        </tr>
+        <tr>
+          <td><code>ApplyMaterialsForCurrentMode()</code></td>
+          <td><code>void</code></td>
+          <td>Switches the outlined renderers to the materials matching the current <code>OutlineMode</code>. Called automatically when <code>OutlineMode</code> changes at runtime.</td>
         </tr>
       </tbody>
     </table>
 
-    <h3>4.3. Code Example: Controlling Outlines via Script</h3>
+    <h3>5.1. Editor API (baking from scripts)</h3>
+    <p>The static class <code>AdvancedOutlineBaker</code> (Editor only) exposes the same operations as the inspector, for build scripts and custom tools: <code>Bake(outline)</code>, <code>BakeAll(outlines)</code>, <code>RemoveBake(outline)</code>, <code>ApplyMode(outline)</code> and <code>GetStatus(outline)</code>. Components inside prefab assets are baked and the prefab is saved automatically.</p>
+
+    <h3>5.2. Code Example: Controlling Outlines via Script</h3>
     <p>To control outline settings dynamically at runtime from other scripts, import the <code>ITISKIRUHERE</code> namespace and modify the component properties as shown in the example below:</p>
     <pre><code>using UnityEngine;
 using ITISKIRUHERE; // Namespace for the Advanced Outline component
@@ -314,7 +404,7 @@ public class OutlineController : MonoBehaviour
     }
 }</code></pre>
 
-    <h2 id="shaders">5. Shader Details &amp; Rendering Pipeline</h2>
+    <h2 id="shaders">6. Shader Details &amp; Rendering Pipeline</h2>
     <p>The system utilizes two passes for clean composition:</p>
     <ol>
       <li>
@@ -324,17 +414,30 @@ public class OutlineController : MonoBehaviour
         <strong>Fill Pass:</strong> Extrudes mesh vertices outward along the precalculated smooth normals. It compares the stencil buffer and discards fragments where the value is <code>1</code>, ensuring the outline only renders around the outer boundary of the object.
       </li>
     </ol>
+    <p>Both shaders use a <code>_ZTest</code> render-state property, which cannot be overridden per renderer, so the Material Set contains one material per variant (mask: <em>Always</em>, <em>LessEqual</em>; fill: <em>Always</em>, <em>LessEqual</em>, <em>Greater</em>). Changing <code>OutlineMode</code> swaps which of them a renderer uses; the assets themselves are never edited.</p>
 
-    <h2 id="troubleshooting">6. Troubleshooting &amp; FAQ</h2>
+    <h2 id="troubleshooting">7. Troubleshooting &amp; FAQ</h2>
     
     <p><strong>Q: Why does the outline look jagged on my low-poly mesh?</strong><br>
-    A: Ensure <em>Precompute Outline</em> is checked or that smooth normals have finished baking. The script requires averaged normals to align vertex extrusion correctly across sharp polygon seams.</p>
+    A: Bake the outline (or re-bake it). The outline mesh stores averaged normals so vertex extrusion stays aligned across sharp polygon seams. Un-baked objects get them generated in Play Mode only, which requires the source mesh to be Read/Write enabled.</p>
 
     <p><strong>Q: Does this component support Skinned Mesh Renderers?</strong><br>
-    A: Yes, the component automatically detects and supports skinned meshes. They are cloned and updated dynamically in memory, restoring the original mesh configurations cleanly upon script disable/destruction.</p>
+    A: Yes. Baking stores an outline copy of the skinned mesh (bone weights, bind poses and blend shapes are preserved) and the renderer's bounds are kept.</p>
 
     <p><strong>Q: Why did my mesh disappear when disabling the script in older versions?</strong><br>
-    A: In version 1.0, the script destroyed instantiated mesh copies without restoring the original mesh references to the <code>MeshFilter</code>/<code>SkinnedMeshRenderer</code>. This has been fully corrected in version 1.1+.</p>
+    A: In version 1.0, the script destroyed instantiated mesh copies without restoring the original mesh references. This was corrected in 1.1. Version 1.2 goes further: nothing is generated in edit mode, and <em>Remove Bake</em> restores the original meshes from the stored record.</p>
+
+    <p><strong>Q: Opening my prefab marks it as modified / my prefab has missing meshes or materials.</strong><br>
+    A: That was caused by versions before 1.2 swapping meshes and materials for temporary, non-asset objects in edit mode. With 1.2 opening a prefab changes nothing. For prefabs that were already damaged, run <em>Tools &rarr; Advanced Outline &rarr; Strip Outline Materials From Selected</em>, reassign any missing meshes, then bake again.</p>
+
+    <p><strong>Q: The outline disappeared or looks wrong after I changed a renderer's materials or mesh.</strong><br>
+    A: The outline materials must stay at the end of the material list and the renderer must keep its baked mesh. The component shows &ldquo;out of date&rdquo; with the reason; click <em>Re-Bake</em>.</p>
+
+    <p><strong>Q: The outline is not visible in the editor.</strong><br>
+    A: Un-baked outlines are only generated in Play Mode. Click <em>Bake Outline Assets</em> to see and keep them in the editor.</p>
+
+    <p><strong>Q: A baked mesh says it could not be read.</strong><br>
+    A: Enable <em>Read/Write</em> in the source model's import settings, then bake again. The baked outline mesh itself does not depend on that setting afterwards.</p>
   </div>
 </body>
 </html>

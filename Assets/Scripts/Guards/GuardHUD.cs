@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -9,6 +10,9 @@ using UnityEditor;
 public class GuardHUD : MonoBehaviour
 {
 	static readonly Vector3[] corners = new Vector3[4];
+	public static readonly List<GuardHUD> All = new();
+	public RectTransform Indicator => indicator;
+	public float PlayerDistance { get; private set; }
 
 	GuardBehaviour behaviour;
 	[SerializeField] GuardVision vision;
@@ -25,9 +29,9 @@ public class GuardHUD : MonoBehaviour
 	RectTransform VisionBar => (RectTransform)MiddleAlign.GetChild(0);
 	RectTransform HearingBar => (RectTransform)MiddleAlign.GetChild(1);
 
-	// TODO: Distance scale decay
-	const float curve = 35f;
-	const float decayStart = 15f;
+	// Distance scale decay
+	const float curve = 20f;
+	const float decayStart = 10f;
 
 	Camera Cam => Camera.main;
 	Canvas Canvas => HUD.Instance.GetComponent<Canvas>();
@@ -49,9 +53,9 @@ public class GuardHUD : MonoBehaviour
 		ChaseIcon.gameObject.SetActive(behaviour.State == GuardState.Chase);
 		SuspicionBar.gameObject.SetActive(behaviour.State != GuardState.Chase && TotalSuspicion > 0.1f);
 
-		//float d = Vector3.Distance(target.position, PlayerTouchMovement.Instance.transform.position);
-		//float distanceFactor = Mathf.Min(1f, curve / ((d - decayStart) - curve));
-		//indicator.localScale = Vector3.one * Mathf.Pow(distanceFactor, 2);
+		PlayerDistance = Vector3.Distance(target.position, PlayerTouchMovement.Instance.transform.position);
+		float distanceFactor = Mathf.Min(1f, curve / ((PlayerDistance - decayStart) + curve));
+		indicator.localScale = Vector3.one * Mathf.Pow(distanceFactor, 2);
 
 		if (behaviour.State == GuardState.Chase)
 		{
@@ -148,6 +152,15 @@ public class GuardHUD : MonoBehaviour
 		RectTransformUtility.ScreenPointToWorldPointInRectangle(
 			(RectTransform)indicator.parent, finalScreen, uiCam, out Vector3 world);
 		indicator.position = world;
+	}
+
+	void OnEnable() => All.Add(this);
+	
+	void OnDisable() => All.Remove(this);
+
+	void OnDestroy()
+	{
+		if (indicator != null) Destroy(indicator.gameObject);
 	}
 #if UNITY_EDITOR
 	public GuardVision Vision => vision;

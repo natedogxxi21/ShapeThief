@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d4b8d6f46181442abbc44a1089362c4, type: 3}
+  m_Name: AdvancedOutlineMaterialSet
+  m_EditorClassIdentifier: Assembly-CSharp::ITISKIRUHERE.AdvancedOutlineMaterialSet
+  _maskAlways: {fileID: 2100000, guid: ffe8a10c8b6d84c4588581df21cf5f3f, type: 2}
+  _maskLessEqual: {fileID: 2100000, guid: 2c5bbea04b47e48f1b4a5ddae0ef11cd, type: 2}
+  _fillAlways: {fileID: 2100000, guid: a098350dee3b04325919ac2b2ade9a08, type: 2}
+  _fillLessEqual: {fileID: 2100000, guid: 58a6f548225794625a36e468fb5b0dec, type: 2}
+  _fillGreater: {fileID: 2100000, guid: 6862bc1c0981b40d7b17af73b9c8e9a2, type: 2}
