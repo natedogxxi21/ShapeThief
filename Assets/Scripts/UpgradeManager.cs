@@ -13,7 +13,7 @@ public class UpgradeManager : MonoBehaviour
     [Header("Smoke Bomb")]
     [SerializeField] private ParticleSystem SmokeBomb;
     [SerializeField] private Transform Player;
-    [SerializeField] private GuardVision[] guards;
+     private GuardVision[] guards;
     [SerializeField] private float blindDuration = 4f;
     [SerializeField] public int SmokeBombCost = 50;
 
@@ -24,7 +24,10 @@ public class UpgradeManager : MonoBehaviour
     private bool smokeBombObtained = false;
     //private bool smokeBombUsed = false;
 
-   
+    public void Awake()
+    {
+        guards = Object.FindObjectsByType<GuardVision>(FindObjectsInactive.Exclude);
+    }
     public void Start()
     {
         if (SmokeBomb != null)
@@ -132,6 +135,7 @@ public class UpgradeManager : MonoBehaviour
 
     public void UseSmokeBomb()
     {
+        guards = Object.FindObjectsByType<GuardVision>( FindObjectsInactive.Exclude );
         if (!UpgradeData.HasSmokeBomb)
             return;
 
