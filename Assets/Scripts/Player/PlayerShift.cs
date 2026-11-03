@@ -22,9 +22,9 @@ public partial class PlayerShift : MonoBehaviour
 	public UnityEvent OnShift { get; private set; } = new();
 	public bool ShiftAvailable => !shiftTransitioning &&
 						  (shiftTarget != null || Shifted) &&
-											ShiftCooldownTimer <= 0;
+											ShiftCooldownTimer.Completed;
 	public UnityEvent OnStore { get; private set; } = new();
-	public bool StoreAvailable => shiftTarget != null && StoreCooldownTimer <= 0;
+	public bool StoreAvailable => shiftTarget != null && StoreCooldownTimer.Completed;
 
 	[SerializeField] float shiftTransitionLength;
 	[SerializeField] float shiftDuration;
@@ -34,12 +34,13 @@ public partial class PlayerShift : MonoBehaviour
 	public bool Shifted { get; private set; }
 	bool shiftTransitioning;
 	Vector3 targetShiftObjectScale;
-	public float ShiftTimer { get; private set; } // duration player stays shifted
-	public float ShiftCooldownTimer { get; private set; }
-	public float ShiftCooldownPercent => ShiftCooldownTimer / shiftCooldownDuration;
-
-	public float StoreCooldownTimer { get; private set; }
-	public float StoreCooldownPercent => StoreCooldownTimer / storeCooldownDuration;
+	public Timer ShiftTimer { get; private set; } // duration player stays shifted
+	public Timer ShiftCooldownTimer { get; private set; }
+	public Timer StoreCooldownTimer { get; private set; }
+	// these are used to detect when the timers above end
+	bool shiftActive = false;
+	bool shiftOnCooldown = false;
+	bool storeOnCooldown = false;
 
 	Finger castingFinger = null;
 
@@ -50,29 +51,29 @@ public partial class PlayerShift : MonoBehaviour
 
 	void Update()
 	{
-		if (ShiftTimer > 0)
+		if (shiftActive)
 		{
-			ShiftTimer -= Time.deltaTime;
-			if (ShiftTimer <= 0)
+			if (ShiftTimer.Completed)
 			{
 				Shift();
+				shiftActive = false;
 			}
 		}
-		if (ShiftCooldownTimer > 0)
+		if (shiftOnCooldown)
 		{
-			ShiftCooldownTimer -= Time.deltaTime;
-			if (ShiftCooldownTimer <= 0)
+			if (ShiftCooldownTimer.Completed)
 			{
 				OnShift.Invoke();
+				shiftOnCooldown = false;
 			}
 		}
 		
-		if (ShiftCooldownTimer > 0)
+		if (storeOnCooldown)
 		{
-			ShiftCooldownTimer -= Time.deltaTime;
-			if (ShiftCooldownTimer <= 0)
+			if (StoreCooldownTimer.Completed)
 			{
 				OnStore.Invoke();
+				storeOnCooldown = false;
 			}
 		}
 	}
@@ -98,14 +99,16 @@ public partial class PlayerShift : MonoBehaviour
 	{
 		if (StoreAvailable)
 		{
-			OnStore.Invoke();
 			HUD.Instance.AddToInventory(shiftTarget.prop);
+			StoreCooldownTimer = storeCooldownDuration;
+			storeOnCooldown = true;
+			OnStore.Invoke();
 		}
 	}
 
 	public bool ShiftInventory(Prop prop)
 	{
-		if (shiftTransitioning || Shifted || ShiftCooldownTimer > 0)
+		if (shiftTransitioning || Shifted || !ShiftCooldownTimer.Completed)
 		{ return false; }
 
 		shiftTransitioning = true;
@@ -148,8 +151,16 @@ public partial class PlayerShift : MonoBehaviour
 		transform.position = new(transform.position.x, 0, transform.position.z);
 		rb.position = transform.position;
 
-		if (toObject) { ShiftTimer = shiftDuration; }
-		else { ShiftCooldownTimer = shiftCooldownDuration; }
+		if (toObject)
+		{
+			ShiftTimer = shiftDuration;
+			shiftActive = true;
+		}
+		else
+		{
+			ShiftCooldownTimer = shiftCooldownDuration;
+			shiftOnCooldown = true;
+		}
 
 		shiftTransitioning = false;
 		Shifted = toObject;
@@ -181,6 +192,7 @@ public partial class PlayerShift : MonoBehaviour
 			if (shiftTarget != null) { shiftTarget.Highlight(false); }
 			shiftTarget = null;
 			OnShift.Invoke();
+			OnStore.Invoke();
 		}
 	}
 
@@ -199,6 +211,7 @@ public partial class PlayerShift : MonoBehaviour
 						if (shiftTarget != null) { shiftTarget.Highlight(false); }
 						shiftTarget = possibleShiftTarget;
 						OnShift.Invoke();
+						OnStore.Invoke();
 						shiftTarget.Highlight(true);
 					}
 				}

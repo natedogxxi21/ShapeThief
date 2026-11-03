@@ -362,6 +362,7 @@ MonoBehaviour:
   shiftTransitionLength: 1
   shiftDuration: 10
   shiftCooldownDuration: 5
+  storeCooldownDuration: 10
 --- !u!114 &195112947654372558
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -45,7 +45,8 @@ public class GuardHUD : MonoBehaviour
 	void Update()
 	{
 		UpdateIndicator();
-		PositionIndicator();
+		if (ChaseIcon.gameObject.activeSelf || SuspicionBar.gameObject.activeSelf)
+		{ PositionIndicator(); }
 	}
 
 	void UpdateIndicator()
@@ -112,6 +113,7 @@ public class GuardHUD : MonoBehaviour
 			}
 		}
 
+		if (float.IsInfinity(lo.x)) return;
 		Vector2 pivotScreen = RectTransformUtility.WorldToScreenPoint(uiCam, indicator.position);
 		Vector2 half = (hi - lo) * 0.5f;
 		Vector2 centerOffset = (lo + hi) * 0.5f - pivotScreen;

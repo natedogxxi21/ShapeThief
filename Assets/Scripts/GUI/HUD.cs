@@ -31,10 +31,8 @@ public partial class HUD : MonoBehaviour
 	Coroutine shiftButtonFlashCoroutine;
 	Coroutine storeButtonFlashCoroutine;
 
-	private void Awake()
-	{
-		Instance = this;
-	}
+	private void Awake() => Instance = this;
+
 	void Start()
 	{
 		shiftButton.button.onClick.AddListener(ShiftButtonPressed);
@@ -50,15 +48,15 @@ public partial class HUD : MonoBehaviour
 
 	void Update()
 	{
-		if (PlayerShift.Instance.ShiftTimer > 0)
+		if (!PlayerShift.Instance.ShiftTimer.Completed)
 		{
-			shiftButton.label.text = PlayerShift.Instance.ShiftTimer.ToString("F1");
+			shiftButton.label.text = PlayerShift.Instance.ShiftTimer.Remaining.ToString("F1");
 			shiftButton.image.fillAmount = 1;
 		}
-		else if (PlayerShift.Instance.ShiftCooldownTimer > 0)
+		else if (!PlayerShift.Instance.ShiftCooldownTimer.Completed)
 		{
 			shiftButton.label.text = "Shift";
-			shiftButton.image.fillAmount = 1 - PlayerShift.Instance.ShiftCooldownPercent;
+			shiftButton.image.fillAmount = PlayerShift.Instance.ShiftCooldownTimer.PercentLeft;
 		}
 		else
 		{
@@ -66,8 +64,8 @@ public partial class HUD : MonoBehaviour
 			shiftButton.image.fillAmount = 1;
 		}
 
-		shiftButton.image.fillAmount = PlayerShift.Instance.StoreCooldownTimer > 0
-													? 1 - PlayerShift.Instance.StoreCooldownPercent
+		storeButton.image.fillAmount = !PlayerShift.Instance.StoreCooldownTimer.Completed
+													? PlayerShift.Instance.StoreCooldownTimer.PercentLeft
 													: 1;
 
 		runButton.label.text = PlayerTouchMovement.Instance.Running ? "Running" : "Walking";
@@ -107,7 +105,7 @@ public partial class HUD : MonoBehaviour
 			{
 				timer -= Time.deltaTime;
 				Color color = Color.Lerp(normalColor, activeColor, Mathf.Max(0, timer) / duration);
-				shiftButton.image.color = color;
+				storeButton.image.color = color;
 				yield return null;
 			}
 			storeButton.image.color = normalColor;
@@ -155,8 +153,8 @@ public partial class HUD : MonoBehaviour
 
 	public void SetStoreAvailable(bool ready)
 	{
-		shiftButton.button.interactable = ready;
-		if (ready) { FlashShiftButton(); }
+		storeButton.button.interactable = ready;
+		if (ready) { FlashStoreButton(); }
 	}
 
 	public void ShiftButtonPressed() => PlayerShift.Instance.Shift();

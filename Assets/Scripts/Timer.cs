@@ -1,88 +1,49 @@
+using System;
 using UnityEngine;
-using TMPro;
-using UnityEngine.SceneManagement;
 
-public class CountdownTimer : MonoBehaviour
+[Serializable]
+public struct Timer
 {
-    [Header("Timer Settings")]
-    public float timeRemaining = 60f;
-    public bool timerIsRunning = false;
+	[field: SerializeField] public float EndTime { get; private set; }
+	[field: SerializeField] public float Duration { get; private set; }
+	[field: SerializeField] public bool Paused { get; private set; }
+	[SerializeField] float pausedTime;
+	readonly float EvalTime => Paused ? pausedTime : Time.time;
+	public readonly float Remaining => EndTime - EvalTime;
+	public readonly float Elapsed => Duration - Remaining;
+	public readonly float PercentLeft => Duration > 0f ? Mathf.Clamp01(Remaining / Duration) : 1f;
+	public readonly bool Completed => EvalTime >= EndTime;
 
-    [Header("UI Elements")]
-    public TextMeshProUGUI timerText;
-    public GameObject GameOverPanel;
+	public Timer(float length)
+	{
+		Paused = false;
+		EndTime = Time.time + length;
+		pausedTime = EndTime;
+		Duration = length;
+	}
 
-    private GuardBehaviour[] guards;
-    private void Start()
-    {
-        guards = FindObjectsByType<GuardBehaviour>();
+	public void Set(float length)
+	{
+		EndTime = EvalTime + length;
+		Duration = length;
+	}
 
-        timerIsRunning = true;
-        DisplayTime(timeRemaining);
-    }
+	public void Reset() => EndTime = EvalTime + Duration;
+	public void Cycle() => EndTime += Duration;
 
-    private void Update()
-    {
-        if (timerIsRunning)
-        {
-            if (timeRemaining > 0)
-            {
-                timeRemaining -= Time.deltaTime;
-                timeRemaining = Mathf.Max(0f, timeRemaining);
-                DisplayTime(timeRemaining);
-            }
-            else
-            {
-                Debug.Log("You Got Caught");
-                timeRemaining = 0;
-                timerIsRunning = false;
-                AlertAllGuards();
-            }
-        }
-    }
-    void DisplayTime(float timeToDisplay)
-    {
-        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
-        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+	public void Pause()
+	{
+		if (Paused) return;
+		Paused = true;
+		pausedTime = Time.time;
+	}
 
-        timerText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
-    }
+	public void Resume()
+	{
+		if (!Paused) return;
+		Paused = false;
+		EndTime = Time.time + (EndTime - pausedTime);
+	}
 
-    public void AddTime(float extraTime)
-    {
-        timeRemaining += extraTime;
-        DisplayTime(timeRemaining);
-    }
-
-    void AlertAllGuards()
-    {
-        foreach (GuardBehaviour guard in guards)
-        {
-            guard.Chase(PlayerShift.Instance.gameObject);
-            Debug.Log("Booty");
-        }
-            
-    }
-   /* void TriggerGameOver()
-    {
-        GameOverPanel.SetActive(true);
-
-        Time.timeScale = 0f;
-    }
-   */
-
-    public void RestartGame()
-    {
-        Time.timeScale = 1f;
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public void QuitGame()
-    {
-        Application.Quit();
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
-    }
+	public static implicit operator Timer(float duration) => new(duration);
 }
