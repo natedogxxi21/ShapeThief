@@ -6,7 +6,9 @@ public class GameOverUI : MonoBehaviour
 	public void RestartGame()
 	{
 		Time.timeScale = 1f;
-		SceneManager.LoadScene("Nathan Scene");
+		SceneManager.LoadScene(0);
+        PlayerStats.ResetMoney();
+
 	}
 
 	public void QuitGame()
