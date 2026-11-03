@@ -7,7 +7,6 @@ public class Exit_Level : MonoBehaviour
 {
     [Header("Exit Requirements")]
     [SerializeField] private int additionalMoneyRequired = 50;
-	[SerializeField] string nextSceneName;
 	[SerializeField] GameObject seeBehindPad;
 
 	[Header("Upgrade Menu")]
@@ -75,7 +74,7 @@ public class Exit_Level : MonoBehaviour
     }
     private void LoadNextLevel()
     {
-        SceneManager.LoadScene(nextSceneName);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     private void OnTriggerExit(Collider other)
     {
