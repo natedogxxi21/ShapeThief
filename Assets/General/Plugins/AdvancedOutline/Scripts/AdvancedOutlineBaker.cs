@@ -23,7 +23,7 @@ namespace ITISKIRUHERE
     /// </summary>
     public static class AdvancedOutlineBaker
     {
-        public const string DefaultFolder = "Assets/AdvancedOutline/Generated";
+        public const string DefaultFolder = "Assets/General/Plugins/AdvancedOutline/Generated";
         const string UndoName = "Advanced Outline";
         const string OutlineMeshSuffix = " (Outline)";
 

@@ -11,6 +11,7 @@ public class UpgradeSelectionUI : MonoBehaviour
 	{
 		public string title; [TextArea] public string description; public int index;
 	}
+
 	[Header("Refrences")]
 	[SerializeField] private UpgradeManager upgradeManager;
 	[SerializeField] private GameObject panel;

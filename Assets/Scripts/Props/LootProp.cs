@@ -4,6 +4,7 @@ public class LootProp : MonoBehaviour
 {
 	[SerializeField] int lootValue;
 	[SerializeField] AudioClip collectClip;
+	[SerializeField] AudioClip collisionClip;
 	bool collected;
 
 	void OnCollisionEnter(Collision collision)
@@ -12,9 +13,16 @@ public class LootProp : MonoBehaviour
 		if (collision.gameObject.CompareTag("Player"))
 		{
 			PlayerStats.ChangeMoney(lootValue);
-			SFXManager.PlayClip(collectClip, 1, transform.position, Random.Range(-.1f, .1f));
+			SFXManager.PlayClip(collectClip, volume: 0.75f, transform.position, Random.Range(-.05f, .075f));
 			collected = true;
 			Destroy(gameObject);
+			return;
+		}
+
+		if (collision.impulse.sqrMagnitude >= .5f)
+		{
+			Vector3 pos = collision.contactCount > 0 ? collision.GetContact(0).point : transform.position;
+			AudioCueManager.PlayCollisionSound(collisionClip, pos, collision.impulse.magnitude);
 		}
 	}
 }

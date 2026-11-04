@@ -25,12 +25,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 286117374249888268}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3158161092201532450}
+  m_Father: {fileID: 6640481144384764116}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.85}
   m_AnchorMax: {x: 1, y: 1}
@@ -438,12 +438,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3763974148037403474}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3158161092201532450}
+  m_Father: {fileID: 6640481144384764116}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -488,6 +488,45 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &5447118848024573004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6640481144384764116}
+  m_Layer: 5
+  m_Name: Panel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &6640481144384764116
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5447118848024573004}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8891055577954896952}
+  - {fileID: 6894299659495893350}
+  - {fileID: 5087676767588297590}
+  - {fileID: 1445720785214152129}
+  m_Father: {fileID: 3158161092201532450}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5536091296285609059
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,6 +536,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3158161092201532450}
+  - component: {fileID: 44232037299227570}
+  - component: {fileID: 7796565741285319445}
   - component: {fileID: 3581931430636129961}
   - component: {fileID: 1105122192372573139}
   - component: {fileID: 4679612816941070177}
@@ -520,10 +561,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8891055577954896952}
-  - {fileID: 6894299659495893350}
-  - {fileID: 5087676767588297590}
-  - {fileID: 1445720785214152129}
+  - {fileID: 6640481144384764116}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -531,6 +569,53 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &44232037299227570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5536091296285609059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3abdd6cdae146ea4296df43e2e6d3ac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeManager
+  countdownTimer: {fileID: 0}
+  timeUpgradeCost: 20
+  extraTime: 5000
+  SmokeBomb: {fileID: 6623263323510850359, guid: bfadb8e72fb33aa4ea347f9fe7fa7eff, type: 3}
+  blindDuration: 4
+  SmokeBombCost: 20
+  staminaUpgradeCost: 20
+  extraStamina: 25
+--- !u!114 &7796565741285319445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5536091296285609059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bdfe23ef159c4644b729b415490bf6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeSelectionUI
+  upgradeManager: {fileID: 44232037299227570}
+  panel: {fileID: 5447118848024573004}
+  cards:
+  - {fileID: 2553941793325134900}
+  upgrades:
+  - title: Extra Time
+    description: "Adds more time \t"
+    index: 0
+  - title: Smoke Bomb
+    description: Adds a smoke bomb to your inventory that can be dropped to get away
+      from a guard
+    index: 1
+  - title: Extra Stamina
+    description: Adds more stamina so you can run longer
+    index: 2
 --- !u!223 &3581931430636129961
 Canvas:
   m_ObjectHideFlags: 0
@@ -630,18 +715,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6112565694766661744}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8940070658004692304}
   - {fileID: 3598618825195813214}
-  m_Father: {fileID: 3158161092201532450}
+  m_Father: {fileID: 6640481144384764116}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.39625, y: 0.156}
   m_AnchorMax: {x: 0.59000003, y: 0.83641666}
-  m_AnchoredPosition: {x: -1.5, y: 0.6000061}
+  m_AnchoredPosition: {x: -1.5, y: 0.5999756}
   m_SizeDelta: {x: 3, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3920664720062936247
@@ -779,13 +864,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6994028340492001999}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1771152085250876060}
-  m_Father: {fileID: 3158161092201532450}
+  m_Father: {fileID: 6640481144384764116}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.7575001, y: 0.7356111}
   m_AnchorMax: {x: 0.9875, y: 0.892}

@@ -28,11 +28,20 @@ public partial class AudioCueManager : MonoBehaviour
 		MakeParticles(position, volume);
 	}
 
+	public static void PlayCollisionSound(AudioClip sound, Vector3 position, float velocity)
+	{
+		float volume = (2 * velocity) - 1f;
+		float deltaPitch = Random.Range(-.1f, .1f);
+		SFXManager.PlayClip(sound, volume, position, deltaPitch);
+		CueGuards(volume, position);
+		MakeParticles(position, volume);
+	}
+
 	public static void PlayTestSound(Vector3 position)
 	{
 		float deltaPitch = Random.Range(-.1f, .1f);
 		SFXManager.PlayClip(Instance.testClip, 1, position, deltaPitch);
-		CueGuards(loudness: 3, position);
+		CueGuards(loudness: 7, position);
 		MakeParticles(position, 3);
 	}
 

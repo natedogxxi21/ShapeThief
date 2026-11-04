@@ -4,7 +4,7 @@ public class UpgradeManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private CountdownTimer countdownTimer;
-    [SerializeField] private PlayerTouchMovement playerMovement;
+    PlayerTouchMovement PlayerMovement => PlayerTouchMovement.Instance;
 
     [Header("Time Upgrade")]
     [SerializeField] public int timeUpgradeCost = 100;
@@ -12,7 +12,7 @@ public class UpgradeManager : MonoBehaviour
 
     [Header("Smoke Bomb")]
     [SerializeField] private ParticleSystem SmokeBomb;
-    [SerializeField] private Transform Player;
+    Transform Player => PlayerMovement.transform;
      private GuardVision[] guards;
     [SerializeField] private float blindDuration = 4f;
     [SerializeField] public int SmokeBombCost = 50;
@@ -39,8 +39,8 @@ public class UpgradeManager : MonoBehaviour
         if (countdownTimer != null && UpgradeData.BonusTime > 0f)
             countdownTimer.AddTime(UpgradeData.BonusTime);
 
-        if (playerMovement != null && UpgradeData.BonusStamina > 0f)
-            playerMovement.UpgradeStamina(UpgradeData.BonusStamina);
+        if (PlayerMovement != null && UpgradeData.BonusStamina > 0f)
+            PlayerMovement.UpgradeStamina(UpgradeData.BonusStamina);
         RestoreSmokeBomb();
 
         Debug.Log("Smoke Bomb saved: " + UpgradeData.HasSmokeBomb);
@@ -169,14 +169,14 @@ public class UpgradeManager : MonoBehaviour
             Debug.Log("Something wronger");
             return false;
         }
-        if (playerMovement == null)
+        if (PlayerMovement == null)
         {
             Debug.Log("Something wrong");
             return false;
         }
         PlayerStats.ChangeMoney(-staminaUpgradeCost);
         UpgradeData.BonusStamina += extraStamina;
-        playerMovement.UpgradeStamina(extraStamina);
+        PlayerMovement.UpgradeStamina(extraStamina);
         Debug.Log("Stamina upgraded");
         return true;
     }
