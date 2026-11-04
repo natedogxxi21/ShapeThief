@@ -125,7 +125,7 @@ public class DungeonSpawnManager : MonoBehaviour
                 return;
             }
 
-            Instantiate(
+            GameObject spawnedEnemy = Instantiate(
                 enemyPrefab,
                 cell.WorldPosition,
                 Quaternion.identity,
@@ -160,7 +160,7 @@ public class DungeonSpawnManager : MonoBehaviour
                 return;
             }
 
-            Instantiate(
+            GameObject spawnedItem = Instantiate(
             itemPrefab,
             cell.WorldPosition ,
             Quaternion.identity,
@@ -186,27 +186,35 @@ public class DungeonSpawnManager : MonoBehaviour
 
             int objectCount = Random.Range(minCount, maxCount + 1);
 
+            //Here we will squeeze in the footprint stuff
+
+            SpawnFootPrint footprintComponent = prop.prefab.GetComponent<SpawnFootPrint>();
+
+            Vector2Int footprint = footprintComponent != null
+                //wtf ?
+                ? footprintComponent.Size
+                : Vector2Int.one;
+
              for (int i = 0; i < objectCount; i++)
              {
-                 SpawnCell cell = GetAvailablePropCell(roomGrid, prop.spawnLocation);
-
+                 SpawnCell cell = GetAvailablePropCell(roomGrid, prop.spawnLocation, footprint);
 
                  if(cell == null)
                  {
-                     Debug.LogWarning($"No available shit");
+                     Debug.LogWarning($"No available Props");
                      break;
                  }
 
                 Vector3 spawnPosition = cell.WorldPosition + Vector3.up * prop.verticalOffset;
 
-                Instantiate(
+                GameObject spawnedProp = Instantiate(
                  prop.prefab,
                 spawnPosition,
                  Quaternion.identity,
                  transform
                  );
 
-                 cell.IsOccupied = true;
+                 roomGrid.OccupyFootprint(cell, footprint, spawnedProp);
              }
         }
     }
@@ -256,7 +264,7 @@ private SpawnCell GetAvailableEnemyCell(RoomGrid roomGrid)
    
    //Alright this one is going to be a little complicated compared to the other ones
 
-    private SpawnCell GetAvailablePropCell(RoomGrid roomGrid, PropSpawnLocation location)
+    private SpawnCell GetAvailablePropCell(RoomGrid roomGrid, PropSpawnLocation location, Vector2Int footprint)
    
     {
 
@@ -284,15 +292,33 @@ private SpawnCell GetAvailableEnemyCell(RoomGrid roomGrid)
             maxZ = Mathf.Max(maxZ, pos.z);
         }
 
-        float centerX = (minX + maxX) /2f;
-        float centerZ = (minZ + maxZ) /2f;
+
+
+        //float centerX = (minX + maxX) /2f;
+        //float centerZ = (minZ + maxZ) /2f;
+
 
         foreach (SpawnCell cell in roomGrid.Cells)
         {
+            //Checks if footprints fits
+            List<SpawnCell> footprintCells = roomGrid.GetCellsForFootprint(cell, footprint);
 
-            if (cell.IsOccupied || !cell.CanSpawnObject)
+            if (footprintCells == null)
                 continue;
-           
+
+                bool canSpawn = true;
+
+            foreach (SpawnCell footprintCell in footprintCells)
+            {
+                if (footprintCell.IsOccupied || !footprintCell.CanSpawnObject)
+                {
+                    canSpawn = false;
+                    break;
+                }
+            }
+       
+                if (!canSpawn)
+                    continue;
 
                 Vector3 pos = cell.WorldPosition;
 

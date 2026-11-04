@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 7597819352492815035}
   - component: {fileID: 3160265219656892322}
   - component: {fileID: 6608674102814843442}
+  - component: {fileID: 3564883863349201024}
   m_Layer: 6
   m_Name: Cup
   m_TagString: Untagged
@@ -200,6 +201,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3564883863349201024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7651229594865488112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ef22616a7f96534ca34ffcdc39c158f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnFootPrint
+  width: 1
+  depth: 1
 --- !u!1 &8761075589351961067
 GameObject:
   m_ObjectHideFlags: 0

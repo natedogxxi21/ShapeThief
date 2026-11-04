@@ -6,6 +6,8 @@ public class SpawnCell
 
     public bool IsOccupied { get; set; }
 
+    public GameObject OccupyingObject { get; private set;}
+
     public bool CanSpawnEnemy { get; set; }
     public bool CanSpawnItem { get; set; }
     public bool CanSpawnObject { get; set; }
@@ -20,8 +22,18 @@ public class SpawnCell
         CanSpawnItem = true;
         CanSpawnObject = true;
 
-      
+    }
 
+    public void Occupy(GameObject obj)
+    {
+        IsOccupied = true;
+        OccupyingObject = obj;
+    }
+
+    public void Clear()
+    {
+        IsOccupied = false;
+        OccupyingObject = null;
     }
 
    

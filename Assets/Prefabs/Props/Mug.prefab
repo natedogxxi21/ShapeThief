@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3505728656417085657}
   - component: {fileID: 2915133140769742656}
   - component: {fileID: 459689540704032310}
+  - component: {fileID: -1667465985709568203}
   m_Layer: 6
   m_Name: Mug
   m_TagString: EnemySpawnBlocker
@@ -76,6 +77,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-1667465985709568203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1226859771069493251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ef22616a7f96534ca34ffcdc39c158f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnFootPrint
+  width: 1
+  depth: 1
 --- !u!1 &2974817828678025723
 GameObject:
   m_ObjectHideFlags: 0

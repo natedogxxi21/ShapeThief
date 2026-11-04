@@ -81634,7 +81634,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 386809882074214816, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 72
+      value: 37.1
       objectReference: {fileID: 0}
     - target: {fileID: 552261905853201978, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_SizeDelta.x
@@ -81720,25 +81720,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3320286929241168589, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 3713782913101625619, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3713782913101625619, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.60009766
-      objectReference: {fileID: 0}
-    - target: {fileID: 3836853327721848896, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
-      propertyPath: timeRemaining
-      value: 150
-      objectReference: {fileID: 0}
     - target: {fileID: 6093312590393961592, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 49.65
+      value: 27.75
       objectReference: {fileID: 0}
     - target: {fileID: 6393414177414952191, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_Name
@@ -81746,23 +81730,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6426980794540341402, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 118.15
+      value: 57.75
       objectReference: {fileID: 0}
     - target: {fileID: 6669424879269237201, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 72
+      value: 66
       objectReference: {fileID: 0}
-    - target: {fileID: 8416284732914163269, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 9074754721564934333, guid: e5ee62e965a997048a711864ed0436cb, type: 3}
-    - target: {fileID: 8416284732914163269, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: CloseUpgradeMenu
+    - target: {fileID: 8402484480559052993, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
+      propertyPath: m_fontSize
+      value: 38.8
       objectReference: {fileID: 0}
     - target: {fileID: 8968438791746746977, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 118.15
+      value: 57.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
