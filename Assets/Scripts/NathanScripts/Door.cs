@@ -13,25 +13,20 @@ public class Door : MonoBehaviour
     [Header("Rotation Configs")]
     [SerializeField]
     private float RotationAmount = 90f;
-    [SerializeField]
-    private float ForwardDirection = 0;
+   //  [SerializeField]
+   //  private float ForwardDirection = 0;
 
     private Vector3 StartRotation;
-    private Vector3 Forward;
+    // private Vector3 Forward;
 
     private Coroutine AnimationCoroutine;
 
     [SerializeField] private Transform hingePivot;
 
-    [SerializeField]private NavMeshObstacle navMeshObstacle;
-
     private void Awake()
     {
         if (hingePivot == null)
         hingePivot = transform;
-
-        if (navMeshObstacle != null)
-        navMeshObstacle.enabled = true;
 
         StartRotation = hingePivot.localEulerAngles;
     }
@@ -97,9 +92,6 @@ public class Door : MonoBehaviour
 
         hingePivot.localRotation = endRotation;
         AnimationCoroutine = null;
-
-        if (navMeshObstacle != null)
-        navMeshObstacle.enabled = false;
     }
 
     public void Close()
@@ -119,10 +111,7 @@ public class Door : MonoBehaviour
     }
 
     private IEnumerator DoRotationClose()
-    {
-        if (navMeshObstacle != null)
-        navMeshObstacle.enabled = true;
-        
+    {        
         Quaternion startRotation = hingePivot.localRotation;
         Quaternion endRotation = Quaternion.Euler(StartRotation);
 

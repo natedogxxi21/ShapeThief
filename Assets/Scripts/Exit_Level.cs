@@ -10,7 +10,7 @@ public class Exit_Level : MonoBehaviour
 	[SerializeField] GameObject seeBehindPad;
 
 	[Header("Upgrade Menu")]
-	[SerializeField] private UpgradeSelectionUI upgradeMenu;
+	UpgradeSelectionUI UpgradeMenu => UpgradeSelectionUI.Instance;
 
 	[Header("UI")]
 	public TMP_Text objectiveText;
@@ -53,16 +53,16 @@ public class Exit_Level : MonoBehaviour
         if (exitActivated)
             return;
 
-        int requiredTotal = moneyAtLevelStart + additionalMoneyRequired;
+		int requiredTotal = moneyAtLevelStart + additionalMoneyRequired;
 
        if(PlayerStats.Money >= requiredTotal)
         {
-            if(upgradeMenu == null)
+            if(UpgradeMenu == null)
             {
                 return;
             }
             exitActivated = true;
-            upgradeMenu.OpenUpgradeMenu(LoadNextLevel);
+            UpgradeMenu.OpenUpgradeMenu(LoadNextLevel);
         }
         else
         {

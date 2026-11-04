@@ -1,57 +1,59 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UIElements;
 using System;
+
 public class UpgradeSelectionUI : MonoBehaviour
 {
-    [System.Serializable]
-    public class UpgradeData
-    {
-        public string title; [TextArea] public string description; public int index;
-    }
-    [Header("Refrences")]
-    [SerializeField] private UpgradeManager upgradeManager;
-    [SerializeField] private GameObject panel;
-    [SerializeField] private UpgradeCardUI[] cards;
+	public static UpgradeSelectionUI Instance;
 
-    [Header("Availble Upgrades")]
-    [SerializeField] private UpgradeData[] upgrades;
+	[Serializable]
+	public class UpgradeData
+	{
+		public string title; [TextArea] public string description; public int index;
+	}
+	[Header("Refrences")]
+	[SerializeField] private UpgradeManager upgradeManager;
+	[SerializeField] private GameObject panel;
+	[SerializeField] private UpgradeCardUI[] cards;
 
-    private Action onMenuClosed;
-    private void Start()
-    {
-        panel.SetActive(false);
-    }
+	[Header("Availble Upgrades")]
+	[SerializeField] private UpgradeData[] upgrades;
 
-    public void OpenUpgradeMenu(Action closedCallback = null)
-    {
-        onMenuClosed = closedCallback;
-        panel.SetActive(true);
+	private Action onMenuClosed;
+	private void Start()
+	{
+		Instance = this;
+		panel.SetActive(false);
+	}
 
-        List<UpgradeData> availble = new List<UpgradeData>(upgrades);
+	public void OpenUpgradeMenu(Action closedCallback = null)
+	{
+		onMenuClosed = closedCallback;
+		panel.SetActive(true);
 
-        for (int i = 0; i < cards.Length; i++)
-        {
-            if (availble.Count == 0)
-            {
-                cards[i].gameObject.SetActive(true);
-                continue;
-            }
-            int randomIndex = UnityEngine.Random.Range(0, availble.Count);
+		List<UpgradeData> availble = new List<UpgradeData>(upgrades);
 
-            UpgradeData chosen = availble[randomIndex];
-            availble.RemoveAt(randomIndex);
+		for (int i = 0; i < cards.Length; i++)
+		{
+			if (availble.Count == 0)
+			{
+				cards[i].gameObject.SetActive(true);
+				continue;
+			}
+			int randomIndex = UnityEngine.Random.Range(0, availble.Count);
 
-            cards[i].Setup(upgradeManager, chosen.index, chosen.title, chosen.description);
-        }
-    }
+			UpgradeData chosen = availble[randomIndex];
+			availble.RemoveAt(randomIndex);
 
+			cards[i].Setup(upgradeManager, chosen.index, chosen.title, chosen.description);
+		}
+	}
 
-    public void CloseUpgradeMenu()
-    {
-       panel.SetActive(false);
-        Action callback = onMenuClosed;
-        onMenuClosed = null;
-        callback?.Invoke();
-    }
+	public void CloseUpgradeMenu()
+	{
+		panel.SetActive(false);
+		Action callback = onMenuClosed;
+		onMenuClosed = null;
+		callback?.Invoke();
+	}
 }
