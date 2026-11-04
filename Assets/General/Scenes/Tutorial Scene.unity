@@ -501,7 +501,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8645995374346366610, guid: 90c4fbf9490a02c499afc1f70b637b27, type: 3}
       propertyPath: additionalMoneyRequired
-      value: 10
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -520,7 +520,7 @@ GameObject:
   - component: {fileID: 85791971}
   - component: {fileID: 85791970}
   - component: {fileID: 85791969}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -901,7 +901,7 @@ GameObject:
   - component: {fileID: 152465055}
   - component: {fileID: 152465054}
   - component: {fileID: 152465053}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Room_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1153,7 +1153,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 276064731}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Corridors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1451,7 +1451,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 360115217}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Rooms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1743,7 +1743,7 @@ GameObject:
   - component: {fileID: 452191861}
   - component: {fileID: 452191860}
   - component: {fileID: 452191859}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Room_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2610,7 +2610,7 @@ GameObject:
   - component: {fileID: 725132259}
   - component: {fileID: 725132258}
   - component: {fileID: 725132257}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Corridor_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3014,7 +3014,7 @@ GameObject:
   - component: {fileID: 830191896}
   - component: {fileID: 830191895}
   - component: {fileID: 830191894}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Room_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3947,7 +3947,7 @@ GameObject:
   - component: {fileID: 1017943890}
   - component: {fileID: 1017943889}
   - component: {fileID: 1017943888}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4064,7 +4064,7 @@ GameObject:
   - component: {fileID: 1058731277}
   - component: {fileID: 1058731276}
   - component: {fileID: 1058731275}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Corridor_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4510,7 +4510,7 @@ GameObject:
   - component: {fileID: 1152789931}
   - component: {fileID: 1152789930}
   - component: {fileID: 1152789929}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Room_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4620,7 +4620,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1153109743}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4974,7 +4974,7 @@ GameObject:
   - component: {fileID: 1229577389}
   - component: {fileID: 1229577388}
   - component: {fileID: 1229577387}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Room_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5169,7 +5169,7 @@ GameObject:
   - component: {fileID: 1386133829}
   - component: {fileID: 1386133828}
   - component: {fileID: 1386133827}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Corridor_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5339,7 +5339,7 @@ GameObject:
   - component: {fileID: 1400926938}
   - component: {fileID: 1400926937}
   - component: {fileID: 1400926936}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Corridor_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5585,7 +5585,7 @@ GameObject:
   - component: {fileID: 1434159944}
   - component: {fileID: 1434159943}
   - component: {fileID: 1434159942}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Room_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5824,7 +5824,7 @@ GameObject:
   - component: {fileID: 1466932897}
   - component: {fileID: 1466932896}
   - component: {fileID: 1466932895}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Room_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7109,7 +7109,7 @@ GameObject:
   - component: {fileID: 1897468187}
   - component: {fileID: 1897468186}
   - component: {fileID: 1897468185}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Corridor_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7399,7 +7399,7 @@ GameObject:
   - component: {fileID: 1965324579}
   - component: {fileID: 1965324578}
   - component: {fileID: 1965324577}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Corridor_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7573,7 +7573,7 @@ GameObject:
   - component: {fileID: 1993462636}
   - component: {fileID: 1993462635}
   - component: {fileID: 1993462634}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Room_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8501,7 +8501,7 @@ GameObject:
   - component: {fileID: 2144593355}
   - component: {fileID: 2144593354}
   - component: {fileID: 2144593353}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Corridor_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
