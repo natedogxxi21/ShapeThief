@@ -41,7 +41,7 @@ public partial class HUD : MonoBehaviour
 		inventoryCloseButton.onClick.AddListener(() => { SetInventoryOpen(false); });
 		runButton.button.onClick.AddListener(RunButtonPressed);
 		PlayerShift.Instance.OnShift.AddListener(OnShiftEvent);
-		PlayerShift.Instance.OnStore.AddListener(OnStoreEvent);
+		PlayerShift.Instance.OnCollect.AddListener(OnStoreEvent);
 		PlayerStats.OnMoneyChanged.AddListener(OnMoneyChanged);
 		OnMoneyChanged(PlayerStats.Money, PlayerStats.Money);
 	}
@@ -64,8 +64,8 @@ public partial class HUD : MonoBehaviour
 			shiftButton.image.fillAmount = 1;
 		}
 
-		storeButton.image.fillAmount = !PlayerShift.Instance.StoreCooldownTimer.Completed
-													? PlayerShift.Instance.StoreCooldownTimer.PercentLeft
+		storeButton.image.fillAmount = !PlayerShift.Instance.CollectCooldownTimer.Completed
+													? PlayerShift.Instance.CollectCooldownTimer.PercentLeft
 													: 1;
 
 		runButton.label.text = PlayerTouchMovement.Instance.Running ? "Running" : "Walking";
@@ -143,7 +143,7 @@ public partial class HUD : MonoBehaviour
 	}
 
 	void OnShiftEvent() => SetShiftAvailable(PlayerShift.Instance.ShiftAvailable);
-	void OnStoreEvent() => SetStoreAvailable(PlayerShift.Instance.StoreAvailable);
+	void OnStoreEvent() => SetStoreAvailable(PlayerShift.Instance.CollectAvailable);
 
 	public void SetShiftAvailable(bool ready)
 	{
@@ -159,7 +159,7 @@ public partial class HUD : MonoBehaviour
 
 	public void ShiftButtonPressed() => PlayerShift.Instance.Shift();
 
-	public void StoreButtonPressed() => PlayerShift.Instance.Store();
+	public void StoreButtonPressed() => PlayerShift.Instance.Collect();
 
 	public void InventoryButtonPressed() => SetInventoryOpen(!inventoryOpen);
 	void SetInventoryOpen(bool open)

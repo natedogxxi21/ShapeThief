@@ -359,10 +359,11 @@ MonoBehaviour:
   shiftObjMask:
     serializedVersion: 2
     m_Bits: 64
+  collectPoofParticlesPrefab: {fileID: 5367465813965121044, guid: b356495e10df94d6c80c65ea08260ca7, type: 3}
   shiftTransitionLength: 1
   shiftDuration: 10
   shiftCooldownDuration: 5
-  storeCooldownDuration: 10
+  collectCooldownDuration: 0
 --- !u!114 &195112947654372558
 MonoBehaviour:
   m_ObjectHideFlags: 0

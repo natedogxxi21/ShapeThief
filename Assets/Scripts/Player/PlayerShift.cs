@@ -18,29 +18,30 @@ public partial class PlayerShift : MonoBehaviour
 	[SerializeField] MeshRenderer shiftMeshRenderer;
 	[SerializeField] MeshCollider shiftMeshCollider;
 	[SerializeField] LayerMask shiftObjMask;
+	[SerializeField] GameObject collectPoofParticlesPrefab;
 
 	public UnityEvent OnShift { get; private set; } = new();
 	public bool ShiftAvailable => !shiftTransitioning &&
 						  (shiftTarget != null || Shifted) &&
 											ShiftCooldownTimer.Completed;
-	public UnityEvent OnStore { get; private set; } = new();
-	public bool StoreAvailable => shiftTarget != null && StoreCooldownTimer.Completed;
+	public UnityEvent OnCollect { get; private set; } = new();
+	public bool CollectAvailable => shiftTarget != null && CollectCooldownTimer.Completed;
 
 	[SerializeField] float shiftTransitionLength;
 	[SerializeField] float shiftDuration;
 	[SerializeField] float shiftCooldownDuration;
-	[SerializeField] float storeCooldownDuration;
+	[SerializeField] float collectCooldownDuration;
 
 	public bool Shifted { get; private set; }
 	bool shiftTransitioning;
 	Vector3 targetShiftObjectScale;
 	public Timer ShiftTimer { get; private set; } // duration player stays shifted
 	public Timer ShiftCooldownTimer { get; private set; }
-	public Timer StoreCooldownTimer { get; private set; }
+	public Timer CollectCooldownTimer { get; private set; }
 	// these are used to detect when the timers above end
 	bool shiftActive = false;
 	bool shiftOnCooldown = false;
-	bool storeOnCooldown = false;
+	bool collectOnCooldown = false;
 
 	Finger castingFinger = null;
 
@@ -68,12 +69,12 @@ public partial class PlayerShift : MonoBehaviour
 			}
 		}
 		
-		if (storeOnCooldown)
+		if (collectOnCooldown)
 		{
-			if (StoreCooldownTimer.Completed)
+			if (CollectCooldownTimer.Completed)
 			{
-				OnStore.Invoke();
-				storeOnCooldown = false;
+				OnCollect.Invoke();
+				collectOnCooldown = false;
 			}
 		}
 	}
@@ -95,14 +96,18 @@ public partial class PlayerShift : MonoBehaviour
 		}
 	}
 
-	public void Store()
+	public void Collect()
 	{
-		if (StoreAvailable)
+		if (CollectAvailable)
 		{
 			HUD.Instance.AddToInventory(shiftTarget.prop);
-			StoreCooldownTimer = storeCooldownDuration;
-			storeOnCooldown = true;
-			OnStore.Invoke();
+			Instantiate(collectPoofParticlesPrefab, shiftTarget.transform.position, Quaternion.identity);
+			Destroy(shiftTarget.gameObject);
+			shiftTarget.Highlight(false);
+			shiftTarget = null;
+			CollectCooldownTimer = collectCooldownDuration;
+			collectOnCooldown = true;
+			OnCollect.Invoke();
 		}
 	}
 
@@ -192,7 +197,7 @@ public partial class PlayerShift : MonoBehaviour
 			if (shiftTarget != null) { shiftTarget.Highlight(false); }
 			shiftTarget = null;
 			OnShift.Invoke();
-			OnStore.Invoke();
+			OnCollect.Invoke();
 		}
 	}
 
@@ -211,7 +216,7 @@ public partial class PlayerShift : MonoBehaviour
 						if (shiftTarget != null) { shiftTarget.Highlight(false); }
 						shiftTarget = possibleShiftTarget;
 						OnShift.Invoke();
-						OnStore.Invoke();
+						OnCollect.Invoke();
 						shiftTarget.Highlight(true);
 					}
 				}

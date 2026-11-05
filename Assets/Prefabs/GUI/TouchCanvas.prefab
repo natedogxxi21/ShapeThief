@@ -1182,7 +1182,7 @@ GameObject:
   - component: {fileID: 6838656613182891648}
   - component: {fileID: 7769225206532859419}
   m_Layer: 5
-  m_Name: StoreButton
+  m_Name: CollectButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1977,7 +1977,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Store
+  m_text: Collect
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
@@ -3010,6 +3010,10 @@ PrefabInstance:
       propertyPath: countdownTimer
       value: 
       objectReference: {fileID: 3836853327721848896}
+    - target: {fileID: 1795773787399736880, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6069143564825440}
     - target: {fileID: 3158161092201532450, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -3159,6 +3163,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
+--- !u!114 &6069143564825440 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7796565741285319445, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
+  m_PrefabInstance: {fileID: 7793330589277294709}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bdfe23ef159c4644b729b415490bf6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeSelectionUI
 --- !u!224 &5184613106037218391 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3158161092201532450, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
