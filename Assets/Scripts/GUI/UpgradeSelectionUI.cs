@@ -20,6 +20,7 @@ public class UpgradeSelectionUI : MonoBehaviour
 	[Header("Availble Upgrades")]
 	[SerializeField] private UpgradeData[] upgrades;
 
+
 	private Action onMenuClosed;
 	private void Start()
 	{

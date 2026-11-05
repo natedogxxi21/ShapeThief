@@ -69,7 +69,7 @@ public class Exit_Level : MonoBehaviour
 					return;
 				}
 				exitActivated = true;
-				UpgradeMenu.OpenUpgradeMenu(ReloadMap);
+				UpgradeMenu.OpenUpgradeMenu(LoadNextLevel);
 			}
 		}
 		else
@@ -86,10 +86,6 @@ public class Exit_Level : MonoBehaviour
 		SceneManager.LoadScene("Nathan Scene");
 	}
 
-	void ReloadMap()
-	{
-		// Hello Nate :D
-	}
 
 	private void OnTriggerExit(Collider other)
 	{
