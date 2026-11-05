@@ -9,7 +9,7 @@ public class UpgradeSelectionUI : MonoBehaviour
 	[Serializable]
 	public class UpgradeData
 	{
-		public string title; [TextArea] public string description; public int index; public int cost;
+		public string title; [TextArea] public string description; public int index;
 	}
 
 	[Header("Refrences")]
@@ -19,6 +19,7 @@ public class UpgradeSelectionUI : MonoBehaviour
 
 	[Header("Availble Upgrades")]
 	[SerializeField] private UpgradeData[] upgrades;
+
 
 	private Action onMenuClosed;
 	private void Start()
@@ -46,7 +47,7 @@ public class UpgradeSelectionUI : MonoBehaviour
 			UpgradeData chosen = availble[randomIndex];
 			availble.RemoveAt(randomIndex);
 
-			cards[i].Setup(upgradeManager, chosen.index, chosen.title, chosen.description , chosen.cost);
+			cards[i].Setup(upgradeManager, chosen.index, chosen.title, chosen.description);
 		}
 	}
 

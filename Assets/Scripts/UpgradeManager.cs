@@ -13,7 +13,7 @@ public class UpgradeManager : MonoBehaviour
     [Header("Smoke Bomb")]
     [SerializeField] private ParticleSystem SmokeBomb;
     Transform Player => PlayerMovement.transform;
-     private GuardVision[] guards;
+    private GuardVision[] guards;
     [SerializeField] private float blindDuration = 4f;
     [SerializeField] public int SmokeBombCost = 50;
 
@@ -70,10 +70,10 @@ public class UpgradeManager : MonoBehaviour
                 if (UpgradeData.HasSmokeBomb)
                     return false;
 
-                if(PlayerStats.Money < SmokeBombCost)
+                if (PlayerStats.Money < SmokeBombCost)
                 {
                     Debug.Log("You are Broke");
-                        return false;
+                    return false;
                 }
 
                 PlayerStats.ChangeMoney(-SmokeBombCost);
@@ -81,24 +81,24 @@ public class UpgradeManager : MonoBehaviour
                 return true;
 
 
-                case 2:
+            case 2:
                 return BuyStaminaUpgrade();
 
             default:
                 Debug.LogWarning("Upgrade is broken");
-                    return false;
+                return false;
         }
     }
-   /* private void OnCollisionEnter(Collision collision)
-    {
-        BuyExtraTime();
-        ObtainSmokeBomb();
-        BuyStaminaUpgrade();
+    /* private void OnCollisionEnter(Collision collision)
+     {
+         BuyExtraTime();
+         ObtainSmokeBomb();
+         BuyStaminaUpgrade();
 
-        Debug.Log("Smoke Bomb saved: " + UpgradeData.HasSmokeBomb);
+         Debug.Log("Smoke Bomb saved: " + UpgradeData.HasSmokeBomb);
 
 
-    }*/
+     }*/
     public bool BuyExtraTime()
     {
         if (PlayerStats.Money < timeUpgradeCost)
@@ -135,7 +135,7 @@ public class UpgradeManager : MonoBehaviour
 
     public void UseSmokeBomb()
     {
-        guards = Object.FindObjectsByType<GuardVision>( FindObjectsInactive.Exclude );
+        guards = Object.FindObjectsByType<GuardVision>(FindObjectsInactive.Exclude);
         if (!UpgradeData.HasSmokeBomb)
             return;
 
@@ -157,8 +157,8 @@ public class UpgradeManager : MonoBehaviour
 
         }
 
-        if(HUD.Instance != null)
-        HUD.Instance.RemoveSmokeBombFromInventory();
+        if (HUD.Instance != null)
+            HUD.Instance.RemoveSmokeBombFromInventory();
 
     }
 
@@ -179,5 +179,20 @@ public class UpgradeManager : MonoBehaviour
         PlayerMovement.UpgradeStamina(extraStamina);
         Debug.Log("Stamina upgraded");
         return true;
+    }
+
+    public int GetUpgradeCost(int upgradeIndex)
+    {
+        switch (upgradeIndex)
+        {
+            case 0:
+                return timeUpgradeCost;
+            case 1:
+                return SmokeBombCost;
+            case 2:
+                return staminaUpgradeCost;
+            default:
+                return 0;
+        }
     }
 }

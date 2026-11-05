@@ -13,14 +13,14 @@ public class UpgradeCardUI : MonoBehaviour
     private int upgradeIndex;
     private int currentCost;
 
-    public void Setup(UpgradeManager upgradeManager, int Index, string title, string description,int cost)
+    public void Setup(UpgradeManager upgradeManager, int Index, string title, string description)
     {
         manager = upgradeManager;
         upgradeIndex = Index;
-        currentCost = cost;
+        currentCost = manager.GetUpgradeCost(Index);
         titleText.text = title;
         descriptionText.text = description;
-        costText.text = $"S{cost}";
+        costText.text = $"${currentCost}";
         UpdateCost();
         upgradeButton.onClick.RemoveAllListeners();
         upgradeButton.onClick.AddListener(BuyUpgrade);
@@ -41,14 +41,14 @@ public class UpgradeCardUI : MonoBehaviour
         }
         else
         {
-            costText.color = Color.white;
+            costText.color = Color.black;
         }
     }
     private void BuyUpgrade()
     {
         if (manager.PurchaseUpgrade(upgradeIndex))
         {
-            Debug.Log("Upgrade puechased:" + titleText.text);
+            Debug.Log("Upgrade purchased:" + titleText.text);
             gameObject.SetActive(false);
         }
     }
