@@ -33,6 +33,15 @@ public class DungeonCreator : MonoBehaviour
     [Range(0,2)]
     public int roomOffset;
 
+    [Header("Extra Corridors")]
+
+    [Range(0f, 1f)]
+    public float extraCorridorChance = 0.25f;
+
+    public int maxExtraCorridors = 3;
+
+    public int maxCorridorConnectionDistance = 15;
+
     //Keeping this down here so that I can include more room prefabs later
     //public DungeonRoomPrefabs startRoom;
     //public List<DungeonRoomPrefabs> roomPrefabs;
@@ -369,6 +378,7 @@ private void SpawnCenteredDoors(
         dungeonFloor.GetComponent<MeshFilter>().mesh = mesh;
         dungeonFloor.GetComponent<MeshRenderer>().material = material;
         dungeonFloor.transform.parent = transform;
+        dungeonFloor.layer = 3;
 
     //After GameObject wallParent is created and identified within void Create Mesh, now we can write the logic for creating the walls and doors.
         for (int row = (int)bottomLeftV.x; row <= (int)bottomRightV.x; row++)

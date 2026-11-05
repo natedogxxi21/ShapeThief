@@ -47,7 +47,8 @@ public DungeonGenerator(int dungeonWidth, int dungeonLength)
             //Creating code for creating the connecting Corridors that will be connecting our rooms together.
             CorridorsGenerator corridorGenerator = new CorridorsGenerator();
             var corridorList = corridorGenerator.CreateCorridor(allNodesCollection, corridorWidth);
-            
+            //Updating CorridorGenerator to include more corridors between rooms. We will
+
             return new List<Node>(roomList).Concat(corridorList).ToList();
             //We can pass our room list through line 32 change "allSpaceNodes" to => "roomList"
 

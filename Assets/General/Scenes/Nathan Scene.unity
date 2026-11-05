@@ -12185,7 +12185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Exit_Level
   additionalMoneyRequired: 50
   seeBehindPad: {fileID: 1146889051}
-  upgradeMenu: {fileID: 0}
+  isTutorial: 0
   objectiveText: {fileID: 1437695640}
 --- !u!65 &237378328
 BoxCollider:
@@ -81722,7 +81722,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6093312590393961592, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 27.75
+      value: 29.85
       objectReference: {fileID: 0}
     - target: {fileID: 6393414177414952191, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_Name
@@ -81730,7 +81730,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6426980794540341402, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 57.75
+      value: 70.7
       objectReference: {fileID: 0}
     - target: {fileID: 6669424879269237201, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
@@ -81742,7 +81742,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8968438791746746977, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 57.75
+      value: 63.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -82773,24 +82773,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DungeonCreator
   spawnManager: {fileID: 2140643980}
   guardNavMesh: {fileID: 596467190}
-  dungeonwidth: 90
-  dungeonLength: 90
-  roomWidthMin: 18
-  roomLengthMin: 18
+  dungeonwidth: 80
+  dungeonLength: 80
+  roomWidthMin: 15
+  roomLengthMin: 15
   maxIterations: 20
   corridorWidth: 3
   material: {fileID: 2100000, guid: 729f49c4b6ed50742b437608fd67cd3c, type: 2}
-  roomBottomCornerModifier: 0.186
-  roomTopCornerModifier: 0.828
+  roomBottomCornerModifier: 0.192
+  roomTopCornerModifier: 0.87
   startingRoomPrefab: {fileID: 3673890004127740013, guid: 43a12d4f991ecf84ca14b143e24b1065, type: 3}
   playerTransform: {fileID: 190430338}
-  startingRoomWidth: 18
-  startingRoomLength: 18
+  startingRoomWidth: 15
+  startingRoomLength: 15
   roomOffset: 1
+  extraCorridorChance: 0.25
+  maxExtraCorridors: 3
+  maxCorridorConnectionDistance: 15
   wallVertical: {fileID: 6707263632203575883, guid: 832c274675b35244c90583fe9442a919, type: 3}
   wallHorizontal: {fileID: 8194266006747058734, guid: 86ef0f2a91f435e409a805b0fc9d4480, type: 3}
-  doorVertical: {fileID: 0}
-  doorHorizontal: {fileID: 8517863505612932284, guid: de9fb113ba46cba4cb9de3a49b06c211, type: 3}
+  doorVertical: {fileID: 8904157572620279129, guid: 29d75bac6820afa46ad8fc1e1f9b5d2a, type: 3}
+  doorHorizontal: {fileID: 8904157572620279129, guid: c54dbc4971be4cd48b759e5cee4de511, type: 3}
 --- !u!1 &1526781291
 GameObject:
   m_ObjectHideFlags: 0
@@ -113424,18 +113427,25 @@ MonoBehaviour:
     verticalOffset: 0
   - propName: Table
     prefab: {fileID: 8254913549703994724, guid: 488c7ef465c6b4f8092cd9f672106c42, type: 3}
-    spawnChance: 0.506
+    spawnChance: 0.15
     minPerRoom: 1
     maxPerRoom: 3
     spawnLocation: 3
     verticalOffset: 0.1
-  - propName: Mug
-    prefab: {fileID: 1226859771069493251, guid: 480c4b975cc8f4393b50a95dd136c5bd, type: 3}
+  - propName: TableGroup1
+    prefab: {fileID: 1762637274530661486, guid: 4747a4a2aa3d14b448ac2cc65e188d25, type: 3}
     spawnChance: 0.333
     minPerRoom: 1
-    maxPerRoom: 3
-    spawnLocation: 2
-    verticalOffset: 0
+    maxPerRoom: 2
+    spawnLocation: 3
+    verticalOffset: 0.45
+  - propName: TableGroup2
+    prefab: {fileID: 8494275663934983492, guid: 0f52a8a3174a66a45918027cb301c78f, type: 3}
+    spawnChance: 0.3
+    minPerRoom: 1
+    maxPerRoom: 2
+    spawnLocation: 3
+    verticalOffset: 0.45
   collider: []
 --- !u!4 &2140643981
 Transform:
@@ -113799,6 +113809,71 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77a73f1cc7246b641be6f4ea3c07de34, type: 3}
+--- !u!1001 &3475759835064115799
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -1975387894420563089, guid: be477e365406b514b95d7caa7898b454, type: 3}
+      propertyPath: depth
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -1975387894420563089, guid: be477e365406b514b95d7caa7898b454, type: 3}
+      propertyPath: width
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898204667633164544, guid: be477e365406b514b95d7caa7898b454, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898204667633164544, guid: be477e365406b514b95d7caa7898b454, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898204667633164544, guid: be477e365406b514b95d7caa7898b454, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898204667633164544, guid: be477e365406b514b95d7caa7898b454, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898204667633164544, guid: be477e365406b514b95d7caa7898b454, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898204667633164544, guid: be477e365406b514b95d7caa7898b454, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898204667633164544, guid: be477e365406b514b95d7caa7898b454, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898204667633164544, guid: be477e365406b514b95d7caa7898b454, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898204667633164544, guid: be477e365406b514b95d7caa7898b454, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898204667633164544, guid: be477e365406b514b95d7caa7898b454, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8848459531154230991, guid: be477e365406b514b95d7caa7898b454, type: 3}
+      propertyPath: m_Name
+      value: RoomBlock
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: be477e365406b514b95d7caa7898b454, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -113823,3 +113898,4 @@ SceneRoots:
   - {fileID: 1288386975191948331}
   - {fileID: 19402761}
   - {fileID: 2019268196}
+  - {fileID: 3475759835064115799}

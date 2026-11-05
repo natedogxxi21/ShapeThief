@@ -43,7 +43,7 @@ public class CorridorNode : Node
             ProcessRoomInRelationRightOrLeft(this.structure1, this.structure2);
             break;
             case RelativePosition.Left:
-            ProcessRoomInRelationRightOrLeft(this.structure1, this.structure2);
+            ProcessRoomInRelationRightOrLeft(this.structure2, this.structure1);
             break;
 
             default:
@@ -134,10 +134,10 @@ public class CorridorNode : Node
         {
             return StructureHelper.CalculateMiddlePoint(
                 rightNodeDown + new Vector2Int(0, modifierDistanceFromWall),
-                leftNodeUp - new Vector2Int(0, modifierDistanceFromWall)
+                leftNodeUp - new Vector2Int(0, modifierDistanceFromWall + this.corridorWidth)
             ).y;
         }
-        if(leftNodeDown.y >= rightNodeDown.y && leftNodeDown.y <= rightNodeUp.y)
+        if(leftNodeDown.y >= rightNodeDown.y && leftNodeDown.y <= rightNodeUp.y) 
         {
             return StructureHelper.CalculateMiddlePoint(
              leftNodeDown + new Vector2Int(0, modifierDistanceFromWall), 
@@ -264,6 +264,8 @@ public class CorridorNode : Node
     }
 
     //fucking withcraft what
+
+    
     private float CalculateAngle(Vector2 middlePointStructure1Temp, Vector2 middlePointStructure2Temp)
     {
         //Yeah math

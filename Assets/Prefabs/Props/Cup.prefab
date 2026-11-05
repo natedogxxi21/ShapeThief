@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 3564883863349201024}
   m_Layer: 6
   m_Name: Cup
-  m_TagString: Untagged
+  m_TagString: EnemySpawnBlocker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

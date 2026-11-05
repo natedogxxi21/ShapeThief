@@ -63,6 +63,7 @@ public class DungeonSpawnManager : MonoBehaviour
 
     }
 
+    
     public void Initialize(List<RoomGrid> grids)
     {
         roomGrids = grids;
@@ -73,6 +74,8 @@ public class DungeonSpawnManager : MonoBehaviour
     
     private void SpawnDungeonContents()
     {
+        DestroyAllChildren();
+        //Destroy's Spawned Dungeon contents at the start
         if (roomGrids == null || roomGrids.Count == 0 )
         {
             Debug.LogWarning("DungeonSpawnManager: No room grids were provided.");
@@ -368,6 +371,17 @@ private SpawnCell GetAvailableEnemyCell(RoomGrid roomGrid)
      return availableCells[Random.Range(0, availableCells.Count)];
 
     }
-
+ private void DestroyAllChildren()
+    {
+        while(transform.childCount != 0)
+        {
+            foreach(Transform item in transform)
+            {
+                DestroyImmediate(item.gameObject);
+            }
+        }
+    }
 
 }
+
+
