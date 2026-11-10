@@ -18,7 +18,7 @@ public partial class PlayerStats : MonoBehaviour
 	[AutoStaticsCleanup]
 	public static float GuardDetectRadius { get; private set; } = 10;
 
-	public void Awake() => ResetMoney();
+	
 
 	public static void ChangeMoney(int deltaMoney)
 	{

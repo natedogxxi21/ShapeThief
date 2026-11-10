@@ -22,7 +22,7 @@ public class UpgradeSelectionUI : MonoBehaviour
 
 
 	private Action onMenuClosed;
-	private void Start()
+	private void Awake()
 	{
 		Instance = this;
 		panel.SetActive(false);

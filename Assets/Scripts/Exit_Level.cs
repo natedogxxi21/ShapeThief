@@ -1,3 +1,4 @@
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -5,95 +6,129 @@ using System.Collections;
 
 public class Exit_Level : MonoBehaviour
 {
-	[Header("Exit Requirements")]
-	[SerializeField] private int additionalMoneyRequired = 50;
-	[SerializeField] GameObject seeBehindPad;
-	[SerializeField] bool isTutorial;
+    [Header("Exit Requirements")]
+    [SerializeField] private int additionalMoneyRequired = 20;
+    [SerializeField] private GameObject seeBehindPad;
+    [SerializeField] private bool isTutorial;
 
-	[Header("Upgrade Menu")]
-	UpgradeSelectionUI UpgradeMenu => UpgradeSelectionUI.Instance;
+    [Header("Upgrade Menu")]
+    UpgradeSelectionUI UpgradeMenu => UpgradeSelectionUI.Instance;
 
-	[Header("UI")]
-	public TMP_Text objectiveText;
+    [Header("UI")]
+    public TMP_Text objectiveText;
 
-	private int moneyAtLevelStart;
-	private bool exitActivated;
+    private int nextUpgradeMoney;
+    private bool upgradeMenuOpen;
+    private bool playerInsidePad;
 
-	void Start()
-	{
-		moneyAtLevelStart = PlayerStats.Money;
-		if (objectiveText != null)
-			objectiveText.gameObject.SetActive(false);
+    void Awake()
+    {
+        // Require additional money from the player's current balance.
+        nextUpgradeMoney = PlayerStats.Money + additionalMoneyRequired;
 
-		StartCoroutine(WaitForPlayerCoroutine());
-	}
+        if (objectiveText != null)
+            objectiveText.gameObject.SetActive(false);
 
-	IEnumerator WaitForPlayerCoroutine()
-	{
-		while (PlayerStats.OnMoneyChanged == null)
-		{
-			yield return null;
-		}
+        if (seeBehindPad != null)
+            seeBehindPad.SetActive(false);
 
-		PlayerStats.OnMoneyChanged.AddListener(OnMoneyChanged);
+        StartCoroutine(WaitForPlayerCoroutine());
+    }
 
-		OnMoneyChanged(PlayerStats.Money, PlayerStats.Money);
-	}
+    IEnumerator WaitForPlayerCoroutine()
+    {
+        while (PlayerStats.OnMoneyChanged == null)
+            yield return null;
 
+        PlayerStats.OnMoneyChanged.AddListener(OnMoneyChanged);
 
-	private void OnMoneyChanged(int prev, int newMoney)
-	{
-		if (seeBehindPad != null)
-			seeBehindPad.SetActive(newMoney >= moneyAtLevelStart + additionalMoneyRequired);
-	}
+        OnMoneyChanged(PlayerStats.Money, PlayerStats.Money);
+    }
 
-	private void OnTriggerEnter(Collider other)
-	{
-		if (!other.transform.root.CompareTag("Player"))
-			return;
-		if (exitActivated)
-			return;
+    private void OnMoneyChanged(int prev, int newMoney)
+    {
+        UpdateExitVisibility();
 
-		int requiredTotal = moneyAtLevelStart + additionalMoneyRequired;
+        // If the player is already standing on the pad,
+        // check whether they have reached the next milestone.
+        if (playerInsidePad && !upgradeMenuOpen)
+            TryOpenUpgradeMenu();
+    }
 
-		if (PlayerStats.Money >= requiredTotal)
-		{
-			if (isTutorial)
-			{
-				LoadNextLevel();
-			}
-			else
-			{
-				exitActivated = true;
-				UpgradeMenu.OpenUpgradeMenu(LoadNextLevel);
-			}
-		}
-		else
-		{
-			int stillNeeded = requiredTotal - PlayerStats.Money;
+    private void UpdateExitVisibility()
+    {
+        if (seeBehindPad != null)
+            seeBehindPad.SetActive(PlayerStats.Money >= nextUpgradeMoney);
+    }
 
-			objectiveText.text = "Need <color=green>$" + stillNeeded + "</color> more!";
-			objectiveText.gameObject.SetActive(true);
-		}
-	}
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.transform.root.CompareTag("Player"))
+            return;
 
-	private void LoadNextLevel()
-	{
-		SceneManager.LoadScene("Nathan Scene");
-	}
+        playerInsidePad = true;
+        TryOpenUpgradeMenu();
+    }
 
+    private void TryOpenUpgradeMenu()
+    {
+        if (upgradeMenuOpen)
+            return;
 
-	private void OnTriggerExit(Collider other)
-	{
-		if (!other.transform.root.CompareTag("Player"))
-			return;
+        if (PlayerStats.Money < nextUpgradeMoney)
+        {
+            int stillNeeded = nextUpgradeMoney - PlayerStats.Money;
 
-		objectiveText.gameObject.SetActive(false);
-	}
+            if (objectiveText != null)
+            {
+                objectiveText.text = "Need <color=green>$" + stillNeeded + "</color> more!";
+                objectiveText.gameObject.SetActive(true);
+            }
 
-	private void OnDestroy()
-	{
-		if (PlayerStats.OnMoneyChanged != null)
-			PlayerStats.OnMoneyChanged.RemoveListener(OnMoneyChanged);
-	}
+            return;
+        }
+
+        if (objectiveText != null)
+            objectiveText.gameObject.SetActive(false);
+
+        if (isTutorial)
+        {
+            LoadNextLevel();
+            return;
+        }
+
+        upgradeMenuOpen = true;
+
+        UpgradeMenu.OpenUpgradeMenu(() =>
+        {
+            // Require another additional amount after closing.
+            nextUpgradeMoney = PlayerStats.Money + additionalMoneyRequired;
+
+            upgradeMenuOpen = false;
+
+            UpdateExitVisibility();
+        });
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!other.transform.root.CompareTag("Player"))
+            return;
+
+        playerInsidePad = false;
+
+        if (objectiveText != null)
+            objectiveText.gameObject.SetActive(false);
+    }
+
+    private void LoadNextLevel()
+    {
+        SceneManager.LoadScene("Nathan Scene");
+    }
+
+    private void OnDestroy()
+    {
+        if (PlayerStats.OnMoneyChanged != null)
+            PlayerStats.OnMoneyChanged.RemoveListener(OnMoneyChanged);
+    }
 }
