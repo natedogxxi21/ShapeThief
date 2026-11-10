@@ -8,6 +8,7 @@ public enum GuardState
 	Idle, // Nothing
 	Post, // Standing and turning head
 	Wander, // Randomly navigate around
+	Patrol, // Walk back and forth between two points
 	Investigate, // Walk towards a point
 	Chase, // Run towards a point
 	Return // Walking back to spawn point
@@ -16,7 +17,7 @@ public enum GuardState
 [RequireComponent(typeof(GuardController))]
 public class GuardBehaviour : MonoBehaviour
 {
-	static readonly float[] stateTickDurations = { 10f, 4f, .2f, .2f, .2f, 1f };
+	static readonly float[] stateTickDurations = { 10f, 4f, .2f, .5f, .2f, .2f, 1f };
 
 	GuardController controller;
 	[SerializeField] GuardVision vision;
@@ -33,6 +34,10 @@ public class GuardBehaviour : MonoBehaviour
 
 	[Space]
 	[SerializeField] Timer wanderTimer;
+
+	[SerializeField] Timer patrolTimer;
+	[SerializeField] Vector3 patrolPoint;
+	bool patrolToStart = false;
 
 	GameObject seenPlayer = null;
 	Vector3 investigatePoint;
@@ -53,7 +58,11 @@ public class GuardBehaviour : MonoBehaviour
 
 		controller = GetComponent<GuardController>();
 		controller.enabled = true;
-		Wander();
+		switch (defaultState)
+		{
+			case GuardState.Wander: Wander(); break;
+			case GuardState.Patrol: Patrol(); break;
+		}
 		spawnPoint = transform.position;
 		vision.onPlayerSeen.AddListener(OnPlayerSeen);
 		vision.onPlayerLost.AddListener(OnPlayerLost);
@@ -89,6 +98,19 @@ public class GuardBehaviour : MonoBehaviour
 					wanderTimer.Reset();
 					controller.WalkTo(GetWanderPoint());
 				}
+				break;
+
+			case GuardState.Patrol:
+				if (controller.Traveling) { patrolTimer.Pause(); }
+				else { patrolTimer.Resume(); }
+
+				if (patrolTimer.Completed)
+				{
+					patrolTimer.Reset();
+					patrolToStart = !patrolToStart;
+				}
+
+				controller.WalkTo(patrolToStart ? spawnPoint : patrolPoint);
 				break;
 
 			case GuardState.Investigate:
@@ -145,6 +167,10 @@ public class GuardBehaviour : MonoBehaviour
 							Wander();
 							break;
 
+						case GuardState.Patrol:
+							Patrol();
+							break;
+
 						default:
 							throw new Exception("Cannot accept Guard State " + defaultState + " as default state");
 					}
@@ -170,6 +196,11 @@ public class GuardBehaviour : MonoBehaviour
 	{
 		SetState(GuardState.Wander);
 		wanderTimer = 3f;
+	}
+	public void Patrol()
+	{
+		SetState(GuardState.Patrol);
+		patrolTimer = 2f;
 	}
 	public void Investigate(Vector3 point)
 	{
@@ -224,5 +255,50 @@ public class GuardBehaviour : MonoBehaviour
 		return transform.position + (new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle)) * distance);
 	}
 
+	public void ResetGuard()
+	{
+		controller.Warp(spawnPoint);
+		vision.LosePlayer();
+		hearing.LosePlayer();
+		switch (defaultState)
+		{
+			case GuardState.Wander: Wander(); break;
+			case GuardState.Patrol: Patrol(); break;
+		}
+	}
+
 	float DirectionToAngle(Vector3 direction) => Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+#if UNITY_EDITOR
+	void OnDrawGizmosSelected()
+	{
+		if (defaultState != GuardState.Patrol) return;
+
+		// In edit mode spawnPoint isn't set yet, so use the current position
+		Vector3 start = Application.isPlaying ? spawnPoint : transform.position;
+
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawSphere(patrolPoint, 0.3f);
+		Gizmos.DrawLine(start, patrolPoint);
+	}
+
+	public Vector3 PatrolPoint { get => patrolPoint; set => patrolPoint = value; }
+	public GuardState DefaultState { get => defaultState; set => defaultState = value; }
+#endif
+}
+
+[UnityEditor.CustomEditor(typeof(GuardBehaviour))]
+class GuardBehaviourEditor : UnityEditor.Editor
+{
+	void OnSceneGUI()
+	{
+		var guard = (GuardBehaviour)target;
+		if (guard.DefaultState != GuardState.Patrol) return;
+		UnityEditor.EditorGUI.BeginChangeCheck();
+		Vector3 newPoint = UnityEditor.Handles.PositionHandle(guard.PatrolPoint, Quaternion.identity);
+		if (UnityEditor.EditorGUI.EndChangeCheck())
+		{
+			UnityEditor.Undo.RecordObject(guard, "Move Patrol Point");
+			guard.PatrolPoint = newPoint;
+		}
+	}
 }

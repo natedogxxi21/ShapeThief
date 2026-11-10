@@ -31,5 +31,7 @@ public class GuardController : MonoBehaviour
 	public void Stop() => navAgent.SetDestination(transform.position);
 	public void FaceToward(float angle) => transform.eulerAngles.WithY(angle);
 
+	public void Warp(Vector3 to) => navAgent.Warp(to);
+
 	public void GlanceToward() => throw new System.NotImplementedException();
 }

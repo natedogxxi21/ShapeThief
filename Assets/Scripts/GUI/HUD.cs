@@ -25,6 +25,7 @@ public partial class HUD : MonoBehaviour
 
 	static readonly Color activeColor = new(1, .94f, 0);
 	static readonly Color normalColor = Color.white;
+	[SerializeField] RectTransform collectSymbol;
 
 	[SerializeField] RectTransform[] reservedRects;
 	bool inventoryOpen = false;
@@ -112,6 +113,29 @@ public partial class HUD : MonoBehaviour
 		}
 	}
 
+	public void AnimateCollect(ShiftProp prop)
+	{
+		Vector3 sp = Camera.main.WorldToScreenPoint(prop.transform.position);
+		collectSymbol.anchoredPosition = sp;
+		collectSymbol.gameObject.SetActive(true);
+		StartCoroutine(AnimateCollectCoroutine());
+
+		const float duration = 1.5f;
+		IEnumerator AnimateCollectCoroutine()
+		{
+			float p = 0;
+			while (p < 1)
+			{
+				float t = Mathf.Pow(p, 3);
+				collectSymbol.position = Vector3.Lerp(sp, inventoryButton.transform.position, t);
+				collectSymbol.localScale = Vector3.one * Mathf.Sin(p * Mathf.PI);
+				p += Time.deltaTime / duration;
+				yield return null;
+			}
+			collectSymbol.gameObject.SetActive(false);
+		}
+	}
+
 	public bool IsScreenPosReserved(Vector2 screenPos)
 	{
 		string printString = "";
@@ -166,6 +190,8 @@ public partial class HUD : MonoBehaviour
 	{
 		inventoryOpen = open;
 		inventoryPanel.SetActive(open);
+		if (open) { TutorialFlow.openedInventory = true; }
+		else { TutorialFlow.closedInventory = true; }
 	}
 
 	public void RunButtonPressed()

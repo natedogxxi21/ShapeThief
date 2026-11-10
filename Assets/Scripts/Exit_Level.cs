@@ -64,10 +64,6 @@ public class Exit_Level : MonoBehaviour
 			}
 			else
 			{
-				if (UpgradeMenu == null)
-				{
-					return;
-				}
 				exitActivated = true;
 				UpgradeMenu.OpenUpgradeMenu(LoadNextLevel);
 			}
@@ -76,7 +72,7 @@ public class Exit_Level : MonoBehaviour
 		{
 			int stillNeeded = requiredTotal - PlayerStats.Money;
 
-			objectiveText.text = "You still need <color=green>$" + stillNeeded + "</color> more before you can leave!";
+			objectiveText.text = "Need <color=green>$" + stillNeeded + "</color> more!";
 			objectiveText.gameObject.SetActive(true);
 		}
 	}

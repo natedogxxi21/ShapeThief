@@ -51,8 +51,9 @@ MonoBehaviour:
   visionBlockers:
     serializedVersion: 2
     m_Bits: 266
-  noticeDistance: 3
+  noticeDistance: 4
   safeSpeed: 0.2
+  seenMovementDecay: 0.75
   touchedColliders: []
 --- !u!64 &7195222768170491396
 MeshCollider:
@@ -458,6 +459,12 @@ MonoBehaviour:
     <Duration>k__BackingField: 0
     <Paused>k__BackingField: 0
     pausedTime: 0
+  patrolTimer:
+    <EndTime>k__BackingField: 0
+    <Duration>k__BackingField: 0
+    <Paused>k__BackingField: 0
+    pausedTime: 0
+  patrolPoint: {x: 0, y: 0, z: 0}
   chaseInvestigateTimer:
     <EndTime>k__BackingField: 0
     <Duration>k__BackingField: 0
@@ -491,6 +498,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GuardInteract
   endGame: 1
   seeThroughBody: {fileID: 7772555921923364245}
+  footstepDistance: 1.8
 --- !u!114 &3590587917465020045
 MonoBehaviour:
   m_ObjectHideFlags: 0

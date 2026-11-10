@@ -10,13 +10,16 @@ public partial class AudioCueManager : MonoBehaviour
 
 	void Awake() => Instance = this;
 
-	public static void PlayFootstep(Vector3 position, bool running)
+	public static void PlayFootstep(Vector3 position, bool running, float speedPercent, bool stimulus = true)
 	{
-		float volume = running ? 1.5f : 1f;
+		float volume = speedPercent * (running ? 1.5f : 1f);
 		float deltaPitch = Random.Range(.5f, 1f);
 		SFXManager.PlayClip(Instance.footstepClip, volume, position, deltaPitch);
-		CueGuards(volume, position);
-		MakeParticles(position, volume);
+		if (stimulus)
+		{
+			CueGuards(volume, position);
+			MakeParticles(position, volume);
+		}
 	}
 
 	public static void PlayCollisionSound(Prop prop, Vector3 position, float velocity)
@@ -56,7 +59,7 @@ public partial class AudioCueManager : MonoBehaviour
 	{
 		foreach (GuardBehaviour guard in GuardNavMesh.Instance.RegisteredGuards)
 		{
-			guard.hearing.HearCue(loudness, position);	
+			guard.hearing.HearCue(loudness, position);
 		}
 	}
 }

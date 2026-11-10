@@ -90,6 +90,12 @@ public class GuardHearing : MonoBehaviour
 		return sourceLoudness * EvaluateCurve(dist);
 	}
 
+	public void LosePlayer()
+	{
+		soundHeard = 0;
+		alarmed = false;
+	}
+
 	// Falloff multiplier for a given distance
 	public float EvaluateCurve(float distance)
 	{

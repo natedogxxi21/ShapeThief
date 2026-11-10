@@ -81632,10 +81632,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 386809882074214816, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
-      propertyPath: m_fontSize
-      value: 37.1
-      objectReference: {fileID: 0}
     - target: {fileID: 552261905853201978, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -81720,29 +81716,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6093312590393961592, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
-      propertyPath: m_fontSize
-      value: 29.85
-      objectReference: {fileID: 0}
     - target: {fileID: 6393414177414952191, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_Name
       value: TouchCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426980794540341402, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
-      propertyPath: m_fontSize
-      value: 70.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6669424879269237201, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
-      propertyPath: m_fontSize
-      value: 66
-      objectReference: {fileID: 0}
-    - target: {fileID: 8402484480559052993, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
-      propertyPath: m_fontSize
-      value: 38.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8968438791746746977, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
-      propertyPath: m_fontSize
-      value: 63.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -18,6 +18,7 @@ public partial class PlayerTouchMovement : MonoBehaviour
 	[SerializeField] float maxStamina;
 	[SerializeField] float staminaRecover;
 	[SerializeField] float runStaminaDrain;
+	[SerializeField] float footstepDistance = 1f;
 
 	[Header("Debug Keyboard & Mouse Controls")]
 	[SerializeField] InputAction kbmMove;
@@ -26,43 +27,39 @@ public partial class PlayerTouchMovement : MonoBehaviour
 	[SerializeField] InputAction kbmLook;
 	[SerializeField] InputAction kbmTest;
 
-	Finger movementFinger;
+	protected Finger movementFinger;
 	Vector2 moveInput;
-	Finger lookFinger;
+	protected Finger lookFinger;
 
 	float charModelTargetAngle = 0;
 	const float charModelTurnSpeed = 10;
 	public bool Running { get; private set; }
 	float stamina;
 	public float StaminaPercent => stamina / maxStamina;
-	[SerializeField] Timer footstepTimer;
-	[SerializeField] float footstepFrequency = .3f;
+	float footstepTicker;
 
 	void Awake()
 	{
 		Instance = this;
 		Application.targetFrameRate = 120;
 		stamina = maxStamina;
-		footstepTimer = footstepFrequency;
 	}
 
 	void Update()
 	{
 		float angle = Mathf.LerpAngle(model.localEulerAngles.y, charModelTargetAngle, charModelTurnSpeed * Time.deltaTime);
 		model.localEulerAngles = new Vector3(0, angle, 0);
-		if (moveInput.sqrMagnitude > 0.1f)
-		{ footstepTimer.Resume(); }
-		else { footstepTimer.Pause(); }
 
-		if (footstepTimer.Completed)
+		if (footstepTicker >= footstepDistance)
 		{
-			AudioCueManager.PlayFootstep(transform.position, Running);
-			footstepTimer.Reset();
+			AudioCueManager.PlayFootstep(transform.position, Running, rb.linearVelocity.magnitude / (Running ? runSpeed : speed));
+			footstepTicker = 0;
 		}
 	}
 
 	void FixedUpdate()
 	{
+		footstepTicker += rb.linearVelocity.magnitude * Time.fixedDeltaTime;
 		rb.linearVelocity = (Running ? runSpeed : speed) * ((moveInput.x * camYaw.right) + (moveInput.y * camYaw.forward));
 
 		if (Running && stamina > 0 && moveInput.sqrMagnitude > 0.01f)
@@ -103,7 +100,7 @@ public partial class PlayerTouchMovement : MonoBehaviour
 		}
 	}
 
-	private void HandleFingerMove(Finger movedFinger)
+	protected virtual void HandleFingerMove(Finger movedFinger)
 	{
 		if (movedFinger == movementFinger)
 		{

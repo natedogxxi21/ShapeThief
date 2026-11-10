@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class LootProp : MonoBehaviour
 {
-	[SerializeField] int lootValue;
-	[SerializeField] AudioClip collectClip;
-	[SerializeField] AudioClip collisionClip;
-	bool collected;
+	[SerializeField] protected int lootValue;
+	[SerializeField] protected AudioClip collectClip;
+	[SerializeField] protected AudioClip collisionClip;
+	protected bool collected;
 
-	void OnCollisionEnter(Collision collision)
+	protected virtual void OnCollisionEnter(Collision collision)
 	{
 		if (collected) { return; }
 		if (collision.gameObject.CompareTag("Player"))

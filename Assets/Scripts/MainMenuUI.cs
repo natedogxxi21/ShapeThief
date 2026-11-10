@@ -3,19 +3,19 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuUI : MonoBehaviour
 {
-	public GameObject MainMenuPanel;
-	public GameObject InstructionPanel;
+	[SerializeField] GameObject mainMenuPanel;
+	[SerializeField] GameObject playPanel;
+	[SerializeField] GameObject creditsPanel;
 
-	
-
-	public void StartGame()
+	public void Play()
 	{
-		SceneManager.LoadScene("Nathan Scene");
+		playPanel.SetActive(true);
+		mainMenuPanel.SetActive(false);
 	}
 
-	public void Tutorial()
+	public void StartGame(bool tutorial)
 	{
-		SceneManager.LoadScene("Tutorial Scene");
+		SceneManager.LoadScene(tutorial ? "Tutorial Scene" : "Nathan Scene");
 	}
 
 	public void QuitGame()
@@ -26,15 +26,15 @@ public class MainMenuUI : MonoBehaviour
 #endif
 	}
 
-	public void OpenInstructions()
+	public void OpenCredits()
 	{
-		InstructionPanel.SetActive(true);
-		MainMenuPanel.SetActive(false);
+		creditsPanel.SetActive(true);
+		mainMenuPanel.SetActive(false);
 	}
 
-	public void CloseInstructions()
+	public void CloseCredits()
 	{
-		InstructionPanel.SetActive(false);
-		MainMenuPanel.SetActive(true);
+		creditsPanel.SetActive(false);
+		mainMenuPanel.SetActive(true);
 	}
 }

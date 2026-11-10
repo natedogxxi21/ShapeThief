@@ -232,6 +232,7 @@ MonoBehaviour:
   maxStamina: 100
   staminaRecover: 10
   runStaminaDrain: 30
+  footstepDistance: 1.8
   kbmMove:
     m_Name: Kbm Move
     m_Type: 2
@@ -332,12 +333,6 @@ MonoBehaviour:
       m_Action: Kbm Test
       m_Flags: 0
     m_Flags: 0
-  footstepTimer:
-    <EndTime>k__BackingField: 0
-    <Duration>k__BackingField: 0
-    <Paused>k__BackingField: 0
-    pausedTime: 0
-  footstepFrequency: 0.35
 --- !u!114 &8266984550574199643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,10 +355,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   collectPoofParticlesPrefab: {fileID: 5367465813965121044, guid: b356495e10df94d6c80c65ea08260ca7, type: 3}
+  collectPoofClip: {fileID: 8300000, guid: 339bd4cad3224431a9686bfce9067173, type: 3}
   shiftTransitionLength: 1
   shiftDuration: 10
   shiftCooldownDuration: 5
-  collectCooldownDuration: 0
+  collectCooldownDuration: 10
 --- !u!114 &195112947654372558
 MonoBehaviour:
   m_ObjectHideFlags: 0

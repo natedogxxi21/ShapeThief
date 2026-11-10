@@ -18,7 +18,8 @@ public class GuardVision : MonoBehaviour
 	[Tooltip("Meters of noticeable movement needed before the guard spots a shifted player.")]
 	[SerializeField] float noticeDistance = 1.5f;
 	[Tooltip("Movement slower than this is never noticed. Also how fast suspicion drains.")]
-	[SerializeField] float safeSpeed = 0.5f;
+	[SerializeField] float safeSpeed = 0.15f;
+	[SerializeField] float seenMovementDecay = 0.75f;
 
 	GameObject player;
 	public List<Collider> touchedColliders = new();
@@ -59,10 +60,7 @@ public class GuardVision : MonoBehaviour
 		if (!TryGetPlayer(out GameObject p, out _) || p != player) return;
 		if (touchedColliders.Contains(other)) { touchedColliders.Remove(other); }
 
-		SetPlayerSeen(player, false);
-		player = null;
-		shift = null;
-		movementNoticed = 0f;
+		LosePlayer();
 	}
 
 	void FixedUpdate()
@@ -97,7 +95,7 @@ public class GuardVision : MonoBehaviour
 
 		// Shifted: only noticeable if moving faster than safeSpeed.
 		float prevNotice = movementNoticed;
-		movementNoticed += moved - safeSpeed * Time.fixedDeltaTime;
+		movementNoticed += moved > safeSpeed * Time.fixedDeltaTime ? moved : -seenMovementDecay * Time.fixedDeltaTime;
 		movementNoticed = Mathf.Clamp(movementNoticed, 0f, noticeDistance);
 		if (movementNoticed > prevNotice) { onPlayerNoticed.Invoke(player.transform.position); }
 
@@ -123,6 +121,14 @@ public class GuardVision : MonoBehaviour
 
 		playerSeen = seen;
 		(seen ? onPlayerSeen : onPlayerLost).Invoke(target);
+	}
+
+	public void LosePlayer()
+	{
+		SetPlayerSeen(player, false);
+		player = null;
+		shift = null;
+		movementNoticed = 0f;
 	}
 
 	bool TryGetPlayer(out GameObject player, out PlayerShift shift)

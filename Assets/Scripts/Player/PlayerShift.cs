@@ -10,15 +10,16 @@ public partial class PlayerShift : MonoBehaviour
 	[AutoStaticsCleanup] public static PlayerShift Instance;
 
 	[SerializeField] Rigidbody rb;
-	ShiftProp possibleShiftTarget;
-	ShiftProp shiftTarget;
+	protected ShiftProp possibleShiftTarget;
+	protected ShiftProp shiftTarget;
 	[SerializeField] Transform baseModel;
 	[SerializeField] Transform shiftModelTransform;
 	[SerializeField] MeshFilter shiftMeshFilter;
 	[SerializeField] MeshRenderer shiftMeshRenderer;
 	[SerializeField] MeshCollider shiftMeshCollider;
-	[SerializeField] LayerMask shiftObjMask;
-	[SerializeField] GameObject collectPoofParticlesPrefab;
+	[SerializeField] protected LayerMask shiftObjMask;
+	[SerializeField] protected GameObject collectPoofParticlesPrefab;
+	[SerializeField] protected AudioClip collectPoofClip;
 
 	public UnityEvent OnShift { get; private set; } = new();
 	public bool ShiftAvailable => !shiftTransitioning &&
@@ -30,20 +31,20 @@ public partial class PlayerShift : MonoBehaviour
 	[SerializeField] float shiftTransitionLength;
 	[SerializeField] float shiftDuration;
 	[SerializeField] float shiftCooldownDuration;
-	[SerializeField] float collectCooldownDuration;
+	[SerializeField] protected float collectCooldownDuration;
 
 	public bool Shifted { get; private set; }
 	bool shiftTransitioning;
 	Vector3 targetShiftObjectScale;
 	public Timer ShiftTimer { get; private set; } // duration player stays shifted
 	public Timer ShiftCooldownTimer { get; private set; }
-	public Timer CollectCooldownTimer { get; private set; }
+	public Timer CollectCooldownTimer { get; protected set; }
 	// these are used to detect when the timers above end
 	bool shiftActive = false;
 	bool shiftOnCooldown = false;
-	bool collectOnCooldown = false;
+	protected bool collectOnCooldown = false;
 
-	Finger castingFinger = null;
+	protected Finger castingFinger = null;
 
 	void Awake()
 	{
@@ -79,7 +80,7 @@ public partial class PlayerShift : MonoBehaviour
 		}
 	}
 
-	public void Shift()
+	public virtual void Shift()
 	{
 		if (ShiftAvailable)
 		{
@@ -96,14 +97,16 @@ public partial class PlayerShift : MonoBehaviour
 		}
 	}
 
-	public void Collect()
+	public virtual void Collect()
 	{
 		if (CollectAvailable)
 		{
 			HUD.Instance.AddToInventory(shiftTarget.prop);
 			Instantiate(collectPoofParticlesPrefab, shiftTarget.transform.position, Quaternion.identity);
+			SFXManager.PlayClip(collectPoofClip, 1, shiftTarget.transform.position, Random.Range(-0.05f, .1f));
 			Destroy(shiftTarget.gameObject);
 			shiftTarget.Highlight(false);
+			HUD.Instance.AnimateCollect(shiftTarget);
 			shiftTarget = null;
 			CollectCooldownTimer = collectCooldownDuration;
 			collectOnCooldown = true;
@@ -201,7 +204,7 @@ public partial class PlayerShift : MonoBehaviour
 		}
 	}
 
-	void HandleFingerUp(Finger finger)
+	protected virtual void HandleFingerUp(Finger finger)
 	{
 		if (finger == castingFinger)
 		{
