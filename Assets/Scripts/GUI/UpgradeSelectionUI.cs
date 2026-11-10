@@ -33,6 +33,10 @@ public class UpgradeSelectionUI : MonoBehaviour
 		onMenuClosed = closedCallback;
 		panel.SetActive(true);
 
+		foreach (UpgradeCardUI card in cards)
+		{
+			card.gameObject.SetActive(true);
+		}
 		List<UpgradeData> availble = new List<UpgradeData>(upgrades);
 
 		for (int i = 0; i < cards.Length; i++)
@@ -45,7 +49,7 @@ public class UpgradeSelectionUI : MonoBehaviour
 			int randomIndex = UnityEngine.Random.Range(0, availble.Count);
 
 			UpgradeData chosen = availble[randomIndex];
-			availble.RemoveAt(randomIndex);
+			
 
 			cards[i].Setup(upgradeManager, chosen.index, chosen.title, chosen.description);
 		}
