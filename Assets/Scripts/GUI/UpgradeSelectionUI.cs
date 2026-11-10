@@ -65,7 +65,7 @@ public class UpgradeSelectionUI : MonoBehaviour
 	public void RerollUpgrade()
 	{
 
-		if (PlayerStats.Money > RerollCost)
+		if (PlayerStats.Money >= RerollCost)
 		{
 			PlayerStats.ChangeMoney(-RerollCost);
 			GenerateRandomUpgrade();

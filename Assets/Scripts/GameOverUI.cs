@@ -14,15 +14,17 @@ public class GameOverUI : MonoBehaviour
 	{
 		Time.timeScale = 1f;
 		SceneManager.LoadScene(0);
-        PlayerStats.ResetMoney();
+		PlayerStats.ResetMoney();
 
 	}
 
 	public void QuitGame()
 	{
-		Application.Quit();
+
+	Application.Quit();
 #if UNITY_EDITOR
 		UnityEditor.EditorApplication.isPlaying = false;
 #endif
+
 	}
 }

@@ -7,8 +7,12 @@ public partial class PlayerStats : MonoBehaviour
 	[AutoStaticsCleanup]
 	public static int Money { get; private set; }
 
+	[AutoStaticsCleanup]
+	public static int TotalMoneyCollected { get; private set; }
+
     [AutoStaticsCleanup]
-    public static int TotalMoneyCollected { get; private set; }
+    public static int HighestMoneyCollected { get; private set; }
+
     public class MoneyChangedEvent : UnityEvent<int, int> { };
 
 	[AutoStaticsCleanup]
@@ -29,6 +33,9 @@ public partial class PlayerStats : MonoBehaviour
 		
 		if(deltaMoney > 0) 
 			TotalMoneyCollected += deltaMoney;
+
+		if(TotalMoneyCollected > HighestMoneyCollected)
+			HighestMoneyCollected += deltaMoney;
 
         OnMoneyChanged?.Invoke(prev, Money);
     }
