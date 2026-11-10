@@ -1,6 +1,8 @@
-using UnityEngine;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+using static UnityEngine.Rendering.DebugUI;
 
 public class UpgradeSelectionUI : MonoBehaviour
 {
@@ -17,7 +19,10 @@ public class UpgradeSelectionUI : MonoBehaviour
 	[SerializeField] private GameObject panel;
 	[SerializeField] private UpgradeCardUI[] cards;
 
-	[Header("Availble Upgrades")]
+	private int RerollCost = 20;
+	[SerializeField] private TMP_Text RerollText;
+
+    [Header("Availble Upgrades")]
 	[SerializeField] private UpgradeData[] upgrades;
 
 
@@ -32,34 +37,61 @@ public class UpgradeSelectionUI : MonoBehaviour
 	{
 		onMenuClosed = closedCallback;
 		panel.SetActive(true);
+		RerollText.text = ($"Reroll: ${RerollCost}");
+		GenerateRandomUpgrade();
+	}
 
-		foreach (UpgradeCardUI card in cards)
-		{
-			card.gameObject.SetActive(true);
-		}
-		List<UpgradeData> availble = new List<UpgradeData>(upgrades);
+	public void GenerateRandomUpgrade()
+	{
+		if (upgrades.Length == 0 || cards.Length == 0)
+			return;
+
+		UpgradeData chosen = upgrades[UnityEngine.Random.Range(0, upgrades.Length)];
 
 		for (int i = 0; i < cards.Length; i++)
 		{
-			if (availble.Count == 0)
+			if (i == 0)
 			{
 				cards[i].gameObject.SetActive(true);
-				continue;
+
+				cards[i].Setup(upgradeManager, chosen.index, chosen.title, chosen.description);
 			}
-			int randomIndex = UnityEngine.Random.Range(0, availble.Count);
-
-			UpgradeData chosen = availble[randomIndex];
-			
-
-			cards[i].Setup(upgradeManager, chosen.index, chosen.title, chosen.description);
+			else
+			{
+				cards[i].gameObject.SetActive(false);
+			}
 		}
 	}
-
-	public void CloseUpgradeMenu()
+	public void RerollUpgrade()
 	{
-		panel.SetActive(false);
-		Action callback = onMenuClosed;
-		onMenuClosed = null;
-		callback?.Invoke();
-	}
+
+		if (PlayerStats.Money > RerollCost)
+		{
+			PlayerStats.ChangeMoney(-RerollCost);
+			GenerateRandomUpgrade();
+		}
+		else
+		{
+			return;
+		}
+        if (RerollText == null)
+            return;
+        if (PlayerStats.Money < RerollCost)
+        {
+            RerollText.color = Color.red;
+        }
+        else
+        {
+            RerollText.color = Color.black;
+        }
+    }
+	public void CloseUpgradeMenu()
+    {
+        panel.SetActive(false);
+
+        Action callback = onMenuClosed;
+        onMenuClosed = null;
+        callback?.Invoke();
+    }
+
 }

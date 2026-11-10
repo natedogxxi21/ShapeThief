@@ -299,7 +299,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 386809882074214816, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 72
+      value: 52.65
       objectReference: {fileID: 0}
     - target: {fileID: 552261905853201978, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_SizeDelta.x
@@ -395,7 +395,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6093312590393961592, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 49.65
+      value: 39.8
       objectReference: {fileID: 0}
     - target: {fileID: 6393414177414952191, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_Name
@@ -403,11 +403,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6426980794540341402, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 145
+      value: 94.85
       objectReference: {fileID: 0}
     - target: {fileID: 7165603203647255462, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402484480559052993, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
+      propertyPath: m_fontSize
+      value: 43.1
       objectReference: {fileID: 0}
     - target: {fileID: 8968438791746746977, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_text
@@ -415,7 +419,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8968438791746746977, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 118.15
+      value: 90.9
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6069143564825440, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
@@ -2392,6 +2396,17 @@ Material:
     - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+--- !u!114 &537482305 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3885265046472459084, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
+  m_PrefabInstance: {fileID: 721168057}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!4 &539479356 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3177840810044402959, guid: 86ef0f2a91f435e409a805b0fc9d4480, type: 3}
@@ -3141,7 +3156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4791142249449652943, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
       propertyPath: m_fontSize
-      value: 72
+      value: 50.9
       objectReference: {fileID: 0}
     - target: {fileID: 5174083068648392205, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
       propertyPath: m_fontSize
@@ -3171,6 +3186,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Upgrade_Panel 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6198021323069549828, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6198021323069549828, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7887833973947785718, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
       propertyPath: m_fontSize
       value: 60
@@ -3178,6 +3201,22 @@ PrefabInstance:
     - target: {fileID: 7887833973947785718, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
       propertyPath: m_fontSizeBase
       value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398959127169885776, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1912199512}
+    - target: {fileID: 8398959127169885776, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RerollUpgrade
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398959127169885776, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UpgradeSelectionUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398959127169885776, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7796565741285319445, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
@@ -10102,6 +10141,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1186496562}
     - target: {fileID: 9074754721564934333, guid: e5ee62e965a997048a711864ed0436cb, type: 3}
+      propertyPath: RerollText
+      value: 
+      objectReference: {fileID: 537482305}
+    - target: {fileID: 9074754721564934333, guid: e5ee62e965a997048a711864ed0436cb, type: 3}
       propertyPath: upgradeManager
       value: 
       objectReference: {fileID: 954732734}
@@ -10144,7 +10187,7 @@ PrefabInstance:
       objectReference: {fileID: 1010597549}
     - target: {fileID: 4790466652966427402, guid: a39964d22b5675c44bd6658afacb3ad3, type: 3}
       propertyPath: SmokeBombCost
-      value: 100
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4790466652966427402, guid: a39964d22b5675c44bd6658afacb3ad3, type: 3}
       propertyPath: countdownTimer
@@ -10156,11 +10199,11 @@ PrefabInstance:
       objectReference: {fileID: 970309521}
     - target: {fileID: 4790466652966427402, guid: a39964d22b5675c44bd6658afacb3ad3, type: 3}
       propertyPath: timeUpgradeCost
-      value: 30
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4790466652966427402, guid: a39964d22b5675c44bd6658afacb3ad3, type: 3}
       propertyPath: staminaUpgradeCost
-      value: 100
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4790466652966427402, guid: a39964d22b5675c44bd6658afacb3ad3, type: 3}
       propertyPath: 'guards.Array.data[0]'
