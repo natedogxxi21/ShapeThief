@@ -72,9 +72,9 @@ public class DungeonSpawnManager : MonoBehaviour
     }
 
     
-    private void SpawnDungeonContents()
+    public void SpawnDungeonContents()
     {
-        DestroyAllChildren();
+        DestroyAllPrefabChildren();
         //Destroy's Spawned Dungeon contents at the start
         if (roomGrids == null || roomGrids.Count == 0 )
         {
@@ -371,7 +371,7 @@ private SpawnCell GetAvailableEnemyCell(RoomGrid roomGrid)
      return availableCells[Random.Range(0, availableCells.Count)];
 
     }
- private void DestroyAllChildren()
+ private void DestroyAllPrefabChildren()
     {
         while(transform.childCount != 0)
         {

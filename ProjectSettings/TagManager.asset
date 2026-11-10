@@ -9,6 +9,8 @@ TagManager:
   - KeyPad
   - EnemySpawnBlocker
   - Ignore
+  - DungeonCreator
+  - PrefabSpawner
   layers:
   - Default
   - TransparentFX
