@@ -14560,6 +14560,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 282146252}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &284762443 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9074754721564934333, guid: e5ee62e965a997048a711864ed0436cb, type: 3}
+  m_PrefabInstance: {fileID: 2019268196}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bdfe23ef159c4644b729b415490bf6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeSelectionUI
 --- !u!1 &285632152
 GameObject:
   m_ObjectHideFlags: 0
@@ -81636,6 +81647,14 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 948218110786499258, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
+      propertyPath: m_Name
+      value: Continue
+      objectReference: {fileID: 0}
+    - target: {fileID: 2864136918492898361, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3092843586851202803, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -81716,9 +81735,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5716779208922113089, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
+      propertyPath: costText
+      value: 
+      objectReference: {fileID: 1822024793}
     - target: {fileID: 6393414177414952191, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_Name
       value: TouchCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416284732914163269, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 284762443}
+    - target: {fileID: 8416284732914163269, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseUpgradeMenu
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -96559,6 +96590,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1816011668}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1822024793 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8105205585771437839, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
+  m_PrefabInstance: {fileID: 1509823630}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1822436695
 GameObject:
   m_ObjectHideFlags: 0
