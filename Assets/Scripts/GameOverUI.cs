@@ -14,7 +14,7 @@ public class GameOverUI : MonoBehaviour
 	{
 		Time.timeScale = 1f;
 		SceneManager.LoadScene(0);
-		PlayerStats.ResetMoney();
+        PlayerStats.ResetMoney();
 
 	}
 
