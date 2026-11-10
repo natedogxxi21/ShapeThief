@@ -17,8 +17,8 @@ public class Exit_Level : MonoBehaviour
     [Header("UI")]
     public TMP_Text objectiveText;
 
-	//DungeonCreator dungeonCreator;
-	//DungeonSpawnManager spawnManager;
+	DungeonCreator dungeonCreator;
+	DungeonSpawnManager spawnManager;
 
     private int nextUpgradeMoney;
     private bool upgradeMenuOpen;
@@ -38,8 +38,8 @@ public class Exit_Level : MonoBehaviour
         StartCoroutine(WaitForPlayerCoroutine());
 
 		//Nathan code, GetComponents from these two codes so that the dungeon can be fully reloaded in a new function.
-		//dungeonCreator = GameObject.FindGameObjectWithTag("DungeonCreator").GetComponent<DungeonCreator>();
-		//spawnManager = GameObject.FindGameObjectWithTag("PrefabSpawner").GetComponent<DungeonSpawnManager>();
+		dungeonCreator = GameObject.FindGameObjectWithTag("DungeonCreator").GetComponent<DungeonCreator>();
+		spawnManager = GameObject.FindGameObjectWithTag("PrefabSpawner").GetComponent<DungeonSpawnManager>();
 	}
 
     
@@ -118,6 +118,8 @@ public class Exit_Level : MonoBehaviour
             upgradeMenuOpen = false;
 
             UpdateExitVisibility();
+            //Nathan code, Adding this in after closing the Upgrade manu so that the dungeon reloads.
+			RebuildDungeon();
         });
     }
 
@@ -137,11 +139,11 @@ public class Exit_Level : MonoBehaviour
         SceneManager.LoadScene("Nathan Scene");
     }
 
-	//public void RebuildDungeon()
-	//{
-		//dungeonCreator.CreateDungeon();
-		//spawnManager.SpawnDungeonContents();
-	//}
+	public void RebuildDungeon()
+	{
+		dungeonCreator.CreateDungeon();
+		spawnManager.SpawnDungeonContents();
+	}
     private void OnDestroy()
     {
         if (PlayerStats.OnMoneyChanged != null)
