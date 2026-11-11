@@ -241,6 +241,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1078405620343207032, guid: 43a12d4f991ecf84ca14b143e24b1065, type: 3}
+      propertyPath: isTutorial
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3275895341270364401, guid: 43a12d4f991ecf84ca14b143e24b1065, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8.25
@@ -2331,9 +2335,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6093312590393961592, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
+      propertyPath: m_fontSize
+      value: 55.8
+      objectReference: {fileID: 0}
     - target: {fileID: 6393414177414952191, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_Name
       value: TouchCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6426980794540341402, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
+      propertyPath: m_fontSize
+      value: 161.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8968438791746746977, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
+      propertyPath: m_fontSize
+      value: 135.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -59,7 +59,7 @@ public class GuardHearing : MonoBehaviour
 #endif
 
 		alarmed = soundHeard > hearPlayerThreshold;
-		soundHeard += relative;
+		soundHeard = Mathf.Min(soundHeard + relative, hearPlayerThreshold);
 		stopListeningTimer = .5f;
 		if (!alarmed && soundHeard > hearPlayerThreshold)
 		{
