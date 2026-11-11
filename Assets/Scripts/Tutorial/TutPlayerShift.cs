@@ -58,6 +58,15 @@ public partial class TutPlayerShift : PlayerShift
 					}
 				}
 			}
+
+			if (possibleShiftTarget == null && deselecting && Vector2.Distance(deselectFingerPos, finger.currentTouch.screenPosition) < 10f)
+			{
+				if (shiftTarget != null) { shiftTarget.Highlight(false); }
+				shiftTarget = null;
+				TutorialFlow.selected = false;
+				OnShift.Invoke();
+				OnCollect.Invoke();
+			}
 		}
 	}
 }

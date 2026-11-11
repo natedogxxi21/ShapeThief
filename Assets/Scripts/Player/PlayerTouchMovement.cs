@@ -8,7 +8,7 @@ public partial class PlayerTouchMovement : MonoBehaviour
 {
 	[AutoStaticsCleanup] public static PlayerTouchMovement Instance;
 
-	[SerializeField] Rigidbody rb;
+	[SerializeField] protected Rigidbody rb;
 	[SerializeField] CameraController cam;
 	[SerializeField] Transform model;
 	[SerializeField] Transform camYaw;
@@ -33,7 +33,7 @@ public partial class PlayerTouchMovement : MonoBehaviour
 
 	float charModelTargetAngle = 0;
 	const float charModelTurnSpeed = 10;
-	public bool Running { get; private set; }
+	public bool Running { get; protected set; }
 	float stamina;
 	public float StaminaPercent => stamina / maxStamina;
 	float footstepTicker;
@@ -57,7 +57,7 @@ public partial class PlayerTouchMovement : MonoBehaviour
 		}
 	}
 
-	void FixedUpdate()
+	protected virtual void FixedUpdate()
 	{
 		footstepTicker += rb.linearVelocity.magnitude * Time.fixedDeltaTime;
 		rb.linearVelocity = (Running ? runSpeed : speed) * ((moveInput.x * camYaw.right) + (moveInput.y * camYaw.forward));
@@ -166,7 +166,7 @@ public partial class PlayerTouchMovement : MonoBehaviour
 		return startPosition;
 	}
 
-	public bool ToggleRun()
+	public virtual bool ToggleRun()
 	{
 		Running = !Running;
 		return Running;

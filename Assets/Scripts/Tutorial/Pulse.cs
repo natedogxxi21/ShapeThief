@@ -16,7 +16,7 @@ public class Pulse : MonoBehaviour
 
 	void Update()
 	{
-		float s = Mathf.Abs(Mathf.Sin(Time.time * pulseSpeed) * pulseStrength) + 1;
+		float s = Mathf.Abs(Mathf.Sin(Time.unscaledTime * pulseSpeed) * pulseStrength) + 1;
 		rect.localScale = originalScale * s;
 	}
 }

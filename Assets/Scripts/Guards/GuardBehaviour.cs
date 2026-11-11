@@ -60,8 +60,13 @@ public class GuardBehaviour : MonoBehaviour
 		controller.enabled = true;
 		switch (defaultState)
 		{
+			case GuardState.Idle: Idle(); break;
 			case GuardState.Wander: Wander(); break;
+			case GuardState.Post: Post(); break;
 			case GuardState.Patrol: Patrol(); break;
+			default:
+				Debug.LogWarning("Can only use Idle, Wander, Post, and Patrol as default guard states");
+				Idle(); break;
 		}
 		spawnPoint = transform.position;
 		vision.onPlayerSeen.AddListener(OnPlayerSeen);
@@ -86,7 +91,10 @@ public class GuardBehaviour : MonoBehaviour
 		switch (State)
 		{
 			case GuardState.Post:
+				controller.WalkTo(postPoint);
 				postFacingLeft = !postFacingLeft;
+				if (!controller.Traveling)
+				{ controller.FaceToward(postDirection + (postFacingLeft ? -30 : 30)); }
 				break;
 
 			case GuardState.Wander:
@@ -180,16 +188,16 @@ public class GuardBehaviour : MonoBehaviour
 	}
 
 	public void Idle() => SetState(GuardState.Idle);
-	public void Post(Vector3 position, float direction)
+	public void Post()
 	{
-		postPoint = position;
-		postDirection = direction;
+		postPoint = transform.position;
+		postDirection = DirectionToAngle(transform.forward);
 		SetState(GuardState.Post);
 	}
-	public void Post(Vector3 position, Vector3 direction)
+	public void Post(Vector3 position, float angle)
 	{
 		postPoint = position;
-		postDirection = DirectionToAngle(direction);
+		postDirection = angle;
 		SetState(GuardState.Post);
 	}
 	public void Wander()
@@ -262,7 +270,9 @@ public class GuardBehaviour : MonoBehaviour
 		hearing.LosePlayer();
 		switch (defaultState)
 		{
+			case GuardState.Idle: Idle(); break;
 			case GuardState.Wander: Wander(); break;
+			case GuardState.Post: Post(); break;
 			case GuardState.Patrol: Patrol(); break;
 		}
 	}
@@ -286,6 +296,7 @@ public class GuardBehaviour : MonoBehaviour
 #endif
 }
 
+#if UNITY_EDITOR
 [UnityEditor.CustomEditor(typeof(GuardBehaviour))]
 class GuardBehaviourEditor : UnityEditor.Editor
 {
@@ -302,3 +313,4 @@ class GuardBehaviourEditor : UnityEditor.Editor
 		}
 	}
 }
+#endif

@@ -191,7 +191,7 @@ public partial class HUD : MonoBehaviour
 		inventoryOpen = open;
 		inventoryPanel.SetActive(open);
 		if (open) { TutorialFlow.openedInventory = true; }
-		else { TutorialFlow.closedInventory = true; }
+		else { TutorialFlow.openedInventory = false; }
 	}
 
 	public void RunButtonPressed()
@@ -228,6 +228,7 @@ public partial class HUD : MonoBehaviour
 		{
 			RemoveFromInventory(prop);
 			SetInventoryOpen(false);
+			TutorialFlow.usedInventory = true;
 		}
 	}
 

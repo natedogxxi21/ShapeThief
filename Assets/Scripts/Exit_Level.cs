@@ -6,147 +6,154 @@ using System.Collections;
 
 public class Exit_Level : MonoBehaviour
 {
-    [Header("Exit Requirements")]
-    [SerializeField] private int additionalMoneyRequired = 20;
-    [SerializeField] private GameObject seeBehindPad;
-    [SerializeField] private bool isTutorial;
+	[Header("Exit Requirements")]
+	[SerializeField] private int additionalMoneyRequired = 20;
+	[SerializeField] private GameObject seeBehindPad;
+	[SerializeField] private bool isTutorial;
 
-    [Header("Upgrade Menu")]
-    UpgradeSelectionUI UpgradeMenu => UpgradeSelectionUI.Instance;
+	[Header("Upgrade Menu")]
+	UpgradeSelectionUI UpgradeMenu => UpgradeSelectionUI.Instance;
 
-    [Header("UI")]
-    public TMP_Text objectiveText;
+	[Header("UI")]
+	public TMP_Text objectiveText;
 
 	DungeonCreator dungeonCreator;
 	DungeonSpawnManager spawnManager;
 
-    private int nextUpgradeMoney;
-    private bool upgradeMenuOpen;
-    private bool playerInsidePad;
+	private int nextUpgradeMoney;
+	private bool upgradeMenuOpen;
+	private bool playerInsidePad;
 
-    void Awake()
-    {
-        // Require additional money from the player's current balance.
-        nextUpgradeMoney = PlayerStats.Money + additionalMoneyRequired;
+	void Awake()
+	{
+		// Require additional money from the player's current balance.
+		nextUpgradeMoney = PlayerStats.Money + additionalMoneyRequired;
 
-        if (objectiveText != null)
-            objectiveText.gameObject.SetActive(false);
+		if (objectiveText != null)
+			objectiveText.gameObject.SetActive(false);
 
-        if (seeBehindPad != null)
-            seeBehindPad.SetActive(false);
+		if (seeBehindPad != null)
+			seeBehindPad.SetActive(false);
 
-        StartCoroutine(WaitForPlayerCoroutine());
+		StartCoroutine(WaitForPlayerCoroutine());
 
-		//Nathan code, GetComponents from these two codes so that the dungeon can be fully reloaded in a new function.
-		dungeonCreator = GameObject.FindGameObjectWithTag("DungeonCreator").GetComponent<DungeonCreator>();
-		spawnManager = GameObject.FindGameObjectWithTag("PrefabSpawner").GetComponent<DungeonSpawnManager>();
+		if (!isTutorial)
+		{
+			//Nathan code, GetComponents from these two codes so that the dungeon can be fully reloaded in a new function.
+			dungeonCreator = GameObject.FindGameObjectWithTag("DungeonCreator").GetComponent<DungeonCreator>();
+			spawnManager = GameObject.FindGameObjectWithTag("PrefabSpawner").GetComponent<DungeonSpawnManager>();
+		}
 	}
 
-    
 
-    IEnumerator WaitForPlayerCoroutine()
-    {
-        while (PlayerStats.OnMoneyChanged == null)
-            yield return null;
 
-        PlayerStats.OnMoneyChanged.AddListener(OnMoneyChanged);
+	IEnumerator WaitForPlayerCoroutine()
+	{
+		while (PlayerStats.OnMoneyChanged == null)
+			yield return null;
 
-        OnMoneyChanged(PlayerStats.Money, PlayerStats.Money);
-    }
+		PlayerStats.OnMoneyChanged.AddListener(OnMoneyChanged);
 
-    private void OnMoneyChanged(int prev, int newMoney)
-    {
-        UpdateExitVisibility();
+		OnMoneyChanged(PlayerStats.Money, PlayerStats.Money);
+	}
 
-        // If the player is already standing on the pad,
-        // check whether they have reached the next milestone.
-        if (playerInsidePad && !upgradeMenuOpen)
-            TryOpenUpgradeMenu();
-    }
+	private void OnMoneyChanged(int prev, int newMoney)
+	{
+		UpdateExitVisibility();
 
-    private void UpdateExitVisibility()
-    {
-        if (seeBehindPad != null)
-            seeBehindPad.SetActive(PlayerStats.Money >= nextUpgradeMoney);
-			//Nathan code, Adding this in after closing the Upgrade manu so that the dungeon reloads.
-			//RebuildDungeon();
-    }
+		// If the player is already standing on the pad,
+		// check whether they have reached the next milestone.
+		if (playerInsidePad && !upgradeMenuOpen)
+			TryOpenUpgradeMenu();
+	}
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!other.transform.root.CompareTag("Player"))
-            return;
+	private void UpdateExitVisibility()
+	{
+		if (seeBehindPad != null)
+			seeBehindPad.SetActive(PlayerStats.Money >= nextUpgradeMoney);
+		//Nathan code, Adding this in after closing the Upgrade manu so that the dungeon reloads.
+		//RebuildDungeon();
+	}
 
-        playerInsidePad = true;
-        TryOpenUpgradeMenu();
-    }
+	private void OnTriggerEnter(Collider other)
+	{
+		if (!other.transform.root.CompareTag("Player"))
+			return;
 
-    private void TryOpenUpgradeMenu()
-    {
-        if (upgradeMenuOpen)
-            return;
+		playerInsidePad = true;
+		TryOpenUpgradeMenu();
+	}
 
-        if (PlayerStats.Money < nextUpgradeMoney)
-        {
-            int stillNeeded = nextUpgradeMoney - PlayerStats.Money;
+	private void TryOpenUpgradeMenu()
+	{
+		if (upgradeMenuOpen)
+			return;
 
-            if (objectiveText != null)
-            {
-                objectiveText.text = "Need <color=green>$" + stillNeeded + "</color> more!";
-                objectiveText.gameObject.SetActive(true);
-            }
+		if (PlayerStats.Money < nextUpgradeMoney)
+		{
+			int stillNeeded = nextUpgradeMoney - PlayerStats.Money;
 
-            return;
-        }
+			if (objectiveText != null)
+			{
+				objectiveText.text = "Need <color=green>$" + stillNeeded + "</color> more!";
+				objectiveText.gameObject.SetActive(true);
+			}
 
-        if (objectiveText != null)
-            objectiveText.gameObject.SetActive(false);
+			return;
+		}
 
-        if (isTutorial)
-        {
-            LoadNextLevel();
-            return;
-        }
+		if (objectiveText != null)
+			objectiveText.gameObject.SetActive(false);
 
-        upgradeMenuOpen = true;
+		if (isTutorial)
+		{
+			LoadNextLevel();
+			return;
+		}
 
-        UpgradeMenu.OpenUpgradeMenu(() =>
-        {
-            // Require another additional amount after closing.
-            nextUpgradeMoney = PlayerStats.Money + additionalMoneyRequired;
+		upgradeMenuOpen = true;
 
-            upgradeMenuOpen = false;
+		UpgradeMenu.OpenUpgradeMenu(() =>
+		{
+			// Require another additional amount after closing.
+			nextUpgradeMoney = PlayerStats.Money + additionalMoneyRequired;
 
-            UpdateExitVisibility();
-            //Nathan code, Adding this in after closing the Upgrade manu so that the dungeon reloads.
-			RebuildDungeon();
-        });
-    }
+			upgradeMenuOpen = false;
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (!other.transform.root.CompareTag("Player"))
-            return;
+			UpdateExitVisibility();
 
-        playerInsidePad = false;
+			if (!isTutorial)
+			{
+				//Nathan code, Adding this in after closing the Upgrade manu so that the dungeon reloads.
+				RebuildDungeon();
+			}
+		});
+	}
 
-        if (objectiveText != null)
-            objectiveText.gameObject.SetActive(false);
-    }
+	private void OnTriggerExit(Collider other)
+	{
+		if (!other.transform.root.CompareTag("Player"))
+			return;
 
-    private void LoadNextLevel()
-    {
-        SceneManager.LoadScene("Nathan Scene");
-    }
+		playerInsidePad = false;
+
+		if (objectiveText != null)
+			objectiveText.gameObject.SetActive(false);
+	}
+
+	private void LoadNextLevel()
+	{
+		SceneManager.LoadScene("Nathan Scene");
+	}
 
 	public void RebuildDungeon()
 	{
 		dungeonCreator.CreateDungeon();
 		spawnManager.SpawnDungeonContents();
 	}
-    private void OnDestroy()
-    {
-        if (PlayerStats.OnMoneyChanged != null)
-            PlayerStats.OnMoneyChanged.RemoveListener(OnMoneyChanged);
-    }
+	
+	private void OnDestroy()
+	{
+		PlayerStats.OnMoneyChanged?.RemoveListener(OnMoneyChanged);
+	}
 }

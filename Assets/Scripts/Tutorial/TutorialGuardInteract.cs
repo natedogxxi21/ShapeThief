@@ -3,6 +3,7 @@ using UnityEngine;
 public class TutorialGuardInteract : GuardInteract
 {
 	bool caughtPlayer = false;
+	[SerializeField] Transform movePlayerTo;
 
 	protected override void OnCollisionEnter(Collision collision)
 	{
@@ -11,15 +12,15 @@ public class TutorialGuardInteract : GuardInteract
 			if (collision.gameObject.CompareTag("Player"))
 			{
 				caughtPlayer = true;
-				RestartTransition.Restart(ReturnToCheckpoint);
+				RestartTransition.Restart();
 			}
 		}
 	}
 
-	void ReturnToCheckpoint()
+	public void ReturnToCheckpoint()
 	{
 		GetComponent<GuardBehaviour>().ResetGuard();
-		PlayerTouchMovement.Instance.transform.position = new(0, 0, 2);
+		PlayerTouchMovement.Instance.transform.position = movePlayerTo.position;
 		caughtPlayer = false;
 	}
 }

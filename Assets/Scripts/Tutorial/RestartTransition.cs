@@ -14,7 +14,7 @@ public partial class RestartTransition : MonoBehaviour
 
 	void Awake() => Instance = this;
 
-	public static void Restart(Action RestartCallback)
+	public static void Restart()
 	{
 		Time.timeScale = 0;
 		Instance.StartCoroutine(RestartCoroutine());
@@ -33,7 +33,10 @@ public partial class RestartTransition : MonoBehaviour
 				float p = t / duration;
 				if (!tped && p > 0.5f)
 				{
-					RestartCallback();
+					foreach (TutorialGuardInteract tut in FindObjectsByType<TutorialGuardInteract>())
+					{
+						tut.ReturnToCheckpoint();
+					}
 					tped = true;
 				}
 				float y = 2 - (p < 0.5f ? Instance.Ease(p * 2) : 1 + Instance.Ease((p * 2) - 1));

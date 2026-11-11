@@ -42,7 +42,7 @@ public class GuardHUD : MonoBehaviour
 		indicator = Instantiate(indicatorPrefab, HUD.Instance.indicators).GetComponent<RectTransform>();
 	}
 
-	void Update()
+	public void Update()
 	{
 		UpdateIndicator();
 		if (ChaseIcon.gameObject.activeSelf || SuspicionBar.gameObject.activeSelf)

@@ -550,7 +550,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Exit_Level
   additionalMoneyRequired: 50
   seeBehindPad: {fileID: 3889220680743565307}
-  isTutorial: 0
+  isTutorial: 1
   objectiveText: {fileID: 7067230076797341861}
 --- !u!1 &5812176314805321790
 GameObject:

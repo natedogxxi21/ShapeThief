@@ -59,7 +59,10 @@ public partial class AudioCueManager : MonoBehaviour
 	{
 		foreach (GuardBehaviour guard in GuardNavMesh.Instance.RegisteredGuards)
 		{
-			guard.hearing.HearCue(loudness, position);
+			if (guard != null)
+			{
+				guard.hearing.HearCue(loudness, position);
+			}
 		}
 	}
 }

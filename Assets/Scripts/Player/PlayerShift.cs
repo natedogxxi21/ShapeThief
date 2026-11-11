@@ -45,6 +45,8 @@ public partial class PlayerShift : MonoBehaviour
 	protected bool collectOnCooldown = false;
 
 	protected Finger castingFinger = null;
+	protected bool deselecting = false;
+	protected Vector2 deselectFingerPos;
 
 	void Awake()
 	{
@@ -196,11 +198,9 @@ public partial class PlayerShift : MonoBehaviour
 				}
 			}
 			// Will be reached unless there's a hit with a ShiftObject
+			deselecting = true;
+			deselectFingerPos = finger.currentTouch.screenPosition;
 			possibleShiftTarget = null;
-			if (shiftTarget != null) { shiftTarget.Highlight(false); }
-			shiftTarget = null;
-			OnShift.Invoke();
-			OnCollect.Invoke();
 		}
 	}
 
@@ -221,8 +221,17 @@ public partial class PlayerShift : MonoBehaviour
 						OnShift.Invoke();
 						OnCollect.Invoke();
 						shiftTarget.Highlight(true);
+						return;
 					}
 				}
+			}
+
+			if (possibleShiftTarget == null && deselecting && Vector2.Distance(deselectFingerPos, finger.currentTouch.screenPosition) < 10f)
+			{
+				if (shiftTarget != null) { shiftTarget.Highlight(false); }
+				shiftTarget = null;
+				OnShift.Invoke();
+				OnCollect.Invoke();
 			}
 		}
 	}
