@@ -1112,7 +1112,7 @@ MonoBehaviour:
   invTutDoor: {fileID: 0}
   invLoot: {fileID: 0}
   runPrompt: {fileID: 345859947611028764}
-  runText: {fileID: 345859947611028764}
+  runText: {fileID: 2780256415589889849}
   runButton: {fileID: 4307426090553530814}
   shiftTutGuards:
   - {fileID: 0}
