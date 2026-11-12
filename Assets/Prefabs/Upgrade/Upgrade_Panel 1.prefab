@@ -816,6 +816,7 @@ GameObject:
   - component: {fileID: 1105122192372573139}
   - component: {fileID: 4679612816941070177}
   - component: {fileID: 449522910095206299}
+  - component: {fileID: 6031769274705564557}
   m_Layer: 5
   m_Name: Upgrade_Panel 1
   m_TagString: Untagged
@@ -935,6 +936,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5536091296285609059}
   m_CullTransparentMesh: 1
+--- !u!114 &6031769274705564557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5536091296285609059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bdfe23ef159c4644b729b415490bf6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeSelectionUI
+  upgradeManager: {fileID: 44232037299227570}
+  panel: {fileID: 5536091296285609059}
+  cards:
+  - {fileID: 2553941793325134900}
+  RerollText: {fileID: 3885265046472459084}
+  upgrades:
+  - title: Extra Time
+    description: "Adds more Time\t"
+    index: 0
+  - title: Smoke Bomb
+    description: Adds a smoke bomb to your inventory
+    index: 1
+  - title: More Stamina
+    description: Run Longer!
+    index: 2
 --- !u!1 &5597629790159398654
 GameObject:
   m_ObjectHideFlags: 0
@@ -1218,7 +1246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeCardUI
   titleText: {fileID: 5174083068648392205}
   descriptionText: {fileID: 4791142249449652943}
-  costText: {fileID: 0}
+  costText: {fileID: 2043509877986561914}
   upgradeButton: {fileID: 2300664055017546434}
 --- !u!1 &6994028340492001999
 GameObject:

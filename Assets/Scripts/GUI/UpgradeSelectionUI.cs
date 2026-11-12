@@ -29,16 +29,20 @@ public class UpgradeSelectionUI : MonoBehaviour
 	private Action onMenuClosed;
 	private void Awake()
 	{
-		Instance = this;
+        GenerateRandomUpgrade();
+        Instance = this;
 		panel.SetActive(false);
-	}
+       
+    }
 
 	public void OpenUpgradeMenu(Action closedCallback = null)
 	{
 		onMenuClosed = closedCallback;
 		panel.SetActive(true);
+        GenerateRandomUpgrade();
 		RerollText.text = ($"Reroll: ${RerollCost}");
-		GenerateRandomUpgrade();
+		Time.timeScale = 0f;
+
 	}
 
 	public void GenerateRandomUpgrade()
@@ -86,10 +90,11 @@ public class UpgradeSelectionUI : MonoBehaviour
         }
     }
 	public void CloseUpgradeMenu()
-    {
-        panel.SetActive(false);
+	{
+		panel.SetActive(false);
+		Time.timeScale = 1.0f;
 
-        Action callback = onMenuClosed;
+		Action callback = onMenuClosed;
         onMenuClosed = null;
         callback?.Invoke();
     }

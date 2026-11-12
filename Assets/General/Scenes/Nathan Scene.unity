@@ -81629,7 +81629,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 386809882074214816, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 64
+      value: 52.65
       objectReference: {fileID: 0}
     - target: {fileID: 552261905853201978, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_SizeDelta.x
@@ -81639,6 +81639,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Continue
       objectReference: {fileID: 0}
+    - target: {fileID: 950392397451293593, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1028225156527940927, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
+      propertyPath: panel
+      value: 
+      objectReference: {fileID: 1509823631}
     - target: {fileID: 1776775824468571685, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -81749,7 +81757,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6093312590393961592, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 36.15
+      value: 39.8
       objectReference: {fileID: 0}
     - target: {fileID: 6393414177414952191, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_Name
@@ -81757,7 +81765,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6426980794540341402, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 107.65
+      value: 94.85
       objectReference: {fileID: 0}
     - target: {fileID: 6669424879269237201, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
@@ -81769,7 +81777,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8402484480559052993, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 52.45
+      value: 43.1
       objectReference: {fileID: 0}
     - target: {fileID: 8416284732914163269, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -81781,9 +81789,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8968438791746746977, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 80.8
+      value: 90.9
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1521463854187861080, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
