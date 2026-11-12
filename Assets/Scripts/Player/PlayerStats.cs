@@ -24,9 +24,12 @@ public partial class PlayerStats : MonoBehaviour
 	[AutoStaticsCleanup]
 	public static float GuardDetectRadius { get; private set; } = 10;
 
-	public void Update()
+
+	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+	private static void LoadHighScore()
 	{
-		HighestMoneyCollected = PlayerPrefs.GetInt("High Score", HighestMoneyCollected);
+		HighestMoneyCollected = PlayerPrefs.GetInt("HighScore", 0);
+		Debug.Log("Loaded High Score: " + HighestMoneyCollected);
 	}
 
 	public static void ChangeMoney(int deltaMoney)
@@ -41,12 +44,11 @@ public partial class PlayerStats : MonoBehaviour
 		if (TotalMoneyCollected > HighestMoneyCollected)
 		{
 			HighestMoneyCollected += deltaMoney;
-			
+			PlayerPrefs.SetInt("HighScore", HighestMoneyCollected);
+			PlayerPrefs.Save();
+			Debug.Log("Saved High Score: " + HighestMoneyCollected);
 		}
-
-        PlayerPrefs.SetInt("HighScore", HighestMoneyCollected);
-        PlayerPrefs.Save();
-        OnMoneyChanged?.Invoke(prev, Money);
+		OnMoneyChanged?.Invoke(prev, Money);
 
 	}
 
@@ -57,4 +59,12 @@ public partial class PlayerStats : MonoBehaviour
 		TotalMoneyCollected = 0;
 		OnMoneyChanged?.Invoke(previousMoney, Money);
 	}
+
+	public static void DeleteHighScore()
+	{
+		HighestMoneyCollected = 0;
+        PlayerPrefs.DeleteKey("HighScore");
+		
+	}
 }
+

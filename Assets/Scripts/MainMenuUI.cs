@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.PlayerLoop;
 
 public class MainMenuUI : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class MainMenuUI : MonoBehaviour
 	[SerializeField] TMP_Text HighScoreMoney;
 
 
-    public void Start()
+	public void Start()
 	{
 		HighScoreMoney.text = "Most Money Collected: $" + PlayerStats.HighestMoneyCollected;
 		gameObject.SetActive(true);
@@ -45,4 +46,10 @@ public class MainMenuUI : MonoBehaviour
 		creditsPanel.SetActive(false);
 		mainMenuPanel.SetActive(true);
 	}
+
+	public void DeleteHighScore()
+	{
+        PlayerStats.DeleteHighScore();
+        HighScoreMoney.text = "Most Money Collected: $" + PlayerStats.HighestMoneyCollected;
+    }
 }
