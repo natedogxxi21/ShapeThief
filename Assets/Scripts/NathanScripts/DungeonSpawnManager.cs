@@ -127,10 +127,11 @@ public class DungeonSpawnManager : MonoBehaviour
                 Debug.LogWarning("Not enough valid cells to spawn all enemies in room.");
                 return;
             }
+            
 
             GameObject spawnedEnemy = Instantiate(
                 enemyPrefab,
-                cell.WorldPosition,
+                cell.WorldPosition + Vector3.up * 0.25f,
                 Quaternion.identity,
                 transform
             );

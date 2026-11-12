@@ -2652,17 +2652,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 57463621}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &58547098 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5716779208922113089, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
-  m_PrefabInstance: {fileID: 1509823630}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81511caaf9f13a14bb9d35408b488ad7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UpgradeCardUI
 --- !u!1 &59048772
 GameObject:
   m_ObjectHideFlags: 0
@@ -23351,17 +23340,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423040958}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &423909717 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6470620538308170553, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
-  m_PrefabInstance: {fileID: 1509823630}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &427205300
 GameObject:
   m_ObjectHideFlags: 0
@@ -28850,11 +28828,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 537398875}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &538084740 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2374344037876587542, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
-  m_PrefabInstance: {fileID: 1509823630}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &538358932
 GameObject:
   m_ObjectHideFlags: 0
@@ -81773,7 +81746,7 @@ PrefabInstance:
     - target: {fileID: 5716779208922113089, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: costText
       value: 
-      objectReference: {fileID: 1822024793}
+      objectReference: {fileID: 0}
     - target: {fileID: 6093312590393961592, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
       value: 36.15
@@ -81815,6 +81788,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
+--- !u!1 &1509823631 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 755567697038298038, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
+  m_PrefabInstance: {fileID: 1509823630}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1515202335
 GameObject:
   m_ObjectHideFlags: 0
@@ -96649,17 +96627,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1816011668}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1822024793 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8105205585771437839, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
-  m_PrefabInstance: {fileID: 1509823630}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1822436695
 GameObject:
   m_ObjectHideFlags: 0
@@ -108571,11 +108538,11 @@ PrefabInstance:
     - target: {fileID: 9074754721564934333, guid: e5ee62e965a997048a711864ed0436cb, type: 3}
       propertyPath: panel
       value: 
-      objectReference: {fileID: 538084740}
+      objectReference: {fileID: 1509823631}
     - target: {fileID: 9074754721564934333, guid: e5ee62e965a997048a711864ed0436cb, type: 3}
       propertyPath: RerollText
       value: 
-      objectReference: {fileID: 423909717}
+      objectReference: {fileID: 0}
     - target: {fileID: 9074754721564934333, guid: e5ee62e965a997048a711864ed0436cb, type: 3}
       propertyPath: upgradeManager
       value: 
@@ -108583,7 +108550,7 @@ PrefabInstance:
     - target: {fileID: 9074754721564934333, guid: e5ee62e965a997048a711864ed0436cb, type: 3}
       propertyPath: 'cards.Array.data[0]'
       value: 
-      objectReference: {fileID: 58547098}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

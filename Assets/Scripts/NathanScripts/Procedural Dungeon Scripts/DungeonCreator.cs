@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Diagnostics.Metrics;
 
 public class DungeonCreator : MonoBehaviour
 {
@@ -49,6 +50,7 @@ public class DungeonCreator : MonoBehaviour
 
 //New DungeonSpawnManager
     
+    int Level = 0;
 
     public GameObject wallVertical, wallHorizontal;
     public GameObject doorVertical, doorHorizontal;
@@ -64,13 +66,37 @@ private List<RoomGrid> roomGrids = new List<RoomGrid>();
     void Start()
     {
         CreateDungeon();
+
+        //Level = AddLevel(Level);
+      
     }
+
 
     public void CreateDungeon()
     {
         DestroyAllChildren();
         //DungeonRoomPrefabs first = Instantiate(startRoom, Vector3.zero, Quaternion.identity); 
         //spawnedRooms.Add(first);
+
+        /*
+           What we want to do is everytime CreateDungeon() is called again in ExitLevel.cs , is to set a variable (i) to increase by 1 to 
+           resemble the level/floor the player has reached. So i = level. When i becomes =< 5 , increase the dungeonwidth & dungeonLength by 5.
+            When i increases another 5, increase dungeonwidth and dungeonLength by 5 once more until dungeonWidth and dungeonLength reach the maximum amount.
+
+            We also want to increase spawn chances of enemies and prefabs but will get to that later.
+        */
+        for (int i = 0; i < 5;)
+        {
+            Level += 1;
+            Debug.Log("Level: " + Level);
+            
+            if (Level >= 5 && Level <=10)
+            dungeonwidth += 5;
+            dungeonLength += 5;
+
+            break;
+        }
+        
         
         DungeonGenerator generator = new DungeonGenerator(dungeonwidth,  dungeonLength);
         var listOfRooms = generator.CalculateDungeon(maxIterations, 
