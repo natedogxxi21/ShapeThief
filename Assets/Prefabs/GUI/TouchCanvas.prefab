@@ -3185,6 +3185,10 @@ PrefabInstance:
       propertyPath: m_PresetInfoIsWorld
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1795773787399736880, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1028225156527940927}
     - target: {fileID: 2043509877986561914, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
       propertyPath: m_text
       value: 'Cost:'
@@ -3220,6 +3224,10 @@ PrefabInstance:
     - target: {fileID: 2043509877986561914, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
       propertyPath: m_HorizontalAlignment
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300664055017546434, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2553941793325134900, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
       propertyPath: costText
@@ -3441,6 +3449,10 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: 8398959127169885776, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1028225156527940927}
     - target: {fileID: 8398959127169885776, guid: 5ea8f15447907724dab1af454cef43b2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: RerollUpgrade
