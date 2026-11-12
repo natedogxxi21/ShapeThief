@@ -19,6 +19,8 @@ public class Exit_Level : MonoBehaviour
 
 	DungeonCreator dungeonCreator;
 	DungeonSpawnManager spawnManager;
+	
+	public static int levelHighScore = 1;
 
 	private int nextUpgradeMoney;
 	private bool upgradeMenuOpen;
@@ -28,6 +30,9 @@ public class Exit_Level : MonoBehaviour
 	{
 		// Require additional money from the player's current balance.
 		nextUpgradeMoney = PlayerStats.Money + additionalMoneyRequired;
+
+		levelHighScore = 1;
+
 
 		if (objectiveText != null)
 			objectiveText.gameObject.SetActive(false);
@@ -143,14 +148,21 @@ public class Exit_Level : MonoBehaviour
 
 	private void LoadNextLevel()
 	{
-		SceneManager.LoadScene("Nathan Scene");
+
+        SceneManager.LoadScene("Nathan Scene");
 	}
 
 	public void RebuildDungeon()
 	{
 		dungeonCreator.CreateDungeon();
 		spawnManager.SpawnDungeonContents();
-	}
+
+		if(levelHighScore >= 1)
+		{
+            levelHighScore++;
+        } 
+        Debug.Log("LEVEL UP");
+    }
 	
 	private void OnDestroy()
 	{

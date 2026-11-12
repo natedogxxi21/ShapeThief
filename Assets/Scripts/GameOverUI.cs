@@ -5,9 +5,13 @@ using TMPro;
 public class GameOverUI : MonoBehaviour
 {
 	[SerializeField] private TMP_Text totalMoneyText;
+
+	[SerializeField] private TMP_Text levelHighScoreText;
+
 	public void Start()
 	{
 		totalMoneyText.text = "Total Money Collected: $" + PlayerStats.TotalMoneyCollected;
+		levelHighScoreText.text = "Highest Level: " + Exit_Level.levelHighScore;
 		gameObject.SetActive(true);
 	}
 	public void RestartGame()

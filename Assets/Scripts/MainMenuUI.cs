@@ -9,11 +9,13 @@ public class MainMenuUI : MonoBehaviour
 	[SerializeField] GameObject playPanel;
 	[SerializeField] GameObject creditsPanel;
 	[SerializeField] TMP_Text HighScoreMoney;
+	[SerializeField] TMP_Text LevelScore;
 
 
 	public void Start()
 	{
 		HighScoreMoney.text = "Most Money Collected: $" + PlayerStats.HighestMoneyCollected;
+		LevelScore.text = "Highest Level Reached: " + Exit_Level.levelHighScore;
 		gameObject.SetActive(true);
 	}
 	public void Play()
@@ -51,5 +53,6 @@ public class MainMenuUI : MonoBehaviour
 	{
         PlayerStats.DeleteHighScore();
         HighScoreMoney.text = "Most Money Collected: $" + PlayerStats.HighestMoneyCollected;
+		LevelScore.text = "Highest Level Reached: " + Exit_Level.levelHighScore;
     }
 }

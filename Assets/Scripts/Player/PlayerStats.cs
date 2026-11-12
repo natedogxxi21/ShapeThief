@@ -29,6 +29,7 @@ public partial class PlayerStats : MonoBehaviour
 	private static void LoadHighScore()
 	{
 		HighestMoneyCollected = PlayerPrefs.GetInt("HighScore", 0);
+		Exit_Level.levelHighScore = PlayerPrefs.GetInt("LevelScore", 1);
 		Debug.Log("Loaded High Score: " + HighestMoneyCollected);
 	}
 
@@ -48,6 +49,12 @@ public partial class PlayerStats : MonoBehaviour
 			PlayerPrefs.Save();
 			Debug.Log("Saved High Score: " + HighestMoneyCollected);
 		}
+
+		if (Exit_Level.levelHighScore > 0)
+		{
+            PlayerPrefs.SetInt("LevelScore", Exit_Level.levelHighScore);
+			PlayerPrefs.Save();
+        }
 		OnMoneyChanged?.Invoke(prev, Money);
 
 	}
@@ -63,7 +70,9 @@ public partial class PlayerStats : MonoBehaviour
 	public static void DeleteHighScore()
 	{
 		HighestMoneyCollected = 0;
+		Exit_Level.levelHighScore = 1;
         PlayerPrefs.DeleteKey("HighScore");
+		PlayerPrefs.DeleteKey("LevelScore");
 		
 	}
 }

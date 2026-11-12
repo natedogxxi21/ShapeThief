@@ -16,6 +16,7 @@ public class CountdownTimer : MonoBehaviour
     private void Start()
     {
         guards = FindObjectsByType<GuardBehaviour>();
+        
 
         timerIsRunning = true;
         DisplayTime(timeRemaining);
@@ -23,6 +24,7 @@ public class CountdownTimer : MonoBehaviour
 
     private void Update()
     {
+        LowTime();
         if (timerIsRunning)
         {
             if (timeRemaining > 0)
@@ -52,6 +54,15 @@ public class CountdownTimer : MonoBehaviour
     {
         timeRemaining += extraTime;
         DisplayTime(timeRemaining);
+    }
+
+    public void LowTime()
+    {
+        if (timeRemaining < 30)
+        {
+            timerText.color = Color.red;
+            return;
+        }
     }
 
     void AlertAllGuards()
