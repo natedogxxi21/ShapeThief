@@ -8,6 +8,9 @@ public class CountdownTimer : MonoBehaviour
     public float timeRemaining = 60f;
     public bool timerIsRunning = false;
 
+    public float shakeStrength = 5f;
+    private Vector2 originalTextPos;
+
     [Header("UI Elements")]
     public TextMeshProUGUI timerText;
     public GameObject GameOverPanel;
@@ -61,7 +64,9 @@ public class CountdownTimer : MonoBehaviour
         if (timeRemaining < 30)
         {
             timerText.color = Color.red;
-            return;
+           float offsetX = Random.Range(-shakeStrength, shakeStrength);
+            float offsetY = Random.Range(-shakeStrength,shakeStrength);
+            timerText.rectTransform.anchoredPosition = originalTextPos + new Vector2(offsetX, offsetY);
         }
     }
 
