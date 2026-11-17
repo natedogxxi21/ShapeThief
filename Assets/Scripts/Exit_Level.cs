@@ -112,6 +112,7 @@ public class Exit_Level : MonoBehaviour
 
 		if (isTutorial)
 		{
+			PlayerStats.ResetMoney();
 			LoadNextLevel();
 			return;
 		}
