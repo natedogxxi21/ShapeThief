@@ -19,7 +19,6 @@ public class AutoDoor : MonoBehaviour
 
     if (actor == null )
         return;
-    Debug.Log($"Door detected: {actor.name} through collider: {other.name}");
 
     door.Open(actor.position);
     
@@ -33,8 +32,6 @@ public class AutoDoor : MonoBehaviour
 
     if (door != null && !door.IsOpen)
         door.Open(actor.position);
-Debug.Log("Trigger entered by: " + other.name +
-          " | Tag: " + other.tag);
     }
        
 

@@ -15,7 +15,7 @@ public class DungeonSpawnManager : MonoBehaviour
 
     //EnemySpawning
     [Range(0f, 1f)]
-    public float enemySpawnChance = 0.8f;
+    public float enemySpawnChance = 0.55f;
 
     public int minEnemiesPerRoom = 1;
     public int maxEnemiesPerRooom = 2;
@@ -381,6 +381,12 @@ private SpawnCell GetAvailableEnemyCell(RoomGrid roomGrid)
                 DestroyImmediate(item.gameObject);
             }
         }
+    }
+
+    public void IncreaseEnemySpawnChance()
+    {
+        enemySpawnChance += 0.05f;
+
     }
 
 }

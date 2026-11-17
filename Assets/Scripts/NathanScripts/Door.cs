@@ -33,7 +33,6 @@ public class Door : MonoBehaviour
 
     public void Open(Vector3 userPosition)
     {
-        Debug.Log("Door Open() was called!");
         if (IsOpen)
         return;
 

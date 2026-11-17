@@ -90,10 +90,19 @@ private List<RoomGrid> roomGrids = new List<RoomGrid>();
             Level += 1;
             Debug.Log("Level: " + Level);
             
-            if (Level >= 5 && Level <=10)
-            dungeonwidth += 5;
-            dungeonLength += 5;
+            if (Level == 5 || Level == 10 || Level == 15 || Level == 20 || Level == 25 || Level == 30)
+            {
+                //Increase Dungeon size by 5 units, wdith and length
+                dungeonwidth += 5;
+                Debug.Log("Dungeon Size Incraeased");
 
+                dungeonLength += 5;
+
+                spawnManager.IncreaseEnemySpawnChance();
+                Debug.Log("EnemySpawnChance Increased");
+
+
+            }
             break;
         }
         
@@ -199,14 +208,6 @@ private List<RoomGrid> roomGrids = new List<RoomGrid>();
             Debug.LogError("No starting room generated");
         }
 
-        Debug.Log($"Horizontal door candidates: {possibleDoorHorizontalPosition.Count}");
-Debug.Log($"Vertical door candidates: {possibleDoorVerticalPosition.Count}");
-
-foreach (var p in possibleDoorHorizontalPosition)
-    Debug.Log($"Horizontal door candidate at: {p}");
-
-foreach (var p in possibleDoorVerticalPosition)
-    Debug.Log($"Vertical door candidate at: {p}");
 
         CreateWalls(wallParent);
 

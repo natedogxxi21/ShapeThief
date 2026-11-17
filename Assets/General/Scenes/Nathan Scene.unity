@@ -916,6 +916,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 190430338}
     - target: {fileID: 4790466652966427402, guid: a39964d22b5675c44bd6658afacb3ad3, type: 3}
+      propertyPath: extraTime
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4790466652966427402, guid: a39964d22b5675c44bd6658afacb3ad3, type: 3}
       propertyPath: countdownTimer
       value: 
       objectReference: {fileID: 2096809014}
@@ -12645,6 +12649,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 242173208}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &247713520 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7338925541106201569, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
+  m_PrefabInstance: {fileID: 1509823630}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81511caaf9f13a14bb9d35408b488ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeCardUI
 --- !u!1 &248738210
 GameObject:
   m_ObjectHideFlags: 0
@@ -81629,11 +81644,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 348460657430365466, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 61.4
+      value: 37.1
       objectReference: {fileID: 0}
     - target: {fileID: 386809882074214816, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 64
+      value: 37.65
       objectReference: {fileID: 0}
     - target: {fileID: 552261905853201978, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_SizeDelta.x
@@ -81757,7 +81772,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3836853327721848896, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: timeRemaining
-      value: 35
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 5059039569965452391, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
+      propertyPath: extraTime
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5716779208922113089, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: costText
@@ -81765,7 +81784,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6093312590393961592, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 36.15
+      value: 25.25
       objectReference: {fileID: 0}
     - target: {fileID: 6393414177414952191, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_Name
@@ -81773,11 +81792,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6426980794540341402, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 107.65
+      value: 71.6
       objectReference: {fileID: 0}
     - target: {fileID: 6669424879269237201, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 72
+      value: 67.05
       objectReference: {fileID: 0}
     - target: {fileID: 7165603203647255462, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_PresetInfoIsWorld
@@ -81785,7 +81804,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8402484480559052993, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 52.45
+      value: 30.85
       objectReference: {fileID: 0}
     - target: {fileID: 8416284732914163269, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -81797,7 +81816,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8968438791746746977, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
       propertyPath: m_fontSize
-      value: 80.8
+      value: 50.75
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1521463854187861080, guid: 767986d402e1d4c6fbf015e7259cfdcd, type: 3}
@@ -82839,7 +82858,7 @@ MonoBehaviour:
   roomWidthMin: 15
   roomLengthMin: 15
   maxIterations: 20
-  corridorWidth: 3
+  corridorWidth: 4
   material: {fileID: 2100000, guid: 729f49c4b6ed50742b437608fd67cd3c, type: 2}
   roomBottomCornerModifier: 0.192
   roomTopCornerModifier: 0.87
@@ -108567,7 +108586,7 @@ PrefabInstance:
     - target: {fileID: 9074754721564934333, guid: e5ee62e965a997048a711864ed0436cb, type: 3}
       propertyPath: 'cards.Array.data[0]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 247713520}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
